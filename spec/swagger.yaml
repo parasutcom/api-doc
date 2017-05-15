@@ -1,0 +1,4626 @@
+swagger: '2.0'
+info:
+  version: 4.0.0
+  title: Paraşüt - API V4
+  description: 'State: Alpha'
+host: api.heroku-staging.parasut.com
+schemes:
+  - http
+basePath: /v4
+consumes:
+  - application/vnd.api+json
+produces:
+  - application/vnd.api+json
+tags:
+  - name: Accounts
+  - name: Contacts
+  - name: Employees
+  - name: ItemCategories
+  - name: Products
+  - name: SalesInvoices
+  - name: Tags
+paths:
+  '/{company_id}/accounts':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Accounts
+      operationId: listAccounts
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: sort
+          type: string
+          in: query
+          description: 'id, balance, balance_in_trl'
+          default: '-id'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+      responses:
+        '200':
+          description: Hesaplar
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Account'
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Accounts
+      operationId: createAccount
+      summary: Hesap oluşturur.
+      description: İstediğiniz hesabın bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: account_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - accounts
+                  attributes:
+                    $ref: '#/definitions/AccountAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Hesap
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Account'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/accounts/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Hesap ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Accounts
+      operationId: showAccount
+      summary: Hesap bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz hesabın id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      responses:
+        '200':
+          description: Hesap
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Account'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Accounts
+      operationId: updateAccount
+      summary: Hesabı düzenler.
+      description: ''
+      parameters:
+        - name: account_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - accounts
+                  attributes:
+                    $ref: '#/definitions/AccountAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Hesap
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Account'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Accounts
+      operationId: deleteAccount
+      summary: Hesabı siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/contacts':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Contacts
+      operationId: listContacts
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: sort
+          type: string
+          in: query
+          description: 'id, balance, name, email'
+          default: '-balance'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: 'category, contact_portal, contact_people'
+      responses:
+        '200':
+          description: Müşteriler/Tedarikçiler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Contact'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contact_portals
+                        - contact_people
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Contacts
+      operationId: createContact
+      summary: Müşteri/Tedarikçi oluşturur.
+      description: >-
+        İstediğiniz müşterinin/tedarikçinin bilgilerini göndererek
+        oluşturabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, contact_portal, contact_people'
+        - name: contact_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+                  attributes:
+                    $ref: '#/definitions/ContactAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Müşteri/Tedarikçi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Contact'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contact_portals
+                        - contact_people
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/contacts/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Müşteri/Tedarikçi ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Contacts
+      operationId: showContact
+      summary: Müşteri/Tedarikçi bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz müşterinin/tedarikçinin id'sini
+        göndererek gerekli bilgilere ulaşabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, contact_portal, contact_people'
+      responses:
+        '200':
+          description: Müşteri/Tedarikçi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Contact'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contact_portals
+                        - contact_people
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Contacts
+      operationId: updateContact
+      summary: Müşteriyi/tedarikçiyi düzenler.
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, contact_portal, contact_people'
+        - name: contact_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+                  attributes:
+                    $ref: '#/definitions/ContactAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Müşteri/Tedarikçi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Contact'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contact_portals
+                        - contact_people
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Contacts
+      operationId: deleteContact
+      summary: Müşteriyi/tedarikçiyi siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/employees':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Employees
+      operationId: listEmployees
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: sort
+          type: string
+          in: query
+          description: 'id, balance, name, email'
+          default: '-balance'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: 'category, managed_by_user, managed_by_user_role'
+      responses:
+        '200':
+          description: Çalışanlar
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Employee'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - users
+                        - user_roles
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Employees
+      operationId: createEmployee
+      summary: Çalışan oluşturur.
+      description: İstediğiniz çalışanın bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, managed_by_user, managed_by_user_role'
+        - name: employee_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - employees
+                  attributes:
+                    $ref: '#/definitions/EmployeeAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Çalışan
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Employee'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - users
+                        - user_roles
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/employees/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Çalışan ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Employees
+      operationId: showEmployee
+      summary: Çalışan bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz çalışanın id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, managed_by_user, managed_by_user_role'
+      responses:
+        '200':
+          description: Çalışan
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Employee'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - users
+                        - user_roles
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Employees
+      operationId: updateEmployee
+      summary: Çalışanı düzenler.
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'category, managed_by_user, managed_by_user_role'
+        - name: employee_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - employees
+                  attributes:
+                    $ref: '#/definitions/EmployeeAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Çalışan
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Employee'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - users
+                        - user_roles
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Employees
+      operationId: deleteEmployee
+      summary: Çalışanı siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/item_categories':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ItemCategories
+      operationId: listItemCategories
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+        - name: 'filter[category_type]'
+          type: string
+          in: query
+        - name: sort
+          type: string
+          in: query
+          description: 'id, name, category_type'
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: 'parent_category, subcategories'
+      responses:
+        '200':
+          description: Kategoriler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/ItemCategory'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - ItemCategories
+      operationId: createItemCategory
+      summary: Kategori oluşturur.
+      description: İstediğiniz kategorinin bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'parent_category, subcategories'
+        - name: item_category_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+                  attributes:
+                    $ref: '#/definitions/ItemCategoryAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Kategori
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ItemCategory'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/item_categories/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Kategori ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ItemCategories
+      operationId: showItemCategory
+      summary: Kategori bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz kategorinin id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'parent_category, subcategories'
+      responses:
+        '200':
+          description: Kategori
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ItemCategory'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - ItemCategories
+      operationId: updateItemCategory
+      summary: Kategoriyi düzenler.
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: 'parent_category, subcategories'
+        - name: item_category_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+                  attributes:
+                    $ref: '#/definitions/ItemCategoryAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Kategori
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ItemCategory'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - ItemCategories
+      operationId: deleteItemCategory
+      summary: Kategoriyi siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/products':
+    get:
+      tags:
+        - Products
+      operationId: listProducts
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: company_id
+          type: integer
+          description: Firma ID
+          in: path
+          required: true
+        - name: sort
+          type: string
+          in: query
+          description: 'id, name'
+          default: '-id'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: category
+      responses:
+        '200':
+          description: Ürünler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Product'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Products
+      operationId: createProduct
+      summary: Ürün oluşturur.
+      description: İstediğiniz ürünün bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: company_id
+          type: integer
+          description: Firma ID
+          in: path
+          required: true
+        - name: include
+          type: string
+          in: query
+          description: category
+        - name: product_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+                  attributes:
+                    $ref: '#/definitions/ProductAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Ürün
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Product'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/products/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Ürün ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Products
+      operationId: showProduct
+      summary: Ürün bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz ürünün id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: category
+      responses:
+        '200':
+          description: Ürün
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Product'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Products
+      operationId: updateProduct
+      summary: Ürünü düzenler.
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: category
+        - name: product_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+                  attributes:
+                    $ref: '#/definitions/ProductAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Ürün
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Product'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Products
+      operationId: deleteProduct
+      summary: Ürünü siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - SalesInvoices
+      operationId: listSalesInvoices
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: sort
+          type: string
+          in: query
+          description: 'id, issue_date, due_date, remaining, remaining_in_trl'
+          default: '-remaining_in_trl'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            category, contact, details, payments, tags, refunds, sharings,
+            recurrence_plan
+      responses:
+        '200':
+          description: Satış faturaları
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - purchase_bills
+                        - sharings
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - SalesInvoices
+      operationId: createSalesInvoice
+      summary: Fatura oluşturur.
+      description: İstediğiniz faturanın bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            category, contact, details, payments, tags, refunds, sharings,
+            recurrence_plan
+        - name: sales_invoice_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                  attributes:
+                    $ref: '#/definitions/SalesInvoiceAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - sales_invoice_details
+                                attributes:
+                                  $ref: '#/definitions/SalesInvoiceDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - purchase_bills
+                        - sharings
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    get:
+      tags:
+        - SalesInvoices
+      operationId: showSalesInvoice
+      summary: Fatura bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz faturanın id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            category, contact, details, payments, tags, refunds, sharings,
+            recurrence_plan
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - purchase_bills
+                        - sharings
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - SalesInvoices
+      operationId: updateSalesInvoice
+      summary: Faturayı düzenler.
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            category, contact, details, payments, tags, refunds, sharings,
+            recurrence_plan
+        - name: sales_invoice_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                  attributes:
+                    $ref: '#/definitions/SalesInvoiceAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - sales_invoice_details
+                                attributes:
+                                  $ref: '#/definitions/SalesInvoiceDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - purchase_bills
+                        - sharings
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - SalesInvoices
+      operationId: deleteSalesInvoice
+      summary: Faturayı siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/tags':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Tags
+      operationId: listTags
+      summary: Liste.
+      description: Liste.
+      parameters:
+        - name: sort
+          type: string
+          in: query
+          description: 'id, name'
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          default: 15
+          minimum: 1
+          maximum: 25
+      responses:
+        '200':
+          description: Etiketler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Tag'
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Tags
+      operationId: createTag
+      summary: Etiket oluşturur.
+      description: İstediğiniz etiket bilgilerini göndererek oluşturabilirsiniz.
+      parameters:
+        - name: tag_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - tags
+                  attributes:
+                    $ref: '#/definitions/TagAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Etiket
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Tag'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/tags/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Etiket ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Tags
+      operationId: showTag
+      summary: Etiket bilgisini gösterir.
+      description: >-
+        Ayrıntısını görmek istediğiniz etiket id'sini göndererek gerekli
+        bilgilere ulaşabilirsiniz.
+      responses:
+        '200':
+          description: Etiket
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Tag'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Tags
+      operationId: updateTag
+      summary: Etiketyi düzenler.
+      description: ''
+      parameters:
+        - name: tag_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - tags
+                  attributes:
+                    $ref: '#/definitions/TagAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Etiket
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Tag'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Tags
+      operationId: deleteTag
+      summary: Etiketyi siler.
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+security:
+  - parasut_auth: []
+securityDefinitions:
+  parasut_auth:
+    type: oauth2
+    tokenUrl: 'http://api.heroku-staging.parasut.com/oauth/token'
+    authorizationUrl: 'http://api.heroku-staging.parasut.com/oauth/authorize'
+    flow: accessCode
+definitions:
+  Error:
+    type: object
+    properties:
+      title:
+        type: string
+      detail:
+        type: string
+  ListMeta:
+    type: object
+    properties:
+      current_page:
+        type: integer
+      total_pages:
+        type: integer
+      total_count:
+        type: integer
+  AccountAttributes:
+    type: object
+    properties:
+      used_for:
+        type: string
+        readOnly: true
+      last_used_at:
+        type: string
+        format: date-time
+        readOnly: true
+      balance:
+        type: number
+        readOnly: true
+      last_adjustment_date:
+        type: string
+        format: date-time
+        readOnly: true
+      bank_integration_type:
+        type: string
+        readOnly: true
+      associate_email:
+        type: string
+        readOnly: true
+      name:
+        type: string
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      account_type:
+        type: string
+        enum:
+          - cash
+          - bank
+          - sys
+        readOnly: false
+      bank_name:
+        type: string
+        readOnly: false
+      bank_branch:
+        type: string
+        readOnly: false
+      bank_account_no:
+        type: string
+        readOnly: false
+      iban:
+        type: string
+        readOnly: false
+      archived:
+        type: boolean
+        readOnly: false
+    required:
+      - name
+  Account:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - accounts
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/AccountAttributes'
+      relationships: {}
+    required:
+      - attributes
+  ContactAttributes:
+    type: object
+    properties:
+      balance:
+        type: number
+        readOnly: true
+      trl_balance:
+        type: number
+        readOnly: true
+      usd_balance:
+        type: number
+        readOnly: true
+      eur_balance:
+        type: number
+        readOnly: true
+      gbp_balance:
+        type: number
+        readOnly: true
+      email:
+        type: string
+        format: email
+        readOnly: false
+      name:
+        type: string
+        readOnly: false
+      short_name:
+        type: string
+        readOnly: false
+      contact_type:
+        type: string
+        enum:
+          - person
+          - company
+        readOnly: false
+      tax_office:
+        type: string
+        readOnly: false
+      tax_number:
+        type: string
+        readOnly: false
+      district:
+        type: string
+        readOnly: false
+      city:
+        type: string
+        readOnly: false
+      address:
+        type: string
+        readOnly: false
+      phone:
+        type: string
+        readOnly: false
+      fax:
+        type: string
+        readOnly: false
+      is_abroad:
+        type: boolean
+        readOnly: false
+      archived:
+        type: boolean
+        readOnly: false
+      iban:
+        type: string
+        readOnly: false
+      account_type:
+        type: string
+        enum:
+          - customer
+          - supplier
+        readOnly: false
+    required:
+      - name
+      - account_type
+  Contact:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - contacts
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ContactAttributes'
+      relationships:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          contact_portal:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contact_portals
+          contact_people:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contact_people
+    required:
+      - attributes
+  EmployeeAttributes:
+    type: object
+    properties:
+      balance:
+        type: number
+        readOnly: true
+      trl_balance:
+        type: number
+        readOnly: true
+      usd_balance:
+        type: number
+        readOnly: true
+      eur_balance:
+        type: number
+        readOnly: true
+      gbp_balance:
+        type: number
+        readOnly: true
+      name:
+        type: string
+        readOnly: false
+      email:
+        type: string
+        format: email
+        readOnly: false
+      archived:
+        type: boolean
+        readOnly: false
+      iban:
+        type: string
+        readOnly: false
+    required:
+      - name
+  Employee:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - employees
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EmployeeAttributes'
+      relationships:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          managed_by_user:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - users
+          managed_by_user_role:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - user_roles
+    required:
+      - attributes
+  ItemCategoryAttributes:
+    type: object
+    properties:
+      full_path:
+        type: string
+        readOnly: true
+      name:
+        type: string
+        readOnly: false
+      bg_color:
+        type: string
+        readOnly: false
+      text_color:
+        type: string
+        readOnly: false
+      category_type:
+        type: string
+        readOnly: false
+      parent_id:
+        type: integer
+        readOnly: false
+    required:
+      - name
+  ItemCategory:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - item_categories
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ItemCategoryAttributes'
+      relationships:
+        type: object
+        properties:
+          parent_category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          subcategories:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+    required:
+      - attributes
+  ProductAttributes:
+    type: object
+    properties:
+      sales_excise_duty_code:
+        type: string
+        readOnly: true
+      sales_invoice_details_count:
+        type: integer
+        readOnly: true
+      purchase_invoice_details_count:
+        type: integer
+        readOnly: true
+      list_price_in_trl:
+        type: number
+        readOnly: true
+      buying_price_in_trl:
+        type: number
+        readOnly: true
+      stock_count:
+        type: number
+        readOnly: true
+        description: Stok Miktarı
+      code:
+        type: string
+        readOnly: false
+        description: Ürün/hizmet kodu
+      name:
+        type: string
+        readOnly: false
+        description: Ürün/hizmet ismi
+      vat_rate:
+        type: number
+        readOnly: false
+        description: KDV oranı
+      sales_excise_duty:
+        type: number
+        readOnly: false
+        description: Satış ÖTV
+      sales_excise_duty_type:
+        type: string
+        readOnly: false
+        description: Satış ÖTV tipi
+      purchase_excise_duty:
+        type: number
+        readOnly: false
+        description: Alış ÖTV
+      purchase_excise_duty_type:
+        type: string
+        readOnly: false
+        description: Alış ÖTV tipi
+      unit:
+        type: string
+        readOnly: false
+        description: Birim
+      communications_tax_rate:
+        type: number
+        readOnly: false
+        description: ÖİV oranı
+      archived:
+        type: boolean
+        readOnly: false
+      list_price:
+        type: number
+        readOnly: false
+        description: Satış fiyatı
+      currency:
+        type: string
+        readOnly: false
+        description: Satış döviz
+      buying_price:
+        type: number
+        readOnly: false
+        description: Alış fiyatı
+      buying_currency:
+        type: string
+        readOnly: false
+        description: Alış döviz
+      inventory_tracking:
+        type: boolean
+        readOnly: false
+      initial_stock_count:
+        type: number
+        readOnly: false
+        description: Başlangıç Stok Miktarı
+    required:
+      - name
+  Product:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - products
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ProductAttributes'
+      relationships:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+    required:
+      - attributes
+  SalesInvoiceAttributes:
+    type: object
+    properties:
+      invoice_no:
+        type: string
+        readOnly: true
+      net_total:
+        type: number
+        readOnly: true
+      gross_total:
+        type: number
+        readOnly: true
+      withholding:
+        type: number
+        readOnly: true
+      total_excise_duty:
+        type: number
+        readOnly: true
+      total_communications_tax:
+        type: number
+        readOnly: true
+      total_vat:
+        type: number
+        readOnly: true
+      vat_withholding:
+        type: number
+        readOnly: true
+      total_discount:
+        type: number
+        readOnly: true
+      total_invoice_discount:
+        type: number
+        readOnly: true
+      before_taxes_total:
+        type: number
+        readOnly: true
+      remaining:
+        type: number
+        readOnly: true
+      payment_status:
+        type: string
+        readOnly: true
+      item_type:
+        type: string
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+      invoice_series:
+        type: string
+        readOnly: false
+      invoice_id:
+        type: integer
+        readOnly: false
+      archived:
+        type: boolean
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      exchange_rate:
+        type: number
+        readOnly: false
+      withholding_rate:
+        type: number
+        readOnly: false
+      vat_withholding_rate:
+        type: number
+        readOnly: false
+      invoice_discount_type:
+        type: string
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+      billing_address:
+        type: string
+        readOnly: false
+      billing_phone:
+        type: string
+        readOnly: false
+      billing_fax:
+        type: string
+        readOnly: false
+      tax_office:
+        type: string
+        readOnly: false
+      tax_number:
+        type: string
+        readOnly: false
+      city:
+        type: string
+        readOnly: false
+      district:
+        type: string
+        readOnly: false
+      is_abroad:
+        type: string
+        readOnly: false
+      order_no:
+        type: string
+        readOnly: false
+      order_date:
+        type: string
+        format: date
+        readOnly: false
+      shipment_addres:
+        type: string
+        readOnly: false
+    required:
+      - item_type
+      - issue_date
+  SalesInvoice:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_invoices
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/SalesInvoiceAttributes'
+      relationships:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          contact:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+          details:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoice_details
+          payments:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - payments
+          tags:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - tags
+          refunds:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - purchase_bills
+          sharings:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sharings
+          recurrence_plan:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - recurrence_plans
+    required:
+      - attributes
+  SalesInvoiceDetailAttributes:
+    type: object
+    properties:
+      net_total:
+        type: number
+        readOnly: true
+      quantity:
+        type: number
+        readOnly: false
+      unit_price:
+        type: number
+        readOnly: false
+      vat_rate:
+        type: number
+        readOnly: false
+      discount_type:
+        type: string
+        readOnly: false
+      discount_value:
+        type: number
+        readOnly: false
+      excise_duty_type:
+        type: string
+        readOnly: false
+      excise_duty_value:
+        type: number
+        readOnly: false
+      communications_tax_rate:
+        type: number
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+    required:
+      - quantity
+      - unit_price
+      - vat_rate
+  SalesInvoiceDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_invoice_details
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/SalesInvoiceDetailAttributes'
+      relationships:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+    required:
+      - attributes
+  TagAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        readOnly: false
+    required:
+      - name
+  Tag:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - tags
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/TagAttributes'
+      relationships: {}
+    required:
+      - attributes
