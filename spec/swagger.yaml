@@ -2,6 +2,9 @@ swagger: '2.0'
 info:
   version: 4.0.0
   title: Paraşüt - API V4
+  x-logo:
+    url: 'https://parasutcom.github.io/api-doc/logo.png'
+    backgroundColor: null
   description: >
     # Introduction
 
