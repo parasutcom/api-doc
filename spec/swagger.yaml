@@ -2,7 +2,133 @@ swagger: '2.0'
 info:
   version: 4.0.0
   title: Paraşüt - API V4
-  description: 'State: Alpha'
+  description: >
+    # Introduction
+
+
+    ## State
+
+
+    API V4 test aşamasındadır.
+
+
+    ## BASE_URL
+
+
+    API hizmetimizin `BASE_URL`i `http://api.heroku-staging.parasut.com`
+    şeklindedir.
+
+
+    V4 endpointlerine ulaşmak için `http://api.heroku-staging.parasut.com/v4`
+    şeklinde kullanabilirsiniz.
+
+
+    # Authentication
+
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+
+
+    ## access_token almak:
+
+
+    access_token almanız için iki farklı seçenek bulunmaktadır.
+
+
+    Kullanım şeklinize bağlı olarak iki yöntemden birini tercih etmelisiniz.
+
+
+    ### 1. grant_type=authorization_code
+
+
+    1. Kullanıcıyı şu adrese yönlendirin:
+
+      ```
+      BASE_URL/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code
+      ```
+
+    2. Oturum açmışsa ve uygulamayı kabul ederse, kullanıcı sizin tanımladığınız
+    REDIRECT_URL'e şu şekilde gelmesi gerekiyor:
+      `REDIRECT_URL?code=xxxxxxx`
+
+    3. Burada size gelen "code" parametresi ile access token almalısınız.
+
+
+    ```bash
+
+    curl -F grant_type=authorization_code \
+
+    -F client_id=CLIENT_ID \
+
+    -F client_secret=CLIENT_SECRET \
+
+    -F code=RETURNED_CODE \
+
+    -F redirect_uri=REDIRECT_URL \
+
+    -X POST BASE_URL/oauth/token
+
+    ```
+
+
+    ### 2. grant_type=password
+
+
+    access_token almanız için aşağıdaki url'de size özel alanları doldurarak
+    POST ile ulaşmanız gerekmektedir.
+
+
+    ```bash
+
+    BASE_URL/oauth/token?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&username=YOUREMAIL&password=YOURPASSWORD&grant_type=password&redirect_uri=urn:ietf:wg:oauth:2.0:oob
+
+    ```
+
+
+    ### Sonuç
+
+
+    Her iki yöntem sonucunda size aşağıdaki gibi bir sonuç dönecektir:
+
+
+    ```json
+
+    {
+     "access_token": "XYZXYZXYZ",
+     "token_type": "bearer",
+     "expires_in": 7200,
+     "refresh_token": "ABCABCABC"
+    }
+
+    ```
+
+
+    Burada dönen `access_token`'ı API endpointlerine ulaşmak için gönderdiğiniz
+    sorgulara `Authorization` header'ı olarak `Bearer XYZXYZXYZ` şeklinde
+    eklemeniz gerekiyor.
+
+
+
+    #### Refresh token ile yeni access_token alma örneği:
+
+
+    `access_token` geçerliliğini 2 saat içerisinde yitirdiği için
+    `refresh_token` ile yeni token alabilirsiniz.
+
+
+    ```bash
+
+    curl -F grant_type=refresh_token \
+
+    -F client_id=CLIENT_ID \
+
+    -F client_secret=CLIENT_SECRET \
+
+    -F refresh_token=REFRESH_TOKEN \
+
+    -X POST BASE_URL/oauth/token
+
+    ```
 host: api.heroku-staging.parasut.com
 schemes:
   - http
@@ -31,8 +157,8 @@ paths:
       tags:
         - Accounts
       operationId: listAccounts
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: sort
           type: string
@@ -110,8 +236,8 @@ paths:
       tags:
         - Accounts
       operationId: createAccount
-      summary: Hesap oluşturur.
-      description: İstediğiniz hesabın bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: account_form
           schema:
@@ -204,10 +330,8 @@ paths:
       tags:
         - Accounts
       operationId: showAccount
-      summary: Hesap bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz hesabın id'sini göndererek gerekli
-        bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       responses:
         '200':
           description: Hesap
@@ -265,7 +389,7 @@ paths:
       tags:
         - Accounts
       operationId: updateAccount
-      summary: Hesabı düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: account_form
@@ -347,7 +471,7 @@ paths:
       tags:
         - Accounts
       operationId: deleteAccount
-      summary: Hesabı siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -408,8 +532,8 @@ paths:
       tags:
         - Contacts
       operationId: listContacts
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: sort
           type: string
@@ -522,10 +646,8 @@ paths:
       tags:
         - Contacts
       operationId: createContact
-      summary: Müşteri/Tedarikçi oluşturur.
-      description: >-
-        İstediğiniz müşterinin/tedarikçinin bilgilerini göndererek
-        oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: include
           type: string
@@ -671,10 +793,8 @@ paths:
       tags:
         - Contacts
       operationId: showContact
-      summary: Müşteri/Tedarikçi bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz müşterinin/tedarikçinin id'sini
-        göndererek gerekli bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       parameters:
         - name: include
           type: string
@@ -768,7 +888,7 @@ paths:
       tags:
         - Contacts
       operationId: updateContact
-      summary: Müşteriyi/tedarikçiyi düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: include
@@ -903,7 +1023,7 @@ paths:
       tags:
         - Contacts
       operationId: deleteContact
-      summary: Müşteriyi/tedarikçiyi siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -964,8 +1084,8 @@ paths:
       tags:
         - Employees
       operationId: listEmployees
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: sort
           type: string
@@ -1078,8 +1198,8 @@ paths:
       tags:
         - Employees
       operationId: createEmployee
-      summary: Çalışan oluşturur.
-      description: İstediğiniz çalışanın bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: include
           type: string
@@ -1225,10 +1345,8 @@ paths:
       tags:
         - Employees
       operationId: showEmployee
-      summary: Çalışan bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz çalışanın id'sini göndererek gerekli
-        bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       parameters:
         - name: include
           type: string
@@ -1322,7 +1440,7 @@ paths:
       tags:
         - Employees
       operationId: updateEmployee
-      summary: Çalışanı düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: include
@@ -1457,7 +1575,7 @@ paths:
       tags:
         - Employees
       operationId: deleteEmployee
-      summary: Çalışanı siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -1518,8 +1636,8 @@ paths:
       tags:
         - ItemCategories
       operationId: listItemCategories
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: 'filter[name]'
           type: string
@@ -1636,8 +1754,8 @@ paths:
       tags:
         - ItemCategories
       operationId: createItemCategory
-      summary: Kategori oluşturur.
-      description: İstediğiniz kategorinin bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: include
           type: string
@@ -1858,7 +1976,7 @@ paths:
       tags:
         - ItemCategories
       operationId: updateItemCategory
-      summary: Kategoriyi düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: include
@@ -1973,7 +2091,7 @@ paths:
       tags:
         - ItemCategories
       operationId: deleteItemCategory
-      summary: Kategoriyi siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -2024,18 +2142,19 @@ paths:
                 items:
                   $ref: '#/definitions/Error'
   '/{company_id}/products':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
     get:
       tags:
         - Products
       operationId: listProducts
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
-        - name: company_id
-          type: integer
-          description: Firma ID
-          in: path
-          required: true
         - name: sort
           type: string
           in: query
@@ -2145,14 +2264,9 @@ paths:
       tags:
         - Products
       operationId: createProduct
-      summary: Ürün oluşturur.
-      description: İstediğiniz ürünün bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
-        - name: company_id
-          type: integer
-          description: Firma ID
-          in: path
-          required: true
         - name: include
           type: string
           in: query
@@ -2295,10 +2409,8 @@ paths:
       tags:
         - Products
       operationId: showProduct
-      summary: Ürün bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz ürünün id'sini göndererek gerekli
-        bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       parameters:
         - name: include
           type: string
@@ -2390,7 +2502,7 @@ paths:
       tags:
         - Products
       operationId: updateProduct
-      summary: Ürünü düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: include
@@ -2523,7 +2635,7 @@ paths:
       tags:
         - Products
       operationId: deleteProduct
-      summary: Ürünü siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -2584,8 +2696,8 @@ paths:
       tags:
         - SalesInvoices
       operationId: listSalesInvoices
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: sort
           type: string
@@ -2705,8 +2817,8 @@ paths:
       tags:
         - SalesInvoices
       operationId: createSalesInvoice
-      summary: Fatura oluşturur.
-      description: İstediğiniz faturanın bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: include
           type: string
@@ -2911,10 +3023,8 @@ paths:
       tags:
         - SalesInvoices
       operationId: showSalesInvoice
-      summary: Fatura bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz faturanın id'sini göndererek gerekli
-        bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       parameters:
         - name: include
           type: string
@@ -3015,7 +3125,7 @@ paths:
       tags:
         - SalesInvoices
       operationId: updateSalesInvoice
-      summary: Faturayı düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: include
@@ -3209,7 +3319,7 @@ paths:
       tags:
         - SalesInvoices
       operationId: deleteSalesInvoice
-      summary: Faturayı siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -3270,8 +3380,8 @@ paths:
       tags:
         - Tags
       operationId: listTags
-      summary: Liste.
-      description: Liste.
+      summary: Index
+      description: ''
       parameters:
         - name: sort
           type: string
@@ -3349,8 +3459,8 @@ paths:
       tags:
         - Tags
       operationId: createTag
-      summary: Etiket oluşturur.
-      description: İstediğiniz etiket bilgilerini göndererek oluşturabilirsiniz.
+      summary: Create
+      description: ''
       parameters:
         - name: tag_form
           schema:
@@ -3443,10 +3553,8 @@ paths:
       tags:
         - Tags
       operationId: showTag
-      summary: Etiket bilgisini gösterir.
-      description: >-
-        Ayrıntısını görmek istediğiniz etiket id'sini göndererek gerekli
-        bilgilere ulaşabilirsiniz.
+      summary: Show
+      description: ''
       responses:
         '200':
           description: Etiket
@@ -3504,7 +3612,7 @@ paths:
       tags:
         - Tags
       operationId: updateTag
-      summary: Etiketyi düzenler.
+      summary: Edit
       description: ''
       parameters:
         - name: tag_form
@@ -3586,7 +3694,7 @@ paths:
       tags:
         - Tags
       operationId: deleteTag
-      summary: Etiketyi siler.
+      summary: Delete
       description: ''
       responses:
         '204':
@@ -3674,6 +3782,7 @@ definitions:
       balance:
         type: number
         readOnly: true
+        title: Bakiye
       last_adjustment_date:
         type: string
         format: date-time
@@ -3687,6 +3796,7 @@ definitions:
       name:
         type: string
         readOnly: false
+        title: Hesap ismi
       currency:
         type: string
         enum:
@@ -3695,6 +3805,7 @@ definitions:
           - EUR
           - GBP
         readOnly: false
+        title: Döviz cinsi
       account_type:
         type: string
         enum:
@@ -3702,18 +3813,23 @@ definitions:
           - bank
           - sys
         readOnly: false
+        title: Hesap tipi
       bank_name:
         type: string
         readOnly: false
+        title: Banka ismi
       bank_branch:
         type: string
         readOnly: false
+        title: Banka şubesi
       bank_account_no:
         type: string
         readOnly: false
+        title: Banka hesap no
       iban:
         type: string
         readOnly: false
+        title: IBAN
       archived:
         type: boolean
         readOnly: false
@@ -3753,25 +3869,32 @@ definitions:
       balance:
         type: number
         readOnly: true
+        title: Bakiye
       trl_balance:
         type: number
         readOnly: true
+        title: TL Bakiye
       usd_balance:
         type: number
         readOnly: true
+        title: USD Bakiye
       eur_balance:
         type: number
         readOnly: true
+        title: EUR Bakiye
       gbp_balance:
         type: number
         readOnly: true
+        title: GBP Bakiye
       email:
         type: string
         format: email
         readOnly: false
+        title: E-posta
       name:
         type: string
         readOnly: false
+        title: Müşteri/tedarikçi ismi
       short_name:
         type: string
         readOnly: false
@@ -3781,18 +3904,23 @@ definitions:
           - person
           - company
         readOnly: false
+        title: Tip
       tax_office:
         type: string
         readOnly: false
+        title: Vergi dairesi
       tax_number:
         type: string
         readOnly: false
+        title: Vergi numarası/TC kimlik no
       district:
         type: string
         readOnly: false
+        title: İlçe
       city:
         type: string
         readOnly: false
+        title: İl
       address:
         type: string
         readOnly: false
@@ -3903,6 +4031,7 @@ definitions:
       balance:
         type: number
         readOnly: true
+        title: Bakiye
       trl_balance:
         type: number
         readOnly: true
@@ -3918,6 +4047,7 @@ definitions:
       name:
         type: string
         readOnly: false
+        title: Çalışan adı soyadı
       email:
         type: string
         format: email
@@ -4014,15 +4144,19 @@ definitions:
       name:
         type: string
         readOnly: false
+        title: Kategori adı
       bg_color:
         type: string
         readOnly: false
+        title: Renk
       text_color:
         type: string
         readOnly: false
+        title: Yazı rengi
       category_type:
         type: string
         readOnly: false
+        title: Kategori tipi
       parent_id:
         type: integer
         readOnly: false
@@ -4111,69 +4245,69 @@ definitions:
       stock_count:
         type: number
         readOnly: true
-        description: Stok Miktarı
+        title: Stok Miktarı
       code:
         type: string
         readOnly: false
-        description: Ürün/hizmet kodu
+        title: Ürün/hizmet kodu
       name:
         type: string
         readOnly: false
-        description: Ürün/hizmet ismi
+        title: Ürün/hizmet ismi
       vat_rate:
         type: number
         readOnly: false
-        description: KDV oranı
+        title: KDV oranı
       sales_excise_duty:
         type: number
         readOnly: false
-        description: Satış ÖTV
+        title: Satış ÖTV
       sales_excise_duty_type:
         type: string
         readOnly: false
-        description: Satış ÖTV tipi
+        title: Satış ÖTV tipi
       purchase_excise_duty:
         type: number
         readOnly: false
-        description: Alış ÖTV
+        title: Alış ÖTV
       purchase_excise_duty_type:
         type: string
         readOnly: false
-        description: Alış ÖTV tipi
+        title: Alış ÖTV tipi
       unit:
         type: string
         readOnly: false
-        description: Birim
+        title: Birim
       communications_tax_rate:
         type: number
         readOnly: false
-        description: ÖİV oranı
+        title: ÖİV oranı
       archived:
         type: boolean
         readOnly: false
       list_price:
         type: number
         readOnly: false
-        description: Satış fiyatı
+        title: Satış fiyatı
       currency:
         type: string
         readOnly: false
-        description: Satış döviz
+        title: Satış döviz
       buying_price:
         type: number
         readOnly: false
-        description: Alış fiyatı
+        title: Alış fiyatı
       buying_currency:
         type: string
         readOnly: false
-        description: Alış döviz
+        title: Alış döviz
       inventory_tracking:
         type: boolean
         readOnly: false
       initial_stock_count:
         type: number
         readOnly: false
-        description: Başlangıç Stok Miktarı
+        title: Başlangıç Stok Miktarı
     required:
       - name
   Product:
@@ -4227,15 +4361,19 @@ definitions:
       invoice_no:
         type: string
         readOnly: true
+        title: Fatura no
       net_total:
         type: number
         readOnly: true
+        title: Genel Toplam
       gross_total:
         type: number
         readOnly: true
+        title: Ara toplam
       withholding:
         type: number
         readOnly: true
+        title: Stopaj
       total_excise_duty:
         type: number
         readOnly: true
@@ -4245,44 +4383,56 @@ definitions:
       total_vat:
         type: number
         readOnly: true
+        title: Toplam KDV
       vat_withholding:
         type: number
         readOnly: true
+        title: Tevkifat
       total_discount:
         type: number
         readOnly: true
+        title: Toplam indirim
       total_invoice_discount:
         type: number
         readOnly: true
       before_taxes_total:
         type: number
         readOnly: true
+        title: Vergiler Hariç Toplam
       remaining:
         type: number
         readOnly: true
+        title: Ödenmemiş tutar
       payment_status:
         type: string
         readOnly: true
+        title: Tahsilat durumu
       item_type:
         type: string
         readOnly: false
+        title: Fatura türü
       description:
         type: string
         readOnly: false
+        title: Fatura açıklaması
       issue_date:
         type: string
         format: date
         readOnly: false
+        title: Düzenleme tarihi
       due_date:
         type: string
         format: date
         readOnly: false
+        title: Son tahsilat tarihi
       invoice_series:
         type: string
         readOnly: false
+        title: Fatura seri
       invoice_id:
         type: integer
         readOnly: false
+        title: Fatura sıra
       archived:
         type: boolean
         readOnly: false
@@ -4294,15 +4444,19 @@ definitions:
           - EUR
           - GBP
         readOnly: false
+        title: Döviz tipi
       exchange_rate:
         type: number
         readOnly: false
+        title: Döviz kuru
       withholding_rate:
         type: number
         readOnly: false
+        title: Stopaj oranı
       vat_withholding_rate:
         type: number
         readOnly: false
+        title: Tevkifat oranı
       invoice_discount_type:
         type: string
         readOnly: false
@@ -4312,18 +4466,23 @@ definitions:
       billing_address:
         type: string
         readOnly: false
+        title: Gönderim adresi
       billing_phone:
         type: string
         readOnly: false
+        title: Gönderim adresi telefonu
       billing_fax:
         type: string
         readOnly: false
+        title: Gönderim adresi faksı
       tax_office:
         type: string
         readOnly: false
+        title: Müşteri vergi dairesi
       tax_number:
         type: string
         readOnly: false
+        title: Müşteri vergi numarası
       city:
         type: string
         readOnly: false
@@ -4512,33 +4671,41 @@ definitions:
       net_total:
         type: number
         readOnly: true
+        title: Ürün/hizmet net tutarı
       quantity:
         type: number
         readOnly: false
+        title: Miktar
       unit_price:
         type: number
         readOnly: false
+        title: Birim fiyatı
       vat_rate:
         type: number
         readOnly: false
+        title: KDV oranı
       discount_type:
         type: string
         readOnly: false
+        title: İndirim türü
       discount_value:
         type: number
         readOnly: false
       excise_duty_type:
         type: string
         readOnly: false
+        title: ÖTV tipi
       excise_duty_value:
         type: number
         readOnly: false
       communications_tax_rate:
         type: number
         readOnly: false
+        title: ÖİV oranı
       description:
         type: string
         readOnly: false
+        title: Açıklama
     required:
       - quantity
       - unit_price
@@ -4594,6 +4761,7 @@ definitions:
       name:
         type: string
         readOnly: false
+        title: Etiket adı
     required:
       - name
   Tag:
