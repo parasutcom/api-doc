@@ -18,12 +18,11 @@ info:
     ## BASE_URL
 
 
-    API hizmetimizin `BASE_URL`i `http://api.heroku-staging.parasut.com`
-    şeklindedir.
+    API hizmetimizin `BASE_URL`i `https://api.parasut.com` şeklindedir.
 
 
-    V4 endpointlerine ulaşmak için `http://api.heroku-staging.parasut.com/v4`
-    şeklinde kullanabilirsiniz.
+    V4 endpointlerine ulaşmak için `https://api.parasut.com/v4` şeklinde
+    kullanabilirsiniz.
 
 
     # Authentication
@@ -132,9 +131,9 @@ info:
     -X POST BASE_URL/oauth/token
 
     ```
-host: api.heroku-staging.parasut.com
+host: api.parasut.com
 schemes:
-  - http
+  - https
 basePath: /v4
 consumes:
   - application/vnd.api+json
@@ -3793,8 +3792,8 @@ security:
 securityDefinitions:
   parasut_auth:
     type: oauth2
-    tokenUrl: 'http://api.heroku-staging.parasut.com/oauth/token'
-    authorizationUrl: 'http://api.heroku-staging.parasut.com/oauth/authorize'
+    tokenUrl: 'https://api.parasut.com/oauth/token'
+    authorizationUrl: 'https://api.parasut.com/oauth/authorize'
     flow: accessCode
 definitions:
   Error:
