@@ -3,7 +3,7 @@ info:
   version: 4.0.0
   title: Paraşüt - API V4
   x-logo:
-    url: 'https://parasutcom.github.io/api-doc/logo.png'
+    url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
     # Introduction
@@ -166,15 +166,18 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, balance, balance_in_trl'
+          title: Sortable parameters
+          description: 'Available: id, balance, balance_in_trl'
           default: '-id'
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
@@ -541,22 +544,26 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, balance, name, email'
+          title: Sortable parameters
+          description: 'Available: id, balance, name, email'
           default: '-balance'
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          description: 'category, contact_portal, contact_people'
+          title: Related records that you want to receive with response
+          description: 'Available: category, contact_portal, contact_people'
       responses:
         '200':
           description: Müşteriler/Tedarikçiler
@@ -655,7 +662,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, contact_portal, contact_people'
+          title: Related records that you want to receive with response
+          description: 'Available: category, contact_portal, contact_people'
         - name: contact_form
           schema:
             type: object
@@ -802,7 +810,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, contact_portal, contact_people'
+          title: Related records that you want to receive with response
+          description: 'Available: category, contact_portal, contact_people'
       responses:
         '200':
           description: Müşteri/Tedarikçi
@@ -897,7 +906,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, contact_portal, contact_people'
+          title: Related records that you want to receive with response
+          description: 'Available: category, contact_portal, contact_people'
         - name: contact_form
           schema:
             type: object
@@ -1093,22 +1103,26 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, balance, name, email'
+          title: Sortable parameters
+          description: 'Available: id, balance, name, email'
           default: '-balance'
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          description: 'category, managed_by_user, managed_by_user_role'
+          title: Related records that you want to receive with response
+          description: 'Available: category, managed_by_user, managed_by_user_role'
       responses:
         '200':
           description: Çalışanlar
@@ -1207,7 +1221,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, managed_by_user, managed_by_user_role'
+          title: Related records that you want to receive with response
+          description: 'Available: category, managed_by_user, managed_by_user_role'
         - name: employee_form
           schema:
             type: object
@@ -1354,7 +1369,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, managed_by_user, managed_by_user_role'
+          title: Related records that you want to receive with response
+          description: 'Available: category, managed_by_user, managed_by_user_role'
       responses:
         '200':
           description: Çalışan
@@ -1449,7 +1465,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'category, managed_by_user, managed_by_user_role'
+          title: Related records that you want to receive with response
+          description: 'Available: category, managed_by_user, managed_by_user_role'
         - name: employee_form
           schema:
             type: object
@@ -1651,22 +1668,26 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, name, category_type'
+          title: Sortable parameters
+          description: 'Available: id, name, category_type'
           default: id
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          description: 'parent_category, subcategories'
+          title: Related records that you want to receive with response
+          description: 'Available: parent_category, subcategories'
       responses:
         '200':
           description: Kategoriler
@@ -1763,7 +1784,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'parent_category, subcategories'
+          title: Related records that you want to receive with response
+          description: 'Available: parent_category, subcategories'
         - name: item_category_form
           schema:
             type: object
@@ -1892,7 +1914,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'parent_category, subcategories'
+          title: Related records that you want to receive with response
+          description: 'Available: parent_category, subcategories'
       responses:
         '200':
           description: Kategori
@@ -1985,7 +2008,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: 'parent_category, subcategories'
+          title: Related records that you want to receive with response
+          description: 'Available: parent_category, subcategories'
         - name: item_category_form
           schema:
             type: object
@@ -2161,22 +2185,26 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, name'
+          title: Sortable parameters
+          description: 'Available: id, name'
           default: '-id'
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          description: category
+          title: Related records that you want to receive with response
+          description: 'Available: category'
       responses:
         '200':
           description: Ürünler
@@ -2273,7 +2301,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: category
+          title: Related records that you want to receive with response
+          description: 'Available: category'
         - name: product_form
           schema:
             type: object
@@ -2418,7 +2447,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: category
+          title: Related records that you want to receive with response
+          description: 'Available: category'
       responses:
         '200':
           description: Ürün
@@ -2511,7 +2541,8 @@ paths:
         - name: include
           type: string
           in: query
-          description: category
+          title: Related records that you want to receive with response
+          description: 'Available: category'
         - name: product_form
           schema:
             type: object
@@ -2705,24 +2736,28 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, issue_date, due_date, remaining, remaining_in_trl'
+          title: Sortable parameters
+          description: 'Available: id, issue_date, due_date, remaining, remaining_in_trl'
           default: '-remaining_in_trl'
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
+          title: Related records that you want to receive with response
           description: >-
-            category, contact, details, payments, tags, refunds, sharings,
-            recurrence_plan
+            Available: category, contact, details, payments, tags, refunds,
+            sharings, recurrence_plan
       responses:
         '200':
           description: Satış faturaları
@@ -2826,9 +2861,10 @@ paths:
         - name: include
           type: string
           in: query
+          title: Related records that you want to receive with response
           description: >-
-            category, contact, details, payments, tags, refunds, sharings,
-            recurrence_plan
+            Available: category, contact, details, payments, tags, refunds,
+            sharings, recurrence_plan
         - name: sales_invoice_form
           schema:
             type: object
@@ -3032,9 +3068,10 @@ paths:
         - name: include
           type: string
           in: query
+          title: Related records that you want to receive with response
           description: >-
-            category, contact, details, payments, tags, refunds, sharings,
-            recurrence_plan
+            Available: category, contact, details, payments, tags, refunds,
+            sharings, recurrence_plan
       responses:
         '200':
           description: Fatura
@@ -3134,9 +3171,10 @@ paths:
         - name: include
           type: string
           in: query
+          title: Related records that you want to receive with response
           description: >-
-            category, contact, details, payments, tags, refunds, sharings,
-            recurrence_plan
+            Available: category, contact, details, payments, tags, refunds,
+            sharings, recurrence_plan
         - name: sales_invoice_form
           schema:
             type: object
@@ -3389,15 +3427,18 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'id, name'
+          title: Sortable parameters
+          description: 'Available: id, name'
           default: id
         - name: 'page[number]'
           type: integer
           in: query
+          title: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
+          title: Page Size
           default: 15
           minimum: 1
           maximum: 25
