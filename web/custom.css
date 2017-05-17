@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.security-definition h2.sharable-header {
+  display: none;
+}
+
+.security-definition h3 {
+  display: none;
+}
+
+.security-definition .security-scopes-details {
+  display: none;
+}
+
+.download-openapi {
+  display: none;
+}

@@ -9,19 +9,20 @@ info:
     # Introduction
 
 
-    ## State
+    - API V4 test aşamasındadır.
 
 
-    API V4 test aşamasındadır.
+    - API geliştirmesinde çoğunlukla JSONAPI (http://jsonapi.org/)
+    standartlarına uymaya çalıştık.
 
 
-    ## BASE_URL
+    - Dökümantasyon oluşturulmasında ise OpenAPI-Swagger 2.0 kullandık.
 
 
-    API hizmetimizin `BASE_URL`i `https://api.parasut.com` şeklindedir.
+    - API hizmetimizin `BASE_URL`i `https://api.parasut.com` şeklindedir.
 
 
-    V4 endpointlerine ulaşmak için `https://api.parasut.com/v4` şeklinde
+    - V4 endpointlerine ulaşmak için `https://api.parasut.com/v4` şeklinde
     kullanabilirsiniz.
 
 
