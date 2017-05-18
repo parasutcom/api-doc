@@ -9,6 +9,9 @@ info:
     # Introduction
 
 
+    ## Bilgiler
+
+
     - API V4 test aşamasındadır.
 
 
@@ -26,10 +29,34 @@ info:
     kullanabilirsiniz.
 
 
+    ## URL Yapısı
+
+
+    API metodlarına erişmek için baz URL olarak
+    `https://api.parasut.com/v4/firma_no` adresi kullanılır. Bu yapıda
+    kullanılan `firma_no` parametresi bilgisine erişilmek istenin firmanın
+    Paraşüt veritabanındaki kayıt numarasıdır. Örneğin 115 numaralı firmanın
+    müşteri/tedarikçi listesine erişmek için
+    `https://api.parasut.com/v4/115/contacts` adresi kullanılır.
+
+
     # Authentication
 
 
     <!-- ReDoc-Inject: <security-definitions> -->
+
+
+    Paraşüt API kimlik doğrulama için oAuth2 kullanmaktadır. Bu protokolü
+    destekleyen istemci kütüphanelerini kullanarak oturum açabilir ve API'yi
+    kullanabilirsiniz.
+
+
+    Kimlik doğrulama işleminin başarılı olması durumunda bir adet kimlik jetonu
+    (authentication token) ve bir adet de yenileme jetonu (refresh token)
+    gönderilecektir. Kimlik jetonu 2 saat süreyle geçerlidir ve her istekte http
+    başlık bilgilerinin içerisinde gönderilmelidir. Bu sürenin sonunda kimlik
+    jetonu geçerliliğini yitirecektir ve yenileme jetonu kullanılarak tekrar
+    üretilmesi gerekmektedir.
 
 
     ## access_token almak:
@@ -766,6 +793,25 @@ paths:
                                 description: Type of the resource
                                 enum:
                                   - item_categories
+                      contact_people:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - contact_people
+                                attributes:
+                                  $ref: '#/definitions/ContactPersonAttributes'
           in: body
           required: true
       responses:
@@ -1010,6 +1056,25 @@ paths:
                                 description: Type of the resource
                                 enum:
                                   - item_categories
+                      contact_people:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - contact_people
+                                attributes:
+                                  $ref: '#/definitions/ContactPersonAttributes'
           in: body
           required: true
       responses:
@@ -4857,6 +4922,50 @@ definitions:
                       description: Type of the resource
                       enum:
                         - contact_people
+    required:
+      - attributes
+  ContactPersonAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        readOnly: false
+      email:
+        type: string
+        format: email
+        readOnly: false
+      phone:
+        type: string
+        readOnly: false
+      notes:
+        type: string
+        readOnly: false
+  ContactPerson:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - contact_people
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ContactPersonAttributes'
+      relationships: {}
     required:
       - attributes
   EArchiveAttributes:
