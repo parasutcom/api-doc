@@ -18,3 +18,15 @@ body {
 .download-openapi {
   display: none;
 }
+
+.operation-content params-list json-schema {
+  overflow-x: scroll;
+}
+
+.params-wrap .param .param-info .param-type {
+  color: rgba(38, 50, 56, 0.7);
+}
+
+.params-wrap .param .param-info .param-description {
+  color: rgba(38, 50, 56, 0.4);
+}
