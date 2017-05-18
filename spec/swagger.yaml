@@ -143,11 +143,15 @@ produces:
 tags:
   - name: Accounts
   - name: Contacts
+  - name: EArchives
+  - name: EInvoiceInboxes
+  - name: EInvoices
   - name: Employees
   - name: ItemCategories
   - name: Products
   - name: SalesInvoices
   - name: Tags
+  - name: TrackableJobs
 paths:
   '/{company_id}/accounts':
     parameters:
@@ -1041,6 +1045,661 @@ paths:
       responses:
         '204':
           description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_archives':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - EArchives
+      operationId: createEArchive
+      summary: Create
+      description: ''
+      parameters:
+        - name: e_archive_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - e_archives
+                  attributes:
+                    $ref: '#/definitions/EArchiveFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      sales_invoice:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_invoices
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Trackable Job
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/TrackableJob'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_archives/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: EArchive ID
+        in: path
+        required: true
+    get:
+      tags:
+        - EArchives
+      operationId: showEArchive
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: sales_invoice'
+      responses:
+        '200':
+          description: e-Arşiv
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EArchive'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_archives/{id}/pdf':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: EArchive ID
+        in: path
+        required: true
+    get:
+      tags:
+        - EArchives
+      operationId: showEArchivePdf
+      summary: Show PDF
+      description: ''
+      responses:
+        '200':
+          description: e-Arşiv PDF
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDocumentPdf'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_invoice_inboxes':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - EInvoiceInboxes
+      operationId: listEInvoiceInboxes
+      summary: Index
+      description: ''
+      parameters:
+        - name: 'filter[vkn]'
+          type: string
+          in: query
+        - name: 'page[number]'
+          type: integer
+          in: query
+          title: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          title: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+      responses:
+        '200':
+          description: E-fatura posta kutuları
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/EInvoiceInbox'
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_invoices':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - EInvoices
+      operationId: createEInvoice
+      summary: Create
+      description: ''
+      parameters:
+        - name: e_invoice_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - e_invoices
+                  attributes:
+                    $ref: '#/definitions/EInvoiceFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      sales_invoice:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_invoices
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Trackable Job
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/TrackableJob'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_invoices/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: EInvoice ID
+        in: path
+        required: true
+    get:
+      tags:
+        - EInvoices
+      operationId: showEInvoice
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: invoice'
+      responses:
+        '200':
+          description: e-Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                        - purchase_bills
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_invoices/{id}/pdf':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: EInvoice ID
+        in: path
+        required: true
+    get:
+      tags:
+        - EInvoices
+      operationId: showEInvoicePdf
+      summary: Show PDF
+      description: ''
+      responses:
+        '200':
+          description: e-Fatura PDF
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDocumentPdf'
         '400':
           description: Bad Request
           schema:
@@ -3788,6 +4447,77 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/trackable_jobs/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Trackable Job ID
+        in: path
+        required: true
+    get:
+      tags:
+        - TrackableJobs
+      operationId: showTrackableJob
+      summary: Show
+      description: ''
+      responses:
+        '200':
+          description: Trackable Job
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/TrackableJob'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
 security:
   - parasut_auth: []
 securityDefinitions:
@@ -4067,6 +4797,521 @@ definitions:
                       description: Type of the resource
                       enum:
                         - contact_people
+    required:
+      - attributes
+  EArchiveAttributes:
+    type: object
+    properties:
+      uuid:
+        type: string
+        readOnly: true
+      vkn:
+        type: string
+        readOnly: true
+      invoice_number:
+        type: string
+        readOnly: true
+      note:
+        type: string
+        readOnly: true
+      is_printed:
+        type: boolean
+        readOnly: true
+      status:
+        type: string
+        enum:
+          - bounced
+          - sent
+          - printed
+          - legalized
+        readOnly: true
+      printed_at:
+        type: string
+        format: date-time
+        readOnly: true
+      cancellable_until:
+        type: string
+        format: date-time
+        readOnly: true
+      is_signed:
+        type: boolean
+        readOnly: true
+  EArchive:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_archives
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EArchiveAttributes'
+      relationships:
+        type: object
+        properties:
+          sales_invoice:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+    required:
+      - attributes
+  EArchiveFormAttributes:
+    type: object
+    properties:
+      vat_withholding_code:
+        type: string
+        title: Tevkifat oranına ait vergi kodu.
+        description: >-
+          Bu dosyada ilgili kodları bulabilirsiniz:
+          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
+        readOnly: false
+      vat_exemption_reason_code:
+        type: string
+        title: KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu.
+        description: >-
+          Bu dosyada ilgili kodları bulabilirsiniz:
+          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
+        readOnly: false
+      vat_exemption_reason:
+        type: string
+        title: >-
+          Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
+          açıklaması.
+        readOnly: false
+      note:
+        type: string
+        title: Fatura notu
+        readOnly: false
+      internet_sale:
+        type: object
+        title: İnternet satışı bilgileri
+        properties:
+          url:
+            type: string
+            title: İnternet adresi
+          payment_type:
+            type: string
+            title: Ödeme tipi.
+            enum:
+              - KREDIKARTI/BANKAKARTI
+              - EFT/HAVALE
+              - KAPIDAODEME
+              - ODEMEARACISI
+          payment_platform:
+            type: string
+            title: Ödeme platformu
+            description: 'iyzico, payu gibi'
+          payment_date:
+            type: string
+            title: Ödeme tarihi
+        readOnly: false
+      shipment:
+        type: object
+        title: Gönderi bilgileri
+        properties:
+          title:
+            type: string
+            title: Kargo şirketi adı
+            description: Eğer kargo ile gönderiliyorsa
+          vkn:
+            type: string
+            title: Kargo şirketi vergi kimlik numarası
+            description: Eğer kargo ile gönderiliyorsa
+          name:
+            type: string
+            title: Kurye adı
+            description: Eğer kurye ile gönderiliyorsa
+          tckn:
+            type: string
+            title: Kurye TC kimlik numarası
+            description: Eğer kurye ile gönderiliyorsa
+          date:
+            type: string
+            title: Gönderi tarihi
+        readOnly: false
+      excise_duty_codes:
+        type: array
+        title: ÖTV kodları
+        description: >-
+          Özel tüketim vergisi faturadaki her kalem için ayrıdır. ÖTV uygulanan
+          her ürün için ÖTV kodu göndermeniz gerekmektedir.
+        items:
+          type: object
+          properties:
+            product:
+              type: integer
+              title: Ürün ID
+            sales_excise_duty_code:
+              type: string
+              title: ÖTV kodu
+              enum:
+                - 57
+                - 59
+                - 60
+                - 61
+                - 62
+                - 63
+                - 9077
+        readOnly: false
+  EArchiveForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_archives
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EArchiveFormAttributes'
+      relationships: {}
+    required:
+      - attributes
+  EDocumentPdfAttributes:
+    type: object
+    properties:
+      url:
+        type: string
+        readOnly: true
+      expires_at:
+        type: string
+        format: date-time
+        readOnly: true
+  EDocumentPdf:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_document_pdfs
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EDocumentPdfAttributes'
+      relationships: {}
+    required:
+      - attributes
+  EInvoiceAttributes:
+    type: object
+    properties:
+      external_id:
+        type: string
+        readOnly: true
+      uuid:
+        type: string
+        readOnly: true
+      env_uuid:
+        type: string
+        readOnly: true
+      from_address:
+        type: string
+        readOnly: true
+      from_vkn:
+        type: string
+        readOnly: true
+      to_address:
+        type: string
+        readOnly: true
+      to_vkn:
+        type: string
+        readOnly: true
+      direction:
+        type: string
+        enum:
+          - inbound
+          - outbound
+        readOnly: true
+      note:
+        type: string
+        readOnly: true
+      response_type:
+        type: string
+        enum:
+          - accepted
+          - rejected
+          - refunded
+        readOnly: true
+      contact_name:
+        type: string
+        readOnly: true
+      scenario:
+        type: string
+        enum:
+          - basic
+          - commercial
+        readOnly: true
+      status:
+        type: string
+        enum:
+          - waiting
+          - failed
+          - successful
+        readOnly: true
+      issue_date:
+        type: string
+        format: date
+        readOnly: true
+      is_expired:
+        type: boolean
+        readOnly: true
+      is_answerable:
+        type: boolean
+        readOnly: true
+      net_total:
+        type: number
+        readOnly: true
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: true
+      item_type:
+        type: string
+        enum:
+          - refund
+          - invoice
+        readOnly: true
+  EInvoice:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_invoices
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EInvoiceAttributes'
+      relationships:
+        type: object
+        properties:
+          invoice:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                      - purchase_bills
+    required:
+      - attributes
+  EInvoiceFormAttributes:
+    type: object
+    properties:
+      vat_withholding_code:
+        type: string
+        title: Tevkifat oranına ait vergi kodu.
+        description: >-
+          Bu dosyada ilgili kodları bulabilirsiniz:
+          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
+        readOnly: false
+      vat_exemption_reason_code:
+        type: string
+        title: KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu.
+        description: >-
+          Bu dosyada ilgili kodları bulabilirsiniz:
+          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
+        readOnly: false
+      vat_exemption_reason:
+        type: string
+        title: >-
+          Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
+          açıklaması.
+        readOnly: false
+      note:
+        type: string
+        title: Fatura notu
+        readOnly: false
+      scenario:
+        type: string
+        title: Gönderim senaryosu
+        enum:
+          - basic
+          - commercial
+        readOnly: false
+      to:
+        type: string
+        title: Alıcının e-Fatura gelen kutusu
+        description: '[e-Fatura Gelen Kutusu Öğrenme](/#operation/listEInvoiceInboxes)'
+        readOnly: false
+      excise_duty_codes:
+        type: array
+        title: ÖTV kodları
+        description: >-
+          Özel tüketim vergisi faturadaki her kalem için ayrıdır. ÖTV uygulanan
+          her ürün için ÖTV kodu göndermeniz gerekmektedir.
+        items:
+          type: object
+          properties:
+            product:
+              type: integer
+              title: Ürün ID
+            sales_excise_duty_code:
+              type: string
+              title: ÖTV kodu
+              enum:
+                - 57
+                - 59
+                - 60
+                - 61
+                - 62
+                - 63
+                - 9077
+        readOnly: false
+  EInvoiceForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_invoices
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EInvoiceFormAttributes'
+      relationships: {}
+    required:
+      - attributes
+  EInvoiceInboxAttributes:
+    type: object
+    properties:
+      vkn:
+        type: string
+        readOnly: true
+      e_invoice_address:
+        type: string
+        readOnly: true
+      name:
+        type: string
+        readOnly: true
+      inbox_type:
+        type: string
+        readOnly: true
+      address_registered_at:
+        type: date-time
+        readOnly: true
+      registered_at:
+        type: date-time
+        readOnly: true
+  EInvoiceInbox:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_invoice_inboxes
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EInvoiceInboxAttributes'
+      relationships: {}
     required:
       - attributes
   EmployeeAttributes:
@@ -4833,6 +6078,45 @@ definitions:
             readOnly: true
       attributes:
         $ref: '#/definitions/TagAttributes'
+      relationships: {}
+    required:
+      - attributes
+  TrackableJobAttributes:
+    type: object
+    properties:
+      status:
+        type: string
+        readOnly: true
+      errors:
+        type: array
+        items:
+          type: string
+        readOnly: true
+  TrackableJob:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - trackable_jobs
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/TrackableJobAttributes'
       relationships: {}
     required:
       - attributes
