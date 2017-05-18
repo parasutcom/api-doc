@@ -132,6 +132,66 @@ info:
     -X POST BASE_URL/oauth/token
 
     ```
+
+
+    # Basic Actions
+
+
+    ## Satış Faturası Oluşturma
+
+
+    Satış faturası oluşturmak için adım adım şunlara ihtiyacınız vardır:
+
+
+    - Müşteri ID'si
+      - [Müşteri listesi](/#operation/listContacts)
+      - [Müşteri oluşturma](/#operation/createContact)
+    - Ürün ID'leri
+      - [Müşteri listesi](/#operation/listContacts)
+      - [Müşteri oluşturma](/#operation/createContact)
+
+    Yukarıdaki bilgilere sahip olduktan sonra [Satış Faturası
+    Oluşturma](/#operation/createSalesInvoice) adımına geçebilirsiniz.
+
+
+
+    `relationships`:
+      - `details` kısmına fatura kalemlerini `array` şeklinde girmelisiniz.
+      - `contact` kısmına müşteri bilgisini girmelisiniz.
+
+    ## Satış Faturası Resmileştirme
+
+
+    Satış faturasını
+    [oluşturduktan](/#section/Basic-Actions/Satis-Faturasi-Olusturma) sonra
+    e-Arşiv ve e-Fatura şeklinde resmileştirmek için adım adım şunları
+    yapmalısınız:
+
+
+    1. Müşterinizin e-Fatura kullanıcısı olup olmadığını öğrenmelisiniz.
+      - Müşterinizin [e-Fatura posta kutusu](/#operation/listEInvoiceInboxes) var ise e-Fatura kullanıcısıdır.
+    2. Eğer müşteriniz e-Fatura kullanıcısı ise:
+      - [e-Fatura oluşturmalısınız](/#operation/createEInvoice)
+    3. Eğer müşteriniz e-Fatura kullanıcısı değil ise:
+      - [e-Arşiv oluşturmalısınız](/#operation/createEArchive)
+    4. Her iki istek sonucunda da size takip edebileceğiniz bir işlem id'si
+    dönecektir.
+      Bu işlemi [sorgulama](/#tag/TrackableJobs) adresi ile belirli aralıklarla sorgulayıp, durum kontrolü yapmalısınız.
+
+      - "data->attributes->status": "running" -> işlemin hala sürdüğü anlamına gelir.
+      - "data->attributes->status": "error" -> bir hata olduğu anlamına gelir.
+        - "data->attributes->errors": ile hataları görebilirsiniz.
+      - "data->attributes->status": "done" -> başarılı bir işlem anlamına gelir.
+
+    5. Başarılı resmileştirilen e-Arşiv
+
+      E-arşiv faturalarınızı başarılı bir şekilde resmileştirdikten sonra müşterinize PDF ile ulaştırabilirsiniz.
+      [e-Arşiv PDF](/#operation/showEArchivePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz. Unutmayın, bu URL 1 saat geçerli bir adrestir. Bu yüzden bu linki direk olarak müşterinizle <u>paylaşmamalısınız</u>. İndirip müşterinize ayrıca göndermelisiniz.
+
+    5. Başarılı resmileştirilen e-Fatura
+
+      Eğer e-fatura olarak başarılı bir şekilde resmileştirdiyseniz, yapmanız gereken başka bir işlem yoktur. Karşı taraf da e-fatura kullancısı olduğu için faturanız karşı tarafa otomatik olarak iletilecektir.
+      Eğer isterseniz yine de [e-Fatura PDF](/#operation/showEInvoicePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz.
 host: api.parasut.com
 schemes:
   - https
@@ -6086,6 +6146,10 @@ definitions:
     properties:
       status:
         type: string
+        enum:
+          - running
+          - done
+          - error
         readOnly: true
       errors:
         type: array
