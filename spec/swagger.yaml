@@ -193,6 +193,13 @@ info:
       - `details` kısmına fatura kalemlerini `array` şeklinde girmelisiniz.
       - `contact` kısmına müşteri bilgisini girmelisiniz.
 
+    ## Satış Faturasına Tahsilat Ekleme
+
+
+    [Tahsilat ekleme](/#operation/paySalesInvoice) kısmındaki ilgili alanları
+    doldurarak satış faturasına tahsilat ekleyebilirsiniz.
+
+
     ## Satış Faturası Resmileştirme
 
 
@@ -262,6 +269,24 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+        - name: 'filter[currency]'
+          type: string
+          in: query
+        - name: 'filter[bank_name]'
+          type: string
+          in: query
+        - name: 'filter[bank_branch]'
+          type: string
+          in: query
+        - name: 'filter[account_type]'
+          type: string
+          in: query
+        - name: 'filter[iban]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
@@ -731,6 +756,12 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+        - name: 'filter[email]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
@@ -1983,6 +2014,12 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+        - name: 'filter[email]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
@@ -3065,6 +3102,12 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+        - name: 'filter[code]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
@@ -6370,6 +6413,8 @@ definitions:
         title: Tevkifat oranı
       invoice_discount_type:
         type: string
+        enum:
+          - amount percentage
         readOnly: false
       invoice_discount:
         type: number
@@ -6597,6 +6642,8 @@ definitions:
         title: KDV oranı
       discount_type:
         type: string
+        enum:
+          - amount percentage
         readOnly: false
         title: İndirim türü
       discount_value:
@@ -6604,6 +6651,8 @@ definitions:
         readOnly: false
       excise_duty_type:
         type: string
+        enum:
+          - amount percentage
         readOnly: false
         title: ÖTV tipi
       excise_duty_value:
@@ -6621,6 +6670,7 @@ definitions:
       - quantity
       - unit_price
       - vat_rate
+      - discount_type
   SalesInvoiceDetail:
     type: object
     properties:
