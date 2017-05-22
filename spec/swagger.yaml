@@ -164,6 +164,13 @@ info:
     # Basic Actions
 
 
+    ## Kullanıcı Bilgisi
+
+
+    access_token aldığınız kullanıcının genel bilgilerini görmek için
+    [/me](/#operation/showMe) adresini kullanabilirsiniz.
+
+
     ## Satış Faturası Oluşturma
 
 
@@ -229,6 +236,7 @@ produces:
   - application/vnd.api+json
 tags:
   - name: Accounts
+  - name: ApiHome
   - name: Contacts
   - name: EArchives
   - name: EInvoiceInboxes
@@ -573,6 +581,97 @@ paths:
       responses:
         '204':
           description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  /me:
+    get:
+      tags:
+        - ApiHome
+      operationId: showMe
+      summary: Show
+      description: ''
+      responses:
+        '200':
+          description: Me
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Me'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - user_roles
+                        - companies
+                        - profiles
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
         '400':
           description: Bad Request
           schema:
@@ -4194,6 +4293,139 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/payments':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    post:
+      tags:
+        - SalesInvoices
+      operationId: paySalesInvoice
+      summary: Pay
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: payable'
+        - name: payment_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - payments
+                  attributes:
+                    $ref: '#/definitions/PaymentFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Ödeme
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Payment'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                        - purchase_bills
+                        - taxes
+                        - bank_fees
+                        - salaries
+                        - checks
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/tags':
     parameters:
       - name: company_id
@@ -5098,6 +5330,7 @@ definitions:
             description: 'iyzico, payu gibi'
           payment_date:
             type: string
+            format: date
             title: Ödeme tarihi
         readOnly: false
       shipment:
@@ -5680,6 +5913,226 @@ definitions:
                       description: Type of the resource
                       enum:
                         - item_categories
+    required:
+      - attributes
+  MeAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        readOnly: true
+      email:
+        type: string
+        format: email
+        readOnly: true
+      is_confirmed:
+        type: boolean
+        readOnly: true
+  Me:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - users
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/MeAttributes'
+      relationships:
+        type: object
+        properties:
+          user_roles:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - user_roles
+          companies:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - companies
+          profile:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - profiles
+    required:
+      - attributes
+  PaymentAttributes:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        title: Ödeme tarihi
+        readOnly: false
+      amount:
+        type: number
+        title: Ödeme tutarı
+        readOnly: false
+      currency:
+        type: number
+        title: Para birimi
+        readOnly: false
+      notes:
+        type: string
+        readOnly: false
+  Payment:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - payments
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PaymentAttributes'
+      relationships:
+        type: object
+        properties:
+          payable:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                      - purchase_bills
+                      - taxes
+                      - bank_fees
+                      - salaries
+                      - checks
+    required:
+      - attributes
+  PaymentFormAttributes:
+    type: object
+    properties:
+      description:
+        type: string
+        title: Ödeme Açıklaması
+        readOnly: false
+      account_id:
+        type: integer
+        title: Kasa veya Banka
+        description: >-
+          Bu parametre ayrıca ödemenin hangi döviz kuru ile yapılacağını
+          belirler.
+        readOnly: false
+      date:
+        type: string
+        format: date
+        title: Ödeme tarihi
+        readOnly: false
+      amount:
+        type: number
+        title: Ödeme tutarı
+        readOnly: false
+      exchange_rate:
+        type: number
+        title: Döviz kuru
+        description: >-
+          Eğer ödeme, faturadan farklı bir döviz kuru ile yapılacaksa; döviz
+          kurunun TL karşılığını belirtin. Eğer ödeme, fatura ile aynı döviz
+          kuru ile yapılacaksa; "1.0" değerini girin veya boş bırakın.
+        readOnly: false
+  PaymentForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - payments
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PaymentFormAttributes'
+      relationships: {}
     required:
       - attributes
   ProductAttributes:
