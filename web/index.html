@@ -12,6 +12,11 @@
     So override default browser styles
     -->
     <link rel="stylesheet" href="/custom.css">
+    <script type="text/javascript">
+      if (location.hostname != 'localhost' && location.protocol != 'https:'){
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+      }
+    </script>
   </head>
   <body>
     <redoc spec-url="./swagger.json">
