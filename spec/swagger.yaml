@@ -609,6 +609,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -1172,6 +1174,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -1908,6 +1912,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -3128,6 +3134,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -3651,6 +3659,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -4208,6 +4218,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -4713,6 +4725,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -5567,6 +5581,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -6078,6 +6094,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -6550,6 +6568,8 @@ paths:
       responses:
         '204':
           description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
