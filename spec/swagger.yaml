@@ -252,6 +252,7 @@ tags:
   - name: Employees
   - name: ItemCategories
   - name: Products
+  - name: Salaries
   - name: SalesInvoices
   - name: Tags
   - name: Taxes
@@ -4252,6 +4253,644 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/salaries':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Salaries
+      operationId: createSalary
+      summary: Create
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: employee, category, tags'
+        - name: salary_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - salaries
+                  attributes:
+                    $ref: '#/definitions/SalaryAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Maaş
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Salary'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - employees
+                        - item_categories
+                        - tags
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/salaries/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Maaş ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Salaries
+      operationId: showSalary
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: employee, category, tags'
+      responses:
+        '200':
+          description: Maaş
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Salary'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - employees
+                        - item_categories
+                        - tags
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Salaries
+      operationId: updateSalary
+      summary: Edit
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: employee, category, tags'
+        - name: salary_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - salaries
+                  attributes:
+                    $ref: '#/definitions/SalaryAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Maaş
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Salary'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - employees
+                        - item_categories
+                        - tags
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Salaries
+      operationId: deleteSalary
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/salaries/{id}/payments':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Maaş ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Salaries
+      operationId: paySalary
+      summary: Pay
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: payable'
+        - name: payment_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - payments
+                  attributes:
+                    $ref: '#/definitions/PaymentFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Ödeme
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Payment'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                        - purchase_bills
+                        - taxes
+                        - bank_fees
+                        - salaries
+                        - checks
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/sales_invoices':
     parameters:
       - name: company_id
@@ -7657,6 +8296,129 @@ definitions:
                     description: Type of the resource
                     enum:
                       - item_categories
+    required:
+      - attributes
+  SalaryAttributes:
+    type: object
+    properties:
+      total_paid:
+        type: number
+        readOnly: true
+      archived:
+        type: boolean
+        readOnly: true
+      remaining:
+        type: number
+        readOnly: true
+      remaining_in_trl:
+        type: number
+        readOnly: true
+      description:
+        type: string
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+      exchange_rate:
+        type: number
+        readOnly: false
+      net_total:
+        type: number
+        readOnly: false
+    required:
+      - description
+      - currency
+      - issue_date
+      - due_date
+      - net_total
+  Salary:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - salaries
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/SalaryAttributes'
+      relationships:
+        type: object
+        properties:
+          employee:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - employees
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          tags:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - tags
     required:
       - attributes
   SalesInvoiceAttributes:
