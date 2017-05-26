@@ -1374,6 +1374,15 @@ paths:
         - name: 'filter[email]'
           type: string
           in: query
+        - name: 'filter[tax_number]'
+          type: string
+          in: query
+        - name: 'filter[tax_office]'
+          type: string
+          in: query
+        - name: 'filter[city]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
