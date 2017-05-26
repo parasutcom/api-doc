@@ -40,6 +40,16 @@ info:
     `https://api.parasut.com/v4/115/contacts` adresi kullanılır.
 
 
+    ## SSS
+
+
+    - İstekleri gönderirken "Content-Type" header'ı olarak "application/json"
+    veya "application/vnd.api+json" göndermelisiniz.
+
+    - Yeni bir kayıt oluştururken ilgili kayıtın "ID" belirtilen parametresini
+    boş göndermeli veya hiç göndermemelisiniz.
+
+
     # Authentication
 
 
@@ -159,6 +169,12 @@ info:
     -X POST BASE_URL/oauth/token
 
     ```
+
+
+    `refresh_token` ile yeni bir `access_token` alırken aynı zamanda yeni bir
+    `refresh_token` da almaktasınız. Dolayısıyla, daha sonra yeniden bir
+    `access_token` alma isteğinizde size dönen yeni `refresh_token`ı
+    kullanmalısınız.
 
 
     # Basic Actions
