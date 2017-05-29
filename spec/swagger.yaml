@@ -7760,10 +7760,12 @@ definitions:
         type: string
         readOnly: true
       address_registered_at:
-        type: date-time
+        type: string
+        format: date-time
         readOnly: true
       registered_at:
-        type: date-time
+        type: string
+        format: date-time
         readOnly: true
   EInvoiceInbox:
     type: object
