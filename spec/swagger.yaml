@@ -268,6 +268,7 @@ tags:
   - name: Employees
   - name: ItemCategories
   - name: Products
+  - name: PurchaseBills
   - name: Salaries
   - name: SalesInvoices
   - name: Tags
@@ -4245,6 +4246,1039 @@ paths:
           description: No content
           schema:
             type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills#basic':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - PurchaseBills
+      operationId: createPurchaseBillBasic
+      summary: Create Basic PurchaseBill
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan
+        - name: purchase_bill_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - purchase_bills
+                  attributes:
+                    $ref: '#/definitions/PurchaseBillBasicFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      supplier:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      paid_by_employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills#detailed':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - PurchaseBills
+      operationId: createPurchaseBillDetailed
+      summary: Create Detailed PurchaseBill
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan
+        - name: purchase_bill_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - purchase_bills
+                  attributes:
+                    $ref: '#/definitions/PurchaseBillDetailedFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - purchase_bill_details
+                                attributes:
+                                  $ref: '#/definitions/PurchaseBillDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      supplier:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      paid_by_employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    get:
+      tags:
+        - PurchaseBills
+      operationId: showPurchaseBill
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - PurchaseBills
+      operationId: deletePurchaseBill
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}#basic':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    put:
+      tags:
+        - PurchaseBills
+      operationId: updatePurchaseBillBasic
+      summary: Edit Basic PurchaseBill
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan
+        - name: purchase_bill_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - purchase_bills
+                  attributes:
+                    $ref: '#/definitions/PurchaseBillBasicFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      supplier:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      paid_by_employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}#detailed':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    put:
+      tags:
+        - PurchaseBills
+      operationId: updatePurchaseBillDetailed
+      summary: Edit Detailed PurchaseBill
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan
+        - name: purchase_bill_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - purchase_bills
+                  attributes:
+                    $ref: '#/definitions/PurchaseBillDetailedFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - purchase_bill_details
+                                attributes:
+                                  $ref: '#/definitions/PurchaseBillDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      supplier:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      paid_by_employee:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - employees
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
         '400':
           description: Bad Request
           schema:
@@ -8343,6 +9377,486 @@ definitions:
                     description: Type of the resource
                     enum:
                       - item_categories
+    required:
+      - attributes
+  PurchaseBillAttributes:
+    type: object
+    properties:
+      archived:
+        type: boolean
+        readOnly: true
+      total_paid:
+        type: number
+        readOnly: true
+      gross_total:
+        type: number
+        readOnly: true
+      total_excise_duty:
+        type: number
+        readOnly: true
+      total_communications_tax:
+        type: number
+        readOnly: true
+      total_vat:
+        type: number
+        readOnly: false
+      total_discount:
+        type: number
+        readOnly: true
+      total_invoice_discount:
+        type: number
+        readOnly: true
+      remaining:
+        type: number
+        readOnly: true
+      remaining_in_trl:
+        type: number
+        readOnly: true
+      payment_status:
+        type: string
+        enum:
+          - paid
+          - overdue
+          - unpaid
+          - partially_paid
+        readOnly: true
+      is_detailed:
+        type: boolean
+        readOnly: true
+      sharings_count:
+        type: integer
+        readOnly: true
+      e_invoices_count:
+        type: integer
+        readOnly: true
+      remaining_reimbursement:
+        type: number
+        readOnly: true
+      remaining_reimbursement_in_trl:
+        type: number
+        readOnly: true
+      item_type:
+        type: string
+        enum:
+          - purchase_bill
+          - cancelled
+          - recurring_purchase_bill
+          - refund
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+      invoice_no:
+        type: string
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      exchange_rate:
+        type: number
+        readOnly: false
+      net_total:
+        type: number
+        readOnly: false
+      withholding_rate:
+        type: number
+        readOnly: false
+      vat_withholding_rate:
+        type: number
+        readOnly: false
+      invoice_discount_type:
+        type: string
+        enum:
+          - amount percentage
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+    required:
+      - item_type
+      - issue_date
+      - due_date
+      - currency
+      - net_total
+      - total_vat
+  PurchaseBill:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - purchase_bills
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PurchaseBillAttributes'
+      relationships:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - item_categories
+          spender:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - employees
+          supplier:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+          payments:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - payments
+          tags:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - tags
+          recurrence_plan:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - recurrence_plans
+    required:
+      - attributes
+  PurchaseBillBasicFormAttributes:
+    type: object
+    properties:
+      item_type:
+        type: string
+        enum:
+          - purchase_bill
+          - refund
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+      invoice_no:
+        type: string
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      exchange_rate:
+        type: number
+        readOnly: false
+      net_total:
+        type: number
+        readOnly: false
+      total_vat:
+        type: number
+        readOnly: false
+    required:
+      - item_type
+      - issue_date
+      - due_date
+      - currency
+      - net_total
+      - total_vat
+  PurchaseBillBasicForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - purchase_bills
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PurchaseBillBasicFormAttributes'
+      relationships: {}
+    required:
+      - attributes
+  PurchaseBillDetailAttributes:
+    type: object
+    properties:
+      net_total:
+        type: number
+        readOnly: true
+      quantity:
+        type: number
+        readOnly: false
+      unit_price:
+        type: number
+        readOnly: false
+      vat_rate:
+        type: number
+        readOnly: false
+      discount_type:
+        type: string
+        enum:
+          - amount percentage
+        readOnly: false
+      discount_value:
+        type: number
+        readOnly: false
+      excise_duty_type:
+        type: string
+        enum:
+          - amount percentage
+        readOnly: false
+      excise_duty_value:
+        type: number
+        readOnly: false
+      communications_tax_rate:
+        type: number
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+    required:
+      - quantity
+      - unit_price
+      - vat_rate
+      - discount_type
+  PurchaseBillDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - purchase_bill_details
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PurchaseBillDetailAttributes'
+      relationships:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+    required:
+      - attributes
+  PurchaseBillDetailedFormAttributes:
+    type: object
+    properties:
+      item_type:
+        type: string
+        enum:
+          - purchase_bill
+          - refund
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+      invoice_no:
+        type: string
+        readOnly: false
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      exchange_rate:
+        type: number
+        readOnly: false
+      withholding_rate:
+        type: number
+        readOnly: false
+      vat_withholding_rate:
+        type: number
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+      invoice_discount_type:
+        type: string
+        enum:
+          - amount percentage
+        readOnly: false
+    required:
+      - item_type
+      - issue_date
+      - due_date
+      - currency
+  PurchaseBillDetailedForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - purchase_bills
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/PurchaseBillDetailedFormAttributes'
+      relationships: {}
     required:
       - attributes
   SalaryAttributes:
