@@ -1995,6 +1995,266 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/contacts/{id}/contact_debit_transactions':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Müşteri/Tedarikçi ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Contacts
+      operationId: collectFromContact
+      summary: Tahsilat
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Related records that you want to receive with response - *Available:
+            debit_account,credit_account,payments*
+        - name: transaction_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - transactions
+                  attributes:
+                    $ref: '#/definitions/ContactCollectionFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: İşlem
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/contacts/{id}/contact_credit_transactions':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Müşteri/Tedarikçi ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Contacts
+      operationId: payToContact
+      summary: Ödeme
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Related records that you want to receive with response - *Available:
+            debit_account,credit_account,payments*
+        - name: transaction_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - transactions
+                  attributes:
+                    $ref: '#/definitions/ContactPaymentFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: İşlem
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/e_archives':
     parameters:
       - name: company_id
@@ -9571,6 +9831,86 @@ definitions:
                         - contact_people
     required:
       - attributes
+  ContactCollectionFormAttributes:
+    allOf:
+      - $ref: '#/definitions/PaymentFormAttributes'
+      - type: object
+        properties:
+          payable_ids:
+            description: >-
+              Satış Faturası ID'leri - *Tahsilatınızın öncelikli olarak
+              eşleşmesini istediğiniz faturalar*
+            type: array
+            items:
+              type: integer
+  ContactCollectionForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - transactions
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ContactCollectionFormAttributes'
+      relationships: {}
+    required:
+      - attributes
+  ContactPaymentFormAttributes:
+    allOf:
+      - $ref: '#/definitions/PaymentFormAttributes'
+      - type: object
+        properties:
+          payable_ids:
+            description: >-
+              Alış Faturası ID'leri - *Ödemenizin öncelikli olarak eşleşmesini
+              istediğiniz faturalar*
+            type: array
+            items:
+              type: integer
+  ContactPaymentForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - transactions
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/ContactPaymentFormAttributes'
+      relationships: {}
+    required:
+      - attributes
   ContactPersonAttributes:
     type: object
     properties:
@@ -11871,5 +12211,120 @@ definitions:
       attributes:
         $ref: '#/definitions/TrackableJobAttributes'
       relationships: {}
+    required:
+      - attributes
+  TransactionAttributes:
+    type: object
+    properties:
+      transaction_type:
+        type: string
+        readOnly: false
+      humanized_type_name:
+        type: string
+        readOnly: false
+      date:
+        type: string
+        format: date
+        readOnly: false
+      amount_in_trl:
+        type: number
+        readOnly: false
+      debit_amount:
+        type: number
+        readOnly: false
+      debit_currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+      credit_amount:
+        type: number
+        readOnly: false
+      credit_currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - transactions
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/TransactionAttributes'
+      relationships:
+        type: object
+        properties:
+          debit_account:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - accounts
+          credit_account:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - accounts
+          payments:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - payments
     required:
       - attributes
