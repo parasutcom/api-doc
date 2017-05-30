@@ -240,12 +240,16 @@ info:
         - "data->attributes->errors": ile hataları görebilirsiniz.
       - "data->attributes->status": "done" -> başarılı bir işlem anlamına gelir.
 
-    5. Başarılı resmileştirilen e-Arşiv
+    5. Resmileştirme detayları
+
+      Faturanız ile birlikte, faturanızın e-Arşiv/e-Fatura detaylarını görmek için [fatura bilgilerine](/#operation/showSalesInvoice) ulaşırken `?include=active_e_document` parametresini eklemeniz yeterlidir.
+
+    6. Başarılı resmileştirilen e-Arşiv
 
       E-arşiv faturalarınızı başarılı bir şekilde resmileştirdikten sonra müşterinize PDF ile ulaştırabilirsiniz.
       [e-Arşiv PDF](/#operation/showEArchivePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz. Unutmayın, bu URL 1 saat geçerli bir adrestir. Bu yüzden bu linki direk olarak müşterinizle <u>paylaşmamalısınız</u>. İndirip müşterinize ayrıca göndermelisiniz.
 
-    5. Başarılı resmileştirilen e-Fatura
+    7. Başarılı resmileştirilen e-Fatura
 
       Eğer e-fatura olarak başarılı bir şekilde resmileştirdiyseniz, yapmanız gereken başka bir işlem yoktur. Karşı taraf da e-fatura kullancısı olduğu için faturanız karşı tarafa otomatik olarak iletilecektir.
       Eğer isterseniz yine de [e-Fatura PDF](/#operation/showEInvoicePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz.
@@ -4311,7 +4315,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, spender, supplier, payments, tags,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: purchase_bill_form
           schema:
             type: object
@@ -4426,6 +4430,7 @@ paths:
                         - payments
                         - tags
                         - recurrence_plans
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -4506,7 +4511,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, spender, supplier, payments, tags,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: purchase_bill_form
           schema:
             type: object
@@ -4658,6 +4663,7 @@ paths:
                         - payments
                         - tags
                         - recurrence_plans
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -4743,7 +4749,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, spender, supplier, payments, tags,
-            recurrence_plan
+            recurrence_plan, active_e_document
       responses:
         '200':
           description: Fatura
@@ -4771,6 +4777,7 @@ paths:
                         - payments
                         - tags
                         - recurrence_plans
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -4912,7 +4919,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, spender, supplier, payments, tags,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: purchase_bill_form
           schema:
             type: object
@@ -5027,6 +5034,7 @@ paths:
                         - payments
                         - tags
                         - recurrence_plans
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -5112,7 +5120,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, spender, supplier, payments, tags,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: purchase_bill_form
           schema:
             type: object
@@ -5264,6 +5272,140 @@ paths:
                         - payments
                         - tags
                         - recurrence_plans
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}/payments':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    post:
+      tags:
+        - PurchaseBills
+      operationId: payPurchaseBill
+      summary: Pay
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: 'Available: payable'
+        - name: payment_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - payments
+                  attributes:
+                    $ref: '#/definitions/PaymentFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Ödeme
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Payment'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                        - purchase_bills
+                        - taxes
+                        - bank_fees
+                        - salaries
+                        - checks
                     meta:
                       type: object
                       properties:
@@ -6002,7 +6144,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan
+            recurrence_plan, active_e_document
       responses:
         '200':
           description: Satış faturaları
@@ -6033,6 +6175,8 @@ paths:
                         - tags
                         - sharings
                         - recurrence_plans
+                        - e_archives
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -6108,7 +6252,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: sales_invoice_form
           schema:
             type: object
@@ -6246,6 +6390,8 @@ paths:
                         - tags
                         - sharings
                         - recurrence_plans
+                        - e_archives
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -6331,7 +6477,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan
+            recurrence_plan, active_e_document
       responses:
         '200':
           description: Fatura
@@ -6360,6 +6506,8 @@ paths:
                         - tags
                         - sharings
                         - recurrence_plans
+                        - e_archives
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -6433,7 +6581,7 @@ paths:
           title: Related records that you want to receive with response
           description: >-
             Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan
+            recurrence_plan, active_e_document
         - name: sales_invoice_form
           schema:
             type: object
@@ -6571,6 +6719,8 @@ paths:
                         - tags
                         - sharings
                         - recurrence_plans
+                        - e_archives
+                        - e_invoices
                     meta:
                       type: object
                       properties:
@@ -9614,6 +9764,21 @@ definitions:
                     description: Type of the resource
                     enum:
                       - recurrence_plans
+          active_e_document:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - e_invoices
     required:
       - attributes
   PurchaseBillBasicFormAttributes:
@@ -10290,6 +10455,22 @@ definitions:
                     description: Type of the resource
                     enum:
                       - recurrence_plans
+          active_e_document:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - e_archives
+                      - e_invoices
     required:
       - attributes
   SalesInvoiceDetailAttributes:
