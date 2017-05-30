@@ -314,18 +314,17 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, balance, balance_in_trl'
+          description: 'Sortable parameters - *Available: id,balance,balance_in_trl*'
           default: '-id'
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
@@ -785,8 +784,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -949,8 +949,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
       responses:
         '200':
           description: Banka Gideri
@@ -1044,8 +1045,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -1264,8 +1266,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: payable'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            payable*
         - name: payment_form
           schema:
             type: object
@@ -1407,26 +1410,26 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, balance, name, email'
+          description: 'Sortable parameters - *Available: id,balance,name,email*'
           default: '-balance'
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, contact_portal, contact_people'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,contact_portal,contact_people*
       responses:
         '200':
           description: Müşteriler/Tedarikçiler
@@ -1525,8 +1528,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, contact_portal, contact_people'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,contact_portal,contact_people*
         - name: contact_form
           schema:
             type: object
@@ -1692,8 +1696,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, contact_portal, contact_people'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,contact_portal,contact_people*
       responses:
         '200':
           description: Müşteri/Tedarikçi
@@ -1788,8 +1793,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, contact_portal, contact_people'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,contact_portal,contact_people*
         - name: contact_form
           schema:
             type: object
@@ -2118,8 +2124,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: sales_invoice'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            sales_invoice*
       responses:
         '200':
           description: e-Arşiv
@@ -2293,12 +2300,12 @@ paths:
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
@@ -2488,8 +2495,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: invoice'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            invoice*
       responses:
         '200':
           description: e-Fatura
@@ -2667,26 +2675,26 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, balance, name, email'
+          description: 'Sortable parameters - *Available: id,balance,name,email*'
           default: '-balance'
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, managed_by_user, managed_by_user_role'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,managed_by_user,managed_by_user_role*
       responses:
         '200':
           description: Çalışanlar
@@ -2785,8 +2793,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, managed_by_user, managed_by_user_role'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,managed_by_user,managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -2933,8 +2942,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, managed_by_user, managed_by_user_role'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,managed_by_user,managed_by_user_role*
       responses:
         '200':
           description: Çalışan
@@ -3029,8 +3039,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, managed_by_user, managed_by_user_role'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,managed_by_user,managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -3234,26 +3245,26 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, name, category_type'
+          description: 'Sortable parameters - *Available: id,name,category_type*'
           default: id
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: parent_category, subcategories'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            parent_category,subcategories*
       responses:
         '200':
           description: Kategoriler
@@ -3350,8 +3361,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: parent_category, subcategories'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            parent_category,subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -3480,8 +3492,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: parent_category, subcategories'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            parent_category,subcategories*
       responses:
         '200':
           description: Kategori
@@ -3574,8 +3587,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: parent_category, subcategories'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            parent_category,subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -3759,26 +3773,26 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, name'
+          description: 'Sortable parameters - *Available: id,name*'
           default: '-id'
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category*
       responses:
         '200':
           description: Ürünler
@@ -3875,8 +3889,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category*
         - name: product_form
           schema:
             type: object
@@ -4021,8 +4036,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category*
       responses:
         '200':
           description: Ürün
@@ -4115,8 +4131,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category*
         - name: product_form
           schema:
             type: object
@@ -4312,10 +4329,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -4508,10 +4524,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -4746,10 +4761,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -4916,10 +4930,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5117,10 +5130,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5355,8 +5367,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: payable'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            payable*
         - name: payment_form
           schema:
             type: object
@@ -5488,10 +5501,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5602,10 +5614,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5716,10 +5727,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5830,10 +5840,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, spender, supplier, payments, tags,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5939,8 +5948,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: employee, category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            employee,category,tags*
         - name: salary_form
           schema:
             type: object
@@ -6119,8 +6129,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: employee, category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            employee,category,tags*
       responses:
         '200':
           description: Maaş
@@ -6215,8 +6226,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: employee, category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            employee,category,tags*
         - name: salary_form
           schema:
             type: object
@@ -6451,8 +6463,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: payable'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            payable*
         - name: payment_form
           schema:
             type: object
@@ -6579,28 +6592,28 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, issue_date, due_date, remaining, remaining_in_trl'
+          description: >-
+            Sortable parameters - *Available:
+            id,issue_date,due_date,remaining,remaining_in_trl*
           default: '-remaining_in_trl'
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Satış faturaları
@@ -6705,10 +6718,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -6930,10 +6942,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7034,10 +7045,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7315,8 +7325,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: payable'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            payable*
         - name: payment_form
           schema:
             type: object
@@ -7448,10 +7459,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7564,10 +7574,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7680,10 +7689,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7796,10 +7804,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7912,10 +7919,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
           description: >-
-            Available: category, contact, details, payments, tags, sharings,
-            recurrence_plan, active_e_document
+            Related records that you want to receive with response - *Available:
+            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8132,18 +8138,17 @@ paths:
         - name: sort
           type: string
           in: query
-          title: Sortable parameters
-          description: 'Available: id, name'
+          description: 'Sortable parameters - *Available: id,name*'
           default: id
         - name: 'page[number]'
           type: integer
           in: query
-          title: Page Number
+          description: Page Number
           default: 1
         - name: 'page[size]'
           type: integer
           in: query
-          title: Page Size
+          description: Page Size
           default: 15
           minimum: 1
           maximum: 25
@@ -8512,8 +8517,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
         - name: tax_form
           schema:
             type: object
@@ -8676,8 +8682,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
       responses:
         '200':
           description: Vergi
@@ -8771,8 +8778,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: category, tags'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            category,tags*
         - name: tax_form
           schema:
             type: object
@@ -8991,8 +8999,9 @@ paths:
         - name: include
           type: string
           in: query
-          title: Related records that you want to receive with response
-          description: 'Available: payable'
+          description: >-
+            Related records that you want to receive with response - *Available:
+            payable*
         - name: payment_form
           schema:
             type: object
@@ -9211,7 +9220,7 @@ definitions:
       balance:
         type: number
         readOnly: true
-        title: Bakiye
+        description: Bakiye
       last_adjustment_date:
         type: string
         format: date-time
@@ -9225,7 +9234,7 @@ definitions:
       name:
         type: string
         readOnly: false
-        title: Hesap ismi
+        description: Hesap ismi
       currency:
         type: string
         enum:
@@ -9234,7 +9243,7 @@ definitions:
           - EUR
           - GBP
         readOnly: false
-        title: Döviz cinsi
+        description: Döviz cinsi
       account_type:
         type: string
         enum:
@@ -9242,23 +9251,23 @@ definitions:
           - bank
           - sys
         readOnly: false
-        title: Hesap tipi
+        description: Hesap tipi
       bank_name:
         type: string
         readOnly: false
-        title: Banka ismi
+        description: Banka ismi
       bank_branch:
         type: string
         readOnly: false
-        title: Banka şubesi
+        description: Banka şubesi
       bank_account_no:
         type: string
         readOnly: false
-        title: Banka hesap no
+        description: Banka hesap no
       iban:
         type: string
         readOnly: false
-        title: IBAN
+        description: IBAN
       archived:
         type: boolean
         readOnly: false
@@ -9406,32 +9415,32 @@ definitions:
       balance:
         type: number
         readOnly: true
-        title: Bakiye
+        description: Bakiye
       trl_balance:
         type: number
         readOnly: true
-        title: TL Bakiye
+        description: TL Bakiye
       usd_balance:
         type: number
         readOnly: true
-        title: USD Bakiye
+        description: USD Bakiye
       eur_balance:
         type: number
         readOnly: true
-        title: EUR Bakiye
+        description: EUR Bakiye
       gbp_balance:
         type: number
         readOnly: true
-        title: GBP Bakiye
+        description: GBP Bakiye
       email:
         type: string
         format: email
         readOnly: false
-        title: E-posta
+        description: E-posta
       name:
         type: string
         readOnly: false
-        title: Müşteri/tedarikçi ismi
+        description: Müşteri/tedarikçi ismi
       short_name:
         type: string
         readOnly: false
@@ -9441,23 +9450,23 @@ definitions:
           - person
           - company
         readOnly: false
-        title: Tip
+        description: Tip
       tax_office:
         type: string
         readOnly: false
-        title: Vergi dairesi
+        description: Vergi dairesi
       tax_number:
         type: string
         readOnly: false
-        title: Vergi numarası/TC kimlik no
+        description: Vergi numarası/TC kimlik no
       district:
         type: string
         readOnly: false
-        title: İlçe
+        description: İlçe
       city:
         type: string
         readOnly: false
-        title: İl
+        description: İl
       address:
         type: string
         readOnly: false
@@ -9689,104 +9698,51 @@ definitions:
     required:
       - attributes
   EArchiveFormAttributes:
-    type: object
-    properties:
-      vat_withholding_code:
-        type: string
-        title: Tevkifat oranına ait vergi kodu.
-        description: >-
-          Bu dosyada ilgili kodları bulabilirsiniz:
-          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
-        readOnly: false
-      vat_exemption_reason_code:
-        type: string
-        title: KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu.
-        description: >-
-          Bu dosyada ilgili kodları bulabilirsiniz:
-          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
-        readOnly: false
-      vat_exemption_reason:
-        type: string
-        title: >-
-          Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
-          açıklaması.
-        readOnly: false
-      note:
-        type: string
-        title: Fatura notu
-        readOnly: false
-      internet_sale:
-        type: object
-        title: İnternet satışı bilgileri
+    allOf:
+      - $ref: '#/definitions/EDocumentCommonFormAttributes'
+      - type: object
         properties:
-          url:
-            type: string
-            title: İnternet adresi
-          payment_type:
-            type: string
-            title: Ödeme tipi.
-            enum:
-              - KREDIKARTI/BANKAKARTI
-              - EFT/HAVALE
-              - KAPIDAODEME
-              - ODEMEARACISI
-          payment_platform:
-            type: string
-            title: Ödeme platformu
-            description: 'iyzico, payu gibi'
-          payment_date:
-            type: string
-            format: date
-            title: Ödeme tarihi
-        readOnly: false
-      shipment:
-        type: object
-        title: Gönderi bilgileri
-        properties:
-          title:
-            type: string
-            title: Kargo şirketi adı
-            description: Eğer kargo ile gönderiliyorsa
-          vkn:
-            type: string
-            title: Kargo şirketi vergi kimlik numarası
-            description: Eğer kargo ile gönderiliyorsa
-          name:
-            type: string
-            title: Kurye adı
-            description: Eğer kurye ile gönderiliyorsa
-          tckn:
-            type: string
-            title: Kurye TC kimlik numarası
-            description: Eğer kurye ile gönderiliyorsa
-          date:
-            type: string
-            title: Gönderi tarihi
-        readOnly: false
-      excise_duty_codes:
-        type: array
-        title: ÖTV kodları
-        description: >-
-          Özel tüketim vergisi faturadaki her kalem için ayrıdır. ÖTV uygulanan
-          her ürün için ÖTV kodu göndermeniz gerekmektedir.
-        items:
-          type: object
-          properties:
-            product:
-              type: integer
-              title: Ürün ID
-            sales_excise_duty_code:
-              type: string
-              title: ÖTV kodu
-              enum:
-                - 57
-                - 59
-                - 60
-                - 61
-                - 62
-                - 63
-                - 9077
-        readOnly: false
+          internet_sale:
+            type: object
+            description: İnternet satışı bilgileri
+            properties:
+              url:
+                type: string
+                description: İnternet adresi
+              payment_type:
+                type: string
+                description: Ödeme tipi
+                enum:
+                  - KREDIKARTI/BANKAKARTI
+                  - EFT/HAVALE
+                  - KAPIDAODEME
+                  - ODEMEARACISI
+              payment_platform:
+                type: string
+                description: 'Ödeme platformu - *(iyzico, payu gibi)*'
+              payment_date:
+                type: string
+                format: date
+                description: Ödeme tarihi
+          shipment:
+            type: object
+            description: Gönderi bilgileri
+            properties:
+              title:
+                type: string
+                description: Kargo şirketi adı *(Eğer kargo ile gönderiliyorsa)*
+              vkn:
+                type: string
+                description: Kargo şirketi VKN *(Eğer kargo ile gönderiliyorsa)*
+              name:
+                type: string
+                description: Kurye adı *(Eğer kurye ile gönderiliyorsa)*
+              tckn:
+                type: string
+                description: Kurye TCKN *(Eğer kurye ile gönderiliyorsa)*
+              date:
+                type: string
+                description: Gönderi tarihi
   EArchiveForm:
     type: object
     properties:
@@ -9812,6 +9768,84 @@ definitions:
             readOnly: true
       attributes:
         $ref: '#/definitions/EArchiveFormAttributes'
+      relationships: {}
+    required:
+      - attributes
+  EDocumentCommonFormAttributes:
+    type: object
+    properties:
+      vat_withholding_code:
+        type: string
+        description: >-
+          Tevkifat oranına ait vergi kodu. - *Bu dosyada ilgili kodları
+          bulabilirsiniz:
+          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+        readOnly: false
+      vat_exemption_reason_code:
+        type: string
+        description: >-
+          KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu. - *Bu
+          dosyada ilgili kodları bulabilirsiniz:
+          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+        readOnly: false
+      vat_exemption_reason:
+        type: string
+        description: >-
+          Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
+          açıklaması.
+        readOnly: false
+      note:
+        type: string
+        description: Fatura notu
+        readOnly: false
+      excise_duty_codes:
+        type: array
+        description: >-
+          ÖTV kodları - *Özel tüketim vergisi faturadaki her kalem için ayrıdır.
+          ÖTV uygulanan her ürün için ÖTV kodu göndermeniz gerekmektedir.*
+        items:
+          type: object
+          properties:
+            product:
+              type: integer
+              description: Ürün ID
+            sales_excise_duty_code:
+              type: string
+              description: ÖTV kodu
+              enum:
+                - 57
+                - 59
+                - 60
+                - 61
+                - 62
+                - 63
+                - 9077
+        readOnly: false
+  EDocumentCommonForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_document_commons
+      meta:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+            readOnly: true
+          updated_at:
+            type: string
+            format: date-time
+            readOnly: true
+      attributes:
+        $ref: '#/definitions/EDocumentCommonFormAttributes'
       relationships: {}
     required:
       - attributes
@@ -9983,68 +10017,21 @@ definitions:
     required:
       - attributes
   EInvoiceFormAttributes:
-    type: object
-    properties:
-      vat_withholding_code:
-        type: string
-        title: Tevkifat oranına ait vergi kodu.
-        description: >-
-          Bu dosyada ilgili kodları bulabilirsiniz:
-          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
-        readOnly: false
-      vat_exemption_reason_code:
-        type: string
-        title: KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu.
-        description: >-
-          Bu dosyada ilgili kodları bulabilirsiniz:
-          <i>https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip</i>
-        readOnly: false
-      vat_exemption_reason:
-        type: string
-        title: >-
-          Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
-          açıklaması.
-        readOnly: false
-      note:
-        type: string
-        title: Fatura notu
-        readOnly: false
-      scenario:
-        type: string
-        title: Gönderim senaryosu
-        enum:
-          - basic
-          - commercial
-        readOnly: false
-      to:
-        type: string
-        title: Alıcının e-Fatura gelen kutusu
-        description: '[e-Fatura Gelen Kutusu Öğrenme](/#operation/listEInvoiceInboxes)'
-        readOnly: false
-      excise_duty_codes:
-        type: array
-        title: ÖTV kodları
-        description: >-
-          Özel tüketim vergisi faturadaki her kalem için ayrıdır. ÖTV uygulanan
-          her ürün için ÖTV kodu göndermeniz gerekmektedir.
-        items:
-          type: object
-          properties:
-            product:
-              type: integer
-              title: Ürün ID
-            sales_excise_duty_code:
-              type: string
-              title: ÖTV kodu
-              enum:
-                - 57
-                - 59
-                - 60
-                - 61
-                - 62
-                - 63
-                - 9077
-        readOnly: false
+    allOf:
+      - $ref: '#/definitions/EDocumentCommonFormAttributes'
+      - type: object
+        properties:
+          scenario:
+            type: string
+            description: Gönderim senaryosu
+            enum:
+              - basic
+              - commercial
+          to:
+            type: string
+            description: >-
+              Alıcının e-Fatura gelen kutusu - *[e-Fatura Gelen Kutusu
+              Öğrenme](/#operation/listEInvoiceInboxes)*
   EInvoiceForm:
     type: object
     properties:
@@ -10130,7 +10117,7 @@ definitions:
       balance:
         type: number
         readOnly: true
-        title: Bakiye
+        description: Bakiye
       trl_balance:
         type: number
         readOnly: true
@@ -10146,7 +10133,7 @@ definitions:
       name:
         type: string
         readOnly: false
-        title: Çalışan adı soyadı
+        description: Çalışan adı soyadı
       email:
         type: string
         format: email
@@ -10243,19 +10230,19 @@ definitions:
       name:
         type: string
         readOnly: false
-        title: Kategori adı
+        description: Kategori adı
       bg_color:
         type: string
         readOnly: false
-        title: Renk
+        description: Renk
       text_color:
         type: string
         readOnly: false
-        title: Yazı rengi
+        description: Yazı rengi
       category_type:
         type: string
         readOnly: false
-        title: Kategori tipi
+        description: Kategori tipi
       parent_id:
         type: integer
         readOnly: false
@@ -10421,15 +10408,15 @@ definitions:
       date:
         type: string
         format: date
-        title: Ödeme tarihi
+        description: Ödeme tarihi
         readOnly: false
       amount:
         type: number
-        title: Ödeme tutarı
+        description: Ödeme tutarı
         readOnly: false
       currency:
         type: number
-        title: Para birimi
+        description: Para birimi
         readOnly: false
       notes:
         type: string
@@ -10489,31 +10476,30 @@ definitions:
     properties:
       description:
         type: string
-        title: Ödeme Açıklaması
+        description: Ödeme/Tahsilat Açıklaması
         readOnly: false
       account_id:
         type: integer
-        title: Kasa veya Banka
         description: >-
-          Bu parametre ayrıca ödemenin hangi döviz kuru ile yapılacağını
-          belirler.
+          Kasa veya Banka - *Bu parametre ayrıca ödemenin/tahsilatın hangi döviz
+          kuru ile yapılacağını belirler.*
         readOnly: false
       date:
         type: string
         format: date
-        title: Ödeme tarihi
+        description: Ödeme/Tahsilat tarihi
         readOnly: false
       amount:
         type: number
-        title: Ödeme tutarı
+        description: Ödeme/Tahsilat tutarı
         readOnly: false
       exchange_rate:
         type: number
-        title: Döviz kuru
         description: >-
-          Eğer ödeme, faturadan farklı bir döviz kuru ile yapılacaksa; döviz
-          kurunun TL karşılığını belirtin. Eğer ödeme, fatura ile aynı döviz
-          kuru ile yapılacaksa; "1.0" değerini girin veya boş bırakın.
+          Döviz kuru - *Eğer ödeme/tahsilat, faturadan farklı bir döviz kuru ile
+          yapılacaksa; döviz kurunun TL karşılığını belirtin. Eğer
+          ödeme/tahsilat, fatura ile aynı döviz kuru ile yapılacaksa; "1.0"
+          değerini girin veya boş bırakın.*
         readOnly: false
   PaymentForm:
     type: object
@@ -10564,69 +10550,69 @@ definitions:
       stock_count:
         type: number
         readOnly: true
-        title: Stok Miktarı
+        description: Stok Miktarı
       code:
         type: string
         readOnly: false
-        title: Ürün/hizmet kodu
+        description: Ürün/hizmet kodu
       name:
         type: string
         readOnly: false
-        title: Ürün/hizmet ismi
+        description: Ürün/hizmet ismi
       vat_rate:
         type: number
         readOnly: false
-        title: KDV oranı
+        description: KDV oranı
       sales_excise_duty:
         type: number
         readOnly: false
-        title: Satış ÖTV
+        description: Satış ÖTV
       sales_excise_duty_type:
         type: string
         readOnly: false
-        title: Satış ÖTV tipi
+        description: Satış ÖTV tipi
       purchase_excise_duty:
         type: number
         readOnly: false
-        title: Alış ÖTV
+        description: Alış ÖTV
       purchase_excise_duty_type:
         type: string
         readOnly: false
-        title: Alış ÖTV tipi
+        description: Alış ÖTV tipi
       unit:
         type: string
         readOnly: false
-        title: Birim
+        description: Birim
       communications_tax_rate:
         type: number
         readOnly: false
-        title: ÖİV oranı
+        description: ÖİV oranı
       archived:
         type: boolean
         readOnly: false
       list_price:
         type: number
         readOnly: false
-        title: Satış fiyatı
+        description: Satış fiyatı
       currency:
         type: string
         readOnly: false
-        title: Satış döviz
+        description: Satış döviz
       buying_price:
         type: number
         readOnly: false
-        title: Alış fiyatı
+        description: Alış fiyatı
       buying_currency:
         type: string
         readOnly: false
-        title: Alış döviz
+        description: Alış döviz
       inventory_tracking:
         type: boolean
         readOnly: false
       initial_stock_count:
         type: number
         readOnly: false
-        title: Başlangıç Stok Miktarı
+        description: Başlangıç Stok Miktarı
     required:
       - name
   Product:
@@ -11300,19 +11286,19 @@ definitions:
       invoice_no:
         type: string
         readOnly: true
-        title: Fatura no
+        description: Fatura no
       net_total:
         type: number
         readOnly: true
-        title: Genel Toplam
+        description: Genel Toplam
       gross_total:
         type: number
         readOnly: true
-        title: Ara toplam
+        description: Ara toplam
       withholding:
         type: number
         readOnly: true
-        title: Stopaj
+        description: Stopaj
       total_excise_duty:
         type: number
         readOnly: true
@@ -11322,26 +11308,26 @@ definitions:
       total_vat:
         type: number
         readOnly: true
-        title: Toplam KDV
+        description: Toplam KDV
       vat_withholding:
         type: number
         readOnly: true
-        title: Tevkifat
+        description: Tevkifat
       total_discount:
         type: number
         readOnly: true
-        title: Toplam indirim
+        description: Toplam indirim
       total_invoice_discount:
         type: number
         readOnly: true
       before_taxes_total:
         type: number
         readOnly: true
-        title: Vergiler Hariç Toplam
+        description: Vergiler Hariç Toplam
       remaining:
         type: number
         readOnly: true
-        title: Ödenmemiş tutar
+        description: Ödenmemiş tutar
       remaining_in_trl:
         type: number
         readOnly: true
@@ -11353,7 +11339,7 @@ definitions:
           - unpaid
           - partially_paid
         readOnly: true
-        title: Tahsilat durumu
+        description: Tahsilat durumu
       item_type:
         type: string
         enum:
@@ -11364,29 +11350,29 @@ definitions:
           - recurring_estimate
           - refund
         readOnly: false
-        title: Fatura türü
+        description: Fatura türü
       description:
         type: string
         readOnly: false
-        title: Fatura açıklaması
+        description: Fatura açıklaması
       issue_date:
         type: string
         format: date
         readOnly: false
-        title: Düzenleme tarihi
+        description: Düzenleme tarihi
       due_date:
         type: string
         format: date
         readOnly: false
-        title: Son tahsilat tarihi
+        description: Son tahsilat tarihi
       invoice_series:
         type: string
         readOnly: false
-        title: Fatura seri
+        description: Fatura seri
       invoice_id:
         type: integer
         readOnly: false
-        title: Fatura sıra
+        description: Fatura sıra
       currency:
         type: string
         enum:
@@ -11395,19 +11381,19 @@ definitions:
           - EUR
           - GBP
         readOnly: false
-        title: Döviz tipi
+        description: Döviz tipi
       exchange_rate:
         type: number
         readOnly: false
-        title: Döviz kuru
+        description: Döviz kuru
       withholding_rate:
         type: number
         readOnly: false
-        title: Stopaj oranı
+        description: Stopaj oranı
       vat_withholding_rate:
         type: number
         readOnly: false
-        title: Tevkifat oranı
+        description: Tevkifat oranı
       invoice_discount_type:
         type: string
         enum:
@@ -11419,23 +11405,23 @@ definitions:
       billing_address:
         type: string
         readOnly: false
-        title: Gönderim adresi
+        description: Gönderim adresi
       billing_phone:
         type: string
         readOnly: false
-        title: Gönderim adresi telefonu
+        description: Gönderim adresi telefonu
       billing_fax:
         type: string
         readOnly: false
-        title: Gönderim adresi faksı
+        description: Gönderim adresi faksı
       tax_office:
         type: string
         readOnly: false
-        title: Müşteri vergi dairesi
+        description: Müşteri vergi dairesi
       tax_number:
         type: string
         readOnly: false
-        title: Müşteri vergi numarası
+        description: Müşteri vergi numarası
       city:
         type: string
         readOnly: false
@@ -11623,25 +11609,25 @@ definitions:
       net_total:
         type: number
         readOnly: true
-        title: Ürün/hizmet net tutarı
+        description: Ürün/hizmet net tutarı
       quantity:
         type: number
         readOnly: false
-        title: Miktar
+        description: Miktar
       unit_price:
         type: number
         readOnly: false
-        title: Birim fiyatı
+        description: Birim fiyatı
       vat_rate:
         type: number
         readOnly: false
-        title: KDV oranı
+        description: KDV oranı
       discount_type:
         type: string
         enum:
           - amount percentage
         readOnly: false
-        title: İndirim türü
+        description: İndirim türü
       discount_value:
         type: number
         readOnly: false
@@ -11650,18 +11636,18 @@ definitions:
         enum:
           - amount percentage
         readOnly: false
-        title: ÖTV tipi
+        description: ÖTV tipi
       excise_duty_value:
         type: number
         readOnly: false
       communications_tax_rate:
         type: number
         readOnly: false
-        title: ÖİV oranı
+        description: ÖİV oranı
       description:
         type: string
         readOnly: false
-        title: Açıklama
+        description: Açıklama
     required:
       - quantity
       - unit_price
@@ -11717,7 +11703,7 @@ definitions:
       name:
         type: string
         readOnly: false
-        title: Etiket adı
+        description: Etiket adı
     required:
       - name
   Tag:
