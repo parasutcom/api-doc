@@ -5466,6 +5466,462 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}/cancel':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    delete:
+      tags:
+        - PurchaseBills
+      operationId: cancelPurchaseBill
+      summary: Cancel
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}/recover':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - PurchaseBills
+      operationId: recoverPurchaseBill
+      summary: Recover
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}/archive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - PurchaseBills
+      operationId: archivePurchaseBill
+      summary: Archive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/purchase_bills/{id}/unarchive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - PurchaseBills
+      operationId: unarchivePurchaseBill
+      summary: Unarchive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/PurchaseBill'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - employees
+                        - contacts
+                        - payments
+                        - tags
+                        - recurrence_plans
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/salaries':
     parameters:
       - name: company_id
@@ -6910,6 +7366,695 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/cancel':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    delete:
+      tags:
+        - SalesInvoices
+      operationId: cancelSalesInvoice
+      summary: Cancel
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, contact, details, payments, tags, sharings,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - sharings
+                        - recurrence_plans
+                        - e_archives
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/recover':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesInvoices
+      operationId: recoverSalesInvoice
+      summary: Recover
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, contact, details, payments, tags, sharings,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - sharings
+                        - recurrence_plans
+                        - e_archives
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/archive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesInvoices
+      operationId: archiveSalesInvoice
+      summary: Archive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, contact, details, payments, tags, sharings,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - sharings
+                        - recurrence_plans
+                        - e_archives
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/unarchive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesInvoices
+      operationId: unarchiveSalesInvoice
+      summary: Unarchive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, contact, details, payments, tags, sharings,
+            recurrence_plan, active_e_document
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - sharings
+                        - recurrence_plans
+                        - e_archives
+                        - e_invoices
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_invoices/{id}/convert_to_invoice':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Fatura ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesInvoices
+      operationId: convertEstimateToInvoice
+      summary: Convert estimate to invoice
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          title: Related records that you want to receive with response
+          description: >-
+            Available: category, contact, details, payments, tags, sharings,
+            recurrence_plan, active_e_document
+        - name: sales_invoice_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                  attributes:
+                    $ref: '#/definitions/SalesInvoiceAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - sales_invoice_details
+                                attributes:
+                                  $ref: '#/definitions/SalesInvoiceDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      category:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - item_categories
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesInvoice'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - contacts
+                        - sales_invoice_details
+                        - payments
+                        - tags
+                        - sharings
+                        - recurrence_plans
+                        - e_archives
+                        - e_invoices
                     meta:
                       type: object
                       properties:
