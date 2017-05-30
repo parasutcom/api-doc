@@ -9897,7 +9897,6 @@ definitions:
       - quantity
       - unit_price
       - vat_rate
-      - discount_type
   PurchaseBillDetail:
     type: object
     properties:
@@ -10522,7 +10521,6 @@ definitions:
       - quantity
       - unit_price
       - vat_rate
-      - discount_type
   SalesInvoiceDetail:
     type: object
     properties:
