@@ -808,8 +808,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -973,8 +973,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
       responses:
         '200':
           description: Banka Gideri
@@ -1069,8 +1069,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -1290,8 +1290,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            payable, tx*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -1452,8 +1452,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact_portal, contact_people*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact_portal, contact_people*
       responses:
         '200':
           description: Müşteriler/Tedarikçiler
@@ -1553,8 +1553,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact_portal, contact_people*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact_portal, contact_people*
         - name: contact_form
           schema:
             type: object
@@ -1721,8 +1721,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact_portal, contact_people*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact_portal, contact_people*
       responses:
         '200':
           description: Müşteri/Tedarikçi
@@ -1818,8 +1818,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact_portal, contact_people*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact_portal, contact_people*
         - name: contact_form
           schema:
             type: object
@@ -2042,8 +2042,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            debit_account, credit_account, payments*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account, payments*
         - name: transaction_form
           schema:
             type: object
@@ -2172,8 +2172,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            debit_account, credit_account, payments*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account, payments*
         - name: transaction_form
           schema:
             type: object
@@ -2409,8 +2409,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            sales_invoice*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: sales_invoice*
       responses:
         '200':
           description: e-Arşiv
@@ -2780,8 +2780,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            invoice*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: invoice*
       responses:
         '200':
           description: e-Fatura
@@ -2977,8 +2977,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, managed_by_user, managed_by_user_role*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, managed_by_user, managed_by_user_role*
       responses:
         '200':
           description: Çalışanlar
@@ -3078,8 +3078,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, managed_by_user, managed_by_user_role*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, managed_by_user, managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -3227,8 +3227,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, managed_by_user, managed_by_user_role*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, managed_by_user, managed_by_user_role*
       responses:
         '200':
           description: Çalışan
@@ -3324,8 +3324,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, managed_by_user, managed_by_user_role*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, managed_by_user, managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -3547,8 +3547,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            parent_category, subcategories*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: parent_category, subcategories*
       responses:
         '200':
           description: Kategoriler
@@ -3646,8 +3646,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            parent_category, subcategories*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: parent_category, subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -3777,8 +3777,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            parent_category, subcategories*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: parent_category, subcategories*
       responses:
         '200':
           description: Kategori
@@ -3872,8 +3872,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            parent_category, subcategories*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: parent_category, subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -4075,8 +4075,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category*
       responses:
         '200':
           description: Ürünler
@@ -4174,8 +4174,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category*
         - name: product_form
           schema:
             type: object
@@ -4321,8 +4321,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category*
       responses:
         '200':
           description: Ürün
@@ -4416,8 +4416,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category*
         - name: product_form
           schema:
             type: object
@@ -4614,9 +4614,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -4810,9 +4810,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5048,9 +5048,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5218,9 +5218,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5419,9 +5419,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5657,8 +5657,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            payable, tx*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -5792,9 +5792,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5906,9 +5906,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -6020,9 +6020,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -6134,9 +6134,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, spender, supplier, payments, tags, recurrence_plan,
-            active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, spender, supplier, payments, tags,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -6243,8 +6243,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            employee, category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: employee, category, tags*
         - name: salary_form
           schema:
             type: object
@@ -6424,8 +6424,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            employee, category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: employee, category, tags*
       responses:
         '200':
           description: Maaş
@@ -6521,8 +6521,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            employee, category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: employee, category, tags*
         - name: salary_form
           schema:
             type: object
@@ -6758,8 +6758,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            payable, tx*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -6907,9 +6907,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Satış faturaları
@@ -7015,9 +7015,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7240,9 +7240,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7344,9 +7344,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7625,8 +7625,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            payable, tx*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -7760,9 +7760,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7876,9 +7876,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7992,9 +7992,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8108,9 +8108,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8224,9 +8224,9 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, contact, details, payments, payments.tx, tags, sharings,
-            recurrence_plan, active_e_document*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, contact, details, payments, payments.tx, tags,
+            sharings, recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8823,8 +8823,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
         - name: tax_form
           schema:
             type: object
@@ -8988,8 +8988,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
       responses:
         '200':
           description: Vergi
@@ -9084,8 +9084,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            category, tags*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags*
         - name: tax_form
           schema:
             type: object
@@ -9305,8 +9305,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            payable, tx*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -9511,8 +9511,8 @@ paths:
           type: string
           in: query
           description: >-
-            Related records that you want to receive with response - *Available:
-            debit_account, credit_account, payments*
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account, payments*
       responses:
         '200':
           description: İşlem
