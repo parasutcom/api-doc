@@ -216,6 +216,28 @@ info:
     doldurarak satış faturasına tahsilat ekleyebilirsiniz.
 
 
+    ## Satış Faturasının Tahsilatını Silme
+
+
+    Bir satış faturasının tahsilatını silmek aslında o tahsilatı yaratan para
+    akışı - işlemi silmek demektir.
+
+
+
+    [Bir işlemi silmek](/#operation/deleteTransaction) için o işlemin ID'sini
+    bilmek gerekir.
+
+    Bir satış faturasına ait tahsilatları almak için
+    [show](/#operation/showSalesInvoice) endpoint'ine istek atarken
+    `?include=payments` parametresini de eklemelisiniz. Tahsilatların yanında
+    işlemleri de almak isterseniz `?include=payments.tx` göndermelisiniz.
+
+
+
+    Daha sonra ilgili işlem-transaction ID'sini [işlem
+    silme](/#operation/deleteTransaction) endpoint'inde kullanabilirsiniz.
+
+
     ## Satış Faturası Resmileştirme
 
 
@@ -278,6 +300,7 @@ tags:
   - name: Tags
   - name: Taxes
   - name: TrackableJobs
+  - name: Transactions
 paths:
   '/{company_id}/accounts':
     parameters:
@@ -314,7 +337,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,balance,balance_in_trl*'
+          description: 'Sortable parameters - *Available: id, balance, balance_in_trl*'
           default: '-id'
         - name: 'page[number]'
           type: integer
@@ -786,7 +809,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -951,7 +974,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
       responses:
         '200':
           description: Banka Gideri
@@ -1047,7 +1070,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
         - name: bank_fee_form
           schema:
             type: object
@@ -1268,7 +1291,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            payable*
+            payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -1318,6 +1341,7 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                        - transactions
                     meta:
                       type: object
                       properties:
@@ -1410,7 +1434,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,balance,name,email*'
+          description: 'Sortable parameters - *Available: id, balance, name, email*'
           default: '-balance'
         - name: 'page[number]'
           type: integer
@@ -1429,7 +1453,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact_portal,contact_people*
+            category, contact_portal, contact_people*
       responses:
         '200':
           description: Müşteriler/Tedarikçiler
@@ -1530,7 +1554,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact_portal,contact_people*
+            category, contact_portal, contact_people*
         - name: contact_form
           schema:
             type: object
@@ -1698,7 +1722,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact_portal,contact_people*
+            category, contact_portal, contact_people*
       responses:
         '200':
           description: Müşteri/Tedarikçi
@@ -1795,7 +1819,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact_portal,contact_people*
+            category, contact_portal, contact_people*
         - name: contact_form
           schema:
             type: object
@@ -2019,7 +2043,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            debit_account,credit_account,payments*
+            debit_account, credit_account, payments*
         - name: transaction_form
           schema:
             type: object
@@ -2149,7 +2173,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            debit_account,credit_account,payments*
+            debit_account, credit_account, payments*
         - name: transaction_form
           schema:
             type: object
@@ -2935,7 +2959,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,balance,name,email*'
+          description: 'Sortable parameters - *Available: id, balance, name, email*'
           default: '-balance'
         - name: 'page[number]'
           type: integer
@@ -2954,7 +2978,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,managed_by_user,managed_by_user_role*
+            category, managed_by_user, managed_by_user_role*
       responses:
         '200':
           description: Çalışanlar
@@ -3055,7 +3079,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,managed_by_user,managed_by_user_role*
+            category, managed_by_user, managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -3204,7 +3228,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,managed_by_user,managed_by_user_role*
+            category, managed_by_user, managed_by_user_role*
       responses:
         '200':
           description: Çalışan
@@ -3301,7 +3325,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,managed_by_user,managed_by_user_role*
+            category, managed_by_user, managed_by_user_role*
         - name: employee_form
           schema:
             type: object
@@ -3505,7 +3529,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,name,category_type*'
+          description: 'Sortable parameters - *Available: id, name, category_type*'
           default: id
         - name: 'page[number]'
           type: integer
@@ -3524,7 +3548,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            parent_category,subcategories*
+            parent_category, subcategories*
       responses:
         '200':
           description: Kategoriler
@@ -3623,7 +3647,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            parent_category,subcategories*
+            parent_category, subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -3754,7 +3778,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            parent_category,subcategories*
+            parent_category, subcategories*
       responses:
         '200':
           description: Kategori
@@ -3849,7 +3873,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            parent_category,subcategories*
+            parent_category, subcategories*
         - name: item_category_form
           schema:
             type: object
@@ -4033,7 +4057,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,name*'
+          description: 'Sortable parameters - *Available: id, name*'
           default: '-id'
         - name: 'page[number]'
           type: integer
@@ -4591,7 +4615,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -4786,7 +4811,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5023,7 +5049,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5192,7 +5219,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5392,7 +5420,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5629,7 +5658,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            payable*
+            payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -5679,6 +5708,7 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                        - transactions
                     meta:
                       type: object
                       properties:
@@ -5763,7 +5793,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5876,7 +5907,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -5989,7 +6021,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -6102,7 +6135,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,spender,supplier,payments,tags,recurrence_plan,active_e_document*
+            category, spender, supplier, payments, tags, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -6210,7 +6244,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            employee,category,tags*
+            employee, category, tags*
         - name: salary_form
           schema:
             type: object
@@ -6391,7 +6425,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            employee,category,tags*
+            employee, category, tags*
       responses:
         '200':
           description: Maaş
@@ -6488,7 +6522,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            employee,category,tags*
+            employee, category, tags*
         - name: salary_form
           schema:
             type: object
@@ -6725,7 +6759,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            payable*
+            payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -6775,6 +6809,7 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                        - transactions
                     meta:
                       type: object
                       properties:
@@ -6853,8 +6888,8 @@ paths:
           type: string
           in: query
           description: >-
-            Sortable parameters - *Available:
-            id,issue_date,due_date,remaining,remaining_in_trl*
+            Sortable parameters - *Available: id, issue_date, due_date,
+            remaining, remaining_in_trl*
           default: '-remaining_in_trl'
         - name: 'page[number]'
           type: integer
@@ -6873,7 +6908,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Satış faturaları
@@ -6980,7 +7016,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7204,7 +7241,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7307,7 +7345,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7587,7 +7626,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            payable*
+            payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -7637,6 +7676,7 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                        - transactions
                     meta:
                       type: object
                       properties:
@@ -7721,7 +7761,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7836,7 +7877,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7951,7 +7993,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8066,7 +8109,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8181,7 +8225,8 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document*
+            category, contact, details, payments, payments.tx, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8398,7 +8443,7 @@ paths:
         - name: sort
           type: string
           in: query
-          description: 'Sortable parameters - *Available: id,name*'
+          description: 'Sortable parameters - *Available: id, name*'
           default: id
         - name: 'page[number]'
           type: integer
@@ -8779,7 +8824,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
         - name: tax_form
           schema:
             type: object
@@ -8944,7 +8989,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
       responses:
         '200':
           description: Vergi
@@ -9040,7 +9085,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            category,tags*
+            category, tags*
         - name: tax_form
           schema:
             type: object
@@ -9261,7 +9306,7 @@ paths:
           in: query
           description: >-
             Related records that you want to receive with response - *Available:
-            payable*
+            payable, tx*
         - name: payment_form
           schema:
             type: object
@@ -9311,6 +9356,7 @@ paths:
                         - bank_fees
                         - salaries
                         - checks
+                        - transactions
                     meta:
                       type: object
                       properties:
@@ -9397,6 +9443,170 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/TrackableJob'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/transactions/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İşlem ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Transactions
+      operationId: showTransaction
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Related records that you want to receive with response - *Available:
+            debit_account, credit_account, payments*
+      responses:
+        '200':
+          description: İşlem
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        updated_at:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Transactions
+      operationId: deleteTransaction
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
         '400':
           description: Bad Request
           schema:
@@ -10809,6 +11019,21 @@ definitions:
                       - bank_fees
                       - salaries
                       - checks
+          tx:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - transactions
     required:
       - attributes
   PaymentFormAttributes:
@@ -11876,6 +12101,20 @@ definitions:
                       description: Type of the resource
                       enum:
                         - payments
+          payments.tx:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum: []
           tags:
             type: object
             properties:
