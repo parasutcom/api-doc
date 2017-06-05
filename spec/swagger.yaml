@@ -301,6 +301,39 @@ tags:
   - name: Taxes
   - name: TrackableJobs
   - name: Transactions
+x-tagGroups:
+  - name: Satışlar
+    tags:
+      - SalesInvoices
+      - Contacts
+  - name: Giderler
+    tags:
+      - PurchaseBills
+      - BankFees
+      - Salaries
+      - Taxes
+      - Contacts
+      - Employees
+  - name: Resmileştirme
+    tags:
+      - EInvoiceInboxes
+      - EArchives
+      - EInvoices
+  - name: Nakit
+    tags:
+      - Accounts
+      - Transactions
+  - name: Stok
+    tags:
+      - Products
+  - name: Ayarlar
+    tags:
+      - ItemCategories
+      - Tags
+  - name: Diğer
+    tags:
+      - ApiHome
+      - TrackableJobs
 paths:
   '/{company_id}/accounts':
     parameters:
