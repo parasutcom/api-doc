@@ -6,10 +6,10 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
-    # Introduction
+    # GİRİŞ
 
 
-    ## Bilgiler
+    ## API Hakkında
 
 
     - API V4 test aşamasındadır.
@@ -29,25 +29,22 @@ info:
     kullanabilirsiniz.
 
 
-    ## URL Yapısı
+    ## Genel Bilgiler
 
 
-    API metodlarına erişmek için baz URL olarak
-    `https://api.parasut.com/v4/firma_no` adresi kullanılır. Bu yapıda
-    kullanılan `firma_no` parametresi bilgisine erişilmek istenin firmanın
-    Paraşüt veritabanındaki kayıt numarasıdır. Örneğin 115 numaralı firmanın
-    müşteri/tedarikçi listesine erişmek için
-    `https://api.parasut.com/v4/115/contacts` adresi kullanılır.
+    - API metodlarına erişmek için baz URL olarak
+    `https://api.parasut.com/v4/firma_no` adresi kullanılır.
+      - Bu yapıda kullanılan `firma_no` parametresi bilgisine erişilmek istenin firmanın Paraşüt veritabanındaki kayıt numarasıdır.
+      - Örneğin 115 numaralı firmanın müşteri/tedarikçi listesine erişmek için `https://api.parasut.com/v4/115/contacts` adresi kullanılır.
+    - İstekleri gönderirken `Content-Type` header'ı olarak `application/json`
+    veya `application/vnd.api+json` göndermelisiniz.
 
-
-    ## SSS
-
-
-    - İstekleri gönderirken "Content-Type" header'ı olarak "application/json"
-    veya "application/vnd.api+json" göndermelisiniz.
-
-    - Yeni bir kayıt oluştururken ilgili kayıtın "ID" belirtilen parametresini
-    boş göndermeli veya hiç göndermemelisiniz.
+    - Yeni bir kayıt oluştururken **ilgili** kaydın `ID` parametresini boş
+    göndermeli veya hiç göndermemelisiniz.
+      - Örnek: Satış faturası oluştururken `data->id` boş olmalı, ama `relationships->contact->data->id` dolu olmalı, çünkü gönderdiğiniz müşterinizin ID'si daha önceden elinizde bulunmalıdır.
+    - API endpointlerine ulaşmak için, aldığınız `access_token`'ı sorgulara
+    `Authorization` header'ı olarak `Bearer access_token` şeklinde
+    göndermelisiniz.
 
 
     # Authentication
@@ -177,7 +174,7 @@ info:
     kullanmalısınız.
 
 
-    # Basic Actions
+    # SIK KULLANILAN İŞLEMLER
 
 
     ## Kullanıcı Bilgisi
@@ -248,7 +245,7 @@ info:
 
 
     1. Müşterinizin e-Fatura kullanıcısı olup olmadığını öğrenmelisiniz.
-      - Müşterinizin [e-Fatura posta kutusu](/#operation/listEInvoiceInboxes) var ise e-Fatura kullanıcısıdır.
+      - Müşterinizin [e-Fatura gelen kutusu](/#operation/listEInvoiceInboxes) var ise e-Fatura kullanıcısıdır.
     2. Eğer müşteriniz e-Fatura kullanıcısı ise:
       - [e-Fatura oluşturmalısınız](/#operation/createEInvoice)
     3. Eğer müşteriniz e-Fatura kullanıcısı değil ise:
@@ -285,22 +282,39 @@ produces:
   - application/vnd.api+json
 tags:
   - name: Accounts
+    x-displayName: KASA VE BANKA
   - name: ApiHome
+    x-displayName: API HOME
   - name: BankFees
+    x-displayName: BANKA GİDERİ
   - name: Contacts
+    x-displayName: MÜŞTERİ / TEDARİKÇİ
   - name: EArchives
+    x-displayName: E-ARŞİV
   - name: EInvoiceInboxes
+    x-displayName: E-FATURA GELEN KUTUSU
   - name: EInvoices
+    x-displayName: E-FATURA
   - name: Employees
+    x-displayName: ÇALIŞAN
   - name: ItemCategories
+    x-displayName: KATEGORİ
   - name: Products
+    x-displayName: ÜRÜN
   - name: PurchaseBills
+    x-displayName: FİŞ / FATURA
   - name: Salaries
+    x-displayName: MAAŞ
   - name: SalesInvoices
+    x-displayName: SATIŞ FATURASI
   - name: Tags
+    x-displayName: ETİKET
   - name: Taxes
+    x-displayName: VERGİ
   - name: TrackableJobs
+    x-displayName: TRACKABLE JOB
   - name: Transactions
+    x-displayName: İŞLEM
 x-tagGroups:
   - name: Satışlar
     tags:
