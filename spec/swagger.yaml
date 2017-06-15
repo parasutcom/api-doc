@@ -41,7 +41,7 @@ info:
 
     - Yeni bir kayıt oluştururken **ilgili** kaydın `ID` parametresini boş
     göndermeli veya hiç göndermemelisiniz.
-      - Örnek: Satış faturası oluştururken `data->id` boş olmalı, ama `relationships->contact->data->id` dolu olmalı, çünkü gönderdiğiniz müşterinizin ID'si daha önceden elinizde bulunmalıdır.
+      - Örnek: Satış faturası oluştururken `data->id` boş olmalı, ama `relationships->contact->data->id` dolu olmalı, çünkü gönderdiğiniz müşterinizin ID'si daha önceden elinizde bulunmalıdır. Aynı şekilde `relationships->details->data` içerisinde tanımladığınız ID'ler de boş olmalı, çünkü henüz fatura kalemi yaratmadınız.
     - API endpointlerine ulaşmak için, aldığınız `access_token`'ı sorgulara
     `Authorization` header'ı olarak `Bearer access_token` şeklinde
     göndermelisiniz.
@@ -76,6 +76,12 @@ info:
 
 
     ### 1. grant_type=authorization_code
+
+
+    Bu yöntemi kullanabilmek için öncelikle aşağıda belirtildiği gibi
+    kullanıcıyı başarılı authentication işleminin ardından yönlendirmek
+    istediğiniz `REDIRECT_URL`'i bize ulaşarak kayıt ettirmeniz gerekmektedir.
+    `REDIRECT_URL` varsayılan olarak `urn:ietf:wg:oauth:2.0:oob` gelmektedir.
 
 
     1. Kullanıcıyı şu adrese yönlendirin:
@@ -11706,6 +11712,12 @@ definitions:
         description: Yazı rengi
       category_type:
         type: string
+        enum:
+          - Product
+          - Contact
+          - Employee
+          - SalesInvoice
+          - Expenditure
         readOnly: false
         description: Kategori tipi
       parent_id:
@@ -11713,6 +11725,7 @@ definitions:
         readOnly: false
     required:
       - name
+      - category_type
   ItemCategory:
     type: object
     properties:
