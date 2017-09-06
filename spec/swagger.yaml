@@ -12396,7 +12396,8 @@ definitions:
       invoice_discount_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
       invoice_discount:
         type: number
@@ -12671,7 +12672,8 @@ definitions:
       discount_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
       discount_value:
         type: number
@@ -12679,7 +12681,8 @@ definitions:
       excise_duty_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
       excise_duty_value:
         type: number
@@ -12785,7 +12788,8 @@ definitions:
       invoice_discount_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
     required:
       - item_type
@@ -13063,7 +13067,8 @@ definitions:
       invoice_discount_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
       invoice_discount:
         type: number
@@ -13305,7 +13310,8 @@ definitions:
       discount_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
         description: İndirim türü
       discount_value:
@@ -13314,7 +13320,8 @@ definitions:
       excise_duty_type:
         type: string
         enum:
-          - amount percentage
+          - percentage
+          - amount
         readOnly: false
         description: ÖTV tipi
       excise_duty_value:
