@@ -200,8 +200,8 @@ info:
       - [Müşteri listesi](/#operation/listContacts)
       - [Müşteri oluşturma](/#operation/createContact)
     - Ürün ID'leri
-      - [Müşteri listesi](/#operation/listContacts)
-      - [Müşteri oluşturma](/#operation/createContact)
+      - [Ürün listesi](/#operation/listProducts)
+      - [Ürün oluşturma](/#operation/createProduct)
 
     Yukarıdaki bilgilere sahip olduktan sonra [Satış Faturası
     Oluşturma](/#operation/createSalesInvoice) adımına geçebilirsiniz.
@@ -2956,7 +2956,7 @@ paths:
                   relationships:
                     type: object
                     properties:
-                      sales_invoice:
+                      invoice:
                         type: object
                         properties:
                           data:
