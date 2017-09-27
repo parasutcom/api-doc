@@ -783,17 +783,6 @@ paths:
                         - user_roles
                         - companies
                         - profiles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -943,17 +932,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1051,17 +1029,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1204,17 +1171,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1368,17 +1324,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1476,17 +1421,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1611,17 +1545,6 @@ paths:
                         - salaries
                         - checks
                         - transactions
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1749,17 +1672,6 @@ paths:
                         - item_categories
                         - contact_portals
                         - contact_people
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -1907,17 +1819,6 @@ paths:
                         - item_categories
                         - contact_portals
                         - contact_people
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -2016,17 +1917,6 @@ paths:
                         - item_categories
                         - contact_portals
                         - contact_people
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -2172,17 +2062,6 @@ paths:
                         - item_categories
                         - contact_portals
                         - contact_people
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -2358,17 +2237,6 @@ paths:
                       enum:
                         - accounts
                         - payments
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -2488,17 +2356,6 @@ paths:
                       enum:
                         - accounts
                         - payments
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -2702,17 +2559,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - sales_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3074,17 +2920,6 @@ paths:
                       enum:
                         - sales_invoices
                         - purchase_bills
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3274,17 +3109,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3413,17 +3237,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3522,17 +3335,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3659,17 +3461,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3824,17 +3615,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -3933,17 +3713,6 @@ paths:
                         - item_categories
                         - users
                         - user_roles
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4060,17 +3829,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4179,17 +3937,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4288,17 +4035,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4405,17 +4141,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4588,17 +4313,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4725,17 +4439,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4832,17 +4535,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -4967,17 +4659,6 @@ paths:
                       description: Type of the resource
                       enum:
                         - item_categories
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -5154,17 +4835,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -5353,17 +5023,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -5587,17 +5246,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -5702,17 +5350,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -5960,17 +5597,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6199,17 +5825,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6334,17 +5949,6 @@ paths:
                         - salaries
                         - checks
                         - transactions
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6449,17 +6053,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6564,17 +6157,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6679,17 +6261,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6794,17 +6365,6 @@ paths:
                         - tags
                         - recurrence_plans
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -6970,17 +6530,6 @@ paths:
                         - employees
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7079,17 +6628,6 @@ paths:
                         - employees
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7248,17 +6786,6 @@ paths:
                         - employees
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7413,17 +6940,6 @@ paths:
                         - employees
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7522,17 +7038,6 @@ paths:
                         - employees
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7657,17 +7162,6 @@ paths:
                         - salaries
                         - checks
                         - transactions
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -7789,17 +7283,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8004,17 +7487,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8120,17 +7592,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8333,17 +7794,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8524,17 +7974,6 @@ paths:
                         - salaries
                         - checks
                         - transactions
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8640,17 +8079,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8756,17 +8184,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8872,17 +8289,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -8988,17 +8394,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -9213,17 +8608,6 @@ paths:
                         - recurrence_plans
                         - e_archives
                         - e_invoices
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -9752,17 +9136,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -9860,17 +9233,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10013,17 +9375,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10177,17 +9528,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10285,17 +9625,6 @@ paths:
                       enum:
                         - item_categories
                         - tags
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10420,17 +9749,6 @@ paths:
                         - salaries
                         - checks
                         - transactions
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10599,17 +9917,6 @@ paths:
                       enum:
                         - accounts
                         - payments
-                    meta:
-                      type: object
-                      properties:
-                        created_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
-                        updated_at:
-                          type: string
-                          format: date-time
-                          readOnly: true
                     attributes:
                       type: object
                     relationships:
@@ -10764,6 +10071,14 @@ definitions:
       associate_email:
         type: string
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       name:
         type: string
         readOnly: false
@@ -10818,17 +10133,6 @@ definitions:
         description: Type of the resource
         enum:
           - accounts
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/AccountAttributes'
       relationships: {}
@@ -10848,6 +10152,14 @@ definitions:
         readOnly: true
       remaining_in_trl:
         type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
         readOnly: true
       description:
         type: string
@@ -10892,17 +10204,6 @@ definitions:
         description: Type of the resource
         enum:
           - bank_fees
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/BankFeeAttributes'
       relationships:
@@ -10965,6 +10266,16 @@ definitions:
         type: number
         readOnly: true
         description: GBP Bakiye
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Kayıt tarihi
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Son güncelleme tarihi
       email:
         type: string
         format: email
@@ -11039,17 +10350,6 @@ definitions:
         description: Type of the resource
         enum:
           - contacts
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ContactAttributes'
       relationships:
@@ -11128,17 +10428,6 @@ definitions:
         description: Type of the resource
         enum:
           - transactions
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ContactCollectionFormAttributes'
       relationships: {}
@@ -11168,17 +10457,6 @@ definitions:
         description: Type of the resource
         enum:
           - transactions
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ContactPaymentFormAttributes'
       relationships: {}
@@ -11187,6 +10465,14 @@ definitions:
   ContactPersonAttributes:
     type: object
     properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       name:
         type: string
         readOnly: false
@@ -11212,17 +10498,6 @@ definitions:
         description: Type of the resource
         enum:
           - contact_people
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ContactPersonAttributes'
       relationships: {}
@@ -11265,6 +10540,14 @@ definitions:
       is_signed:
         type: boolean
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
   EArchive:
     type: object
     properties:
@@ -11277,17 +10560,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_archives
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EArchiveAttributes'
       relationships:
@@ -11368,17 +10640,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_archives
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EArchiveFormAttributes'
       relationships: {}
@@ -11446,17 +10707,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_document_commons
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EDocumentCommonFormAttributes'
       relationships: {}
@@ -11484,17 +10734,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_document_pdfs
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EDocumentPdfAttributes'
       relationships: {}
@@ -11583,6 +10822,14 @@ definitions:
           - refund
           - invoice
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
   EInvoice:
     type: object
     properties:
@@ -11595,17 +10842,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_invoices
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EInvoiceAttributes'
       relationships:
@@ -11657,17 +10893,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_invoices
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EInvoiceFormAttributes'
       relationships: {}
@@ -11696,6 +10921,14 @@ definitions:
         type: string
         format: date-time
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
   EInvoiceInbox:
     type: object
     properties:
@@ -11708,17 +10941,6 @@ definitions:
         description: Type of the resource
         enum:
           - e_invoice_inboxes
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EInvoiceInboxAttributes'
       relationships: {}
@@ -11742,6 +10964,14 @@ definitions:
         readOnly: true
       gbp_balance:
         type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
         readOnly: true
       name:
         type: string
@@ -11771,17 +11001,6 @@ definitions:
         description: Type of the resource
         enum:
           - employees
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/EmployeeAttributes'
       relationships:
@@ -11840,6 +11059,14 @@ definitions:
       full_path:
         type: string
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       name:
         type: string
         readOnly: false
@@ -11880,17 +11107,6 @@ definitions:
         description: Type of the resource
         enum:
           - item_categories
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ItemCategoryAttributes'
       relationships:
@@ -11955,17 +11171,6 @@ definitions:
         description: Type of the resource
         enum:
           - users
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/MeAttributes'
       relationships:
@@ -12025,6 +11230,14 @@ definitions:
   PaymentAttributes:
     type: object
     properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       date:
         type: string
         format: date
@@ -12053,17 +11266,6 @@ definitions:
         description: Type of the resource
         enum:
           - payments
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PaymentAttributes'
       relationships:
@@ -12148,17 +11350,6 @@ definitions:
         description: Type of the resource
         enum:
           - payments
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PaymentFormAttributes'
       relationships: {}
@@ -12186,6 +11377,14 @@ definitions:
         type: number
         readOnly: true
         description: Stok Miktarı
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       code:
         type: string
         readOnly: false
@@ -12262,17 +11461,6 @@ definitions:
         description: Type of the resource
         enum:
           - products
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/ProductAttributes'
       relationships:
@@ -12351,6 +11539,14 @@ definitions:
       remaining_reimbursement_in_trl:
         type: number
         readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       item_type:
         type: string
         enum:
@@ -12421,17 +11617,6 @@ definitions:
         description: Type of the resource
         enum:
           - purchase_bills
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PurchaseBillAttributes'
       relationships:
@@ -12638,17 +11823,6 @@ definitions:
         description: Type of the resource
         enum:
           - purchase_bills
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PurchaseBillBasicFormAttributes'
       relationships: {}
@@ -12659,6 +11833,14 @@ definitions:
     properties:
       net_total:
         type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
         readOnly: true
       quantity:
         type: number
@@ -12709,17 +11891,6 @@ definitions:
         description: Type of the resource
         enum:
           - purchase_bill_details
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PurchaseBillDetailAttributes'
       relationships:
@@ -12808,17 +11979,6 @@ definitions:
         description: Type of the resource
         enum:
           - purchase_bills
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/PurchaseBillDetailedFormAttributes'
       relationships: {}
@@ -12838,6 +11998,14 @@ definitions:
         readOnly: true
       remaining_in_trl:
         type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
         readOnly: true
       description:
         type: string
@@ -12882,17 +12050,6 @@ definitions:
         description: Type of the resource
         enum:
           - salaries
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/SalaryAttributes'
       relationships:
@@ -13010,6 +12167,16 @@ definitions:
           - partially_paid
         readOnly: true
         description: Tahsilat durumu
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Kayıt tarihi
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Son güncelleme tarihi
       item_type:
         type: string
         enum:
@@ -13127,17 +12294,6 @@ definitions:
         description: Type of the resource
         enum:
           - sales_invoices
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/SalesInvoiceAttributes'
       relationships:
@@ -13295,6 +12451,16 @@ definitions:
         type: number
         readOnly: true
         description: Ürün/hizmet net tutarı
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Kayıt tarihi
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Son güncelleme tarihi
       quantity:
         type: number
         readOnly: false
@@ -13351,17 +12517,6 @@ definitions:
         description: Type of the resource
         enum:
           - sales_invoice_details
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/SalesInvoiceDetailAttributes'
       relationships:
@@ -13387,6 +12542,14 @@ definitions:
   TagAttributes:
     type: object
     properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       name:
         type: string
         readOnly: false
@@ -13405,17 +12568,6 @@ definitions:
         description: Type of the resource
         enum:
           - tags
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/TagAttributes'
       relationships: {}
@@ -13435,6 +12587,14 @@ definitions:
         readOnly: true
       remaining_in_trl:
         type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
         readOnly: true
       description:
         type: string
@@ -13467,17 +12627,6 @@ definitions:
         description: Type of the resource
         enum:
           - bank_fees
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/TaxAttributes'
       relationships:
@@ -13544,17 +12693,6 @@ definitions:
         description: Type of the resource
         enum:
           - trackable_jobs
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/TrackableJobAttributes'
       relationships: {}
@@ -13563,6 +12701,14 @@ definitions:
   TransactionAttributes:
     type: object
     properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
       transaction_type:
         type: string
         readOnly: false
@@ -13610,17 +12756,6 @@ definitions:
         description: Type of the resource
         enum:
           - transactions
-      meta:
-        type: object
-        properties:
-          created_at:
-            type: string
-            format: date-time
-            readOnly: true
-          updated_at:
-            type: string
-            format: date-time
-            readOnly: true
       attributes:
         $ref: '#/definitions/TransactionAttributes'
       relationships:
