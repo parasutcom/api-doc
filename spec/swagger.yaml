@@ -12,7 +12,20 @@ info:
     ## API Hakkında
 
 
-    - API V4 test aşamasındadır.
+    Paraşüt API henüz beta aşamasındadır ve sadece belli sayıda kullanıcıya
+    açıktır. Eğer beta test sürecine katılmak veya API hakkındaki görüşlerinizi
+    bizimle paylaşmak isterseniz lütfen bizimle destek@parasut.com adresi
+    üzerinden bağlantıya geçiniz.
+
+
+    API'yi kullanarak Paraşüt veritabanına ulaşabilir ve kendi yazdığınız
+    uygulamalar ile entegre edebilirsiniz. API vasıtasıyla Paraşüt Web arayüzü
+    ile yapılan hemen her işlemi gerçekleştirebilirsiniz.
+
+
+    Bir önceki API (V1) dökümantasyonuna [bu
+    bağlantı](https://api.parasut.com/docs) ile ulaşabilirsiniz
+
 
 
     - API geliştirmesinde çoğunlukla JSONAPI (http://jsonapi.org/)
@@ -58,6 +71,10 @@ info:
     kullanabilirsiniz.
 
 
+    Gerekli CLIENT_ID, CLIENT_SECRET ve REDIRECT_URL bilgilerini almak için
+    destek@parasut.com adresine mail atabilirsiniz.
+
+
     Kimlik doğrulama işleminin başarılı olması durumunda bir adet kimlik jetonu
     (authentication token) ve bir adet de yenileme jetonu (refresh token)
     gönderilecektir. Kimlik jetonu 2 saat süreyle geçerlidir ve her istekte http
@@ -82,6 +99,10 @@ info:
     kullanıcıyı başarılı authentication işleminin ardından yönlendirmek
     istediğiniz `REDIRECT_URL`'i bize ulaşarak kayıt ettirmeniz gerekmektedir.
     `REDIRECT_URL` varsayılan olarak `urn:ietf:wg:oauth:2.0:oob` gelmektedir.
+
+
+    Size özel bir REDIRECT_URL tanımlamak isterseniz destek@parasut.com adresine
+    mail atabilirsiniz.
 
 
     1. Kullanıcıyı şu adrese yönlendirin:
