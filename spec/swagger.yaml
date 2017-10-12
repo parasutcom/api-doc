@@ -4799,6 +4799,15 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[issue_date]'
+          type: string
+          in: query
+        - name: 'filter[due_date]'
+          type: string
+          in: query
+        - name: 'filter[spender_id]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
