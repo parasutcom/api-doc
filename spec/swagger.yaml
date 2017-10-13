@@ -4833,7 +4833,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Faturalar
@@ -4936,7 +4936,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5122,7 +5122,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5350,7 +5350,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -5510,7 +5510,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5701,7 +5701,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -6053,7 +6053,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -6157,7 +6157,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -6261,7 +6261,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -6365,7 +6365,7 @@ paths:
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
             *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document*
+            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -11792,6 +11792,22 @@ definitions:
                     description: Type of the resource
                     enum:
                       - e_invoices
+          pay_to:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+                      - employees
     required:
       - attributes
   PurchaseBillBasicFormAttributes:
