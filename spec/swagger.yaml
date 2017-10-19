@@ -7260,8 +7260,8 @@ paths:
           in: query
           description: >-
             Sortable parameters - *Available: id, issue_date, due_date,
-            remaining, remaining_in_trl*
-          default: '-remaining_in_trl'
+            remaining, remaining_in_trl, description, net_total*
+          default: id
         - name: 'page[number]'
           type: integer
           in: query
