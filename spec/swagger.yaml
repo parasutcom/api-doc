@@ -144,7 +144,7 @@ info:
 
     ```bash
 
-    BASE_URL/oauth/token?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&username=YOUREMAIL&password=YOURPASSWORD&grant_type=password&redirect_uri=urn:ietf:wg:oauth:2.0:oob
+    BASE_URL/oauth/token?client_id=CLIENT_ID&username=YOUREMAIL&password=YOURPASSWORD&grant_type=password&redirect_uri=urn:ietf:wg:oauth:2.0:oob
 
     ```
 
