@@ -207,31 +207,85 @@ info:
     ## Kullanıcı Bilgisi
 
 
-    access_token aldığınız kullanıcının genel bilgilerini görmek için
+    `access_token` aldığınız kullanıcının genel bilgilerini görmek için
     [/me](/#operation/showMe) adresini kullanabilirsiniz.
 
 
     ## Satış Faturası Oluşturma
 
 
-    Satış faturası oluşturmak için adım adım şunlara ihtiyacınız vardır:
+    Satış faturası oluşturmak için bir müşteri (`contact`) `id`'si ve bir veya
+    birden fazla ürün (`product`) `id`'sine ihtiyacınız vardır.
 
 
-    - Müşteri ID'si
-      - [Müşteri listesi](/#operation/listContacts)
-      - [Müşteri oluşturma](/#operation/createContact)
-    - Ürün ID'leri
-      - [Ürün listesi](/#operation/listProducts)
-      - [Ürün oluşturma](/#operation/createProduct)
-
-    Yukarıdaki bilgilere sahip olduktan sonra [Satış Faturası
-    Oluşturma](/#operation/createSalesInvoice) adımına geçebilirsiniz.
+    ### Müşteri
 
 
+    ##### Yeni bir müşteri ile
 
-    `relationships`:
-      - `details` kısmına fatura kalemlerini `array` şeklinde girmelisiniz.
-      - `contact` kısmına müşteri bilgisini girmelisiniz.
+
+    Eğer ihtiyaç duyduğunuz müşteri bilgisi henüz yoksa, öncelikle müşteri
+    oluşturmanız gereklidir. Bunun için [Müşteri
+    oluşturma](/#operation/createContact) endpoint'ini kullanmalısınız. Başarılı
+    bir şekilde müşteri oluşturulursa size dönecek olan yanıt ihtiyaç
+    duyacağınız müşteri `id`'sini içerir.
+
+
+    ##### Mevcut bir müşteri ile
+
+
+    Eğer daha önceden zaten oluşturduğunuz bir müşteri ile ilişkili bir satış
+    faturası oluşturacaksanız öncelikle o müşterinin `id`'sini öğrenmeniz
+    gerekir. Bunun için [Müşteri listesi](/#operation/listContacts) endpoint'ini
+    kullanabilirsiniz. Müşteri listesi endpoint'i isim, e-posta, vergi numarası
+    gibi çeşitli filtreleri destekler. Bunları kullanarak aradığınız müşteriyi
+    bulabilirsiniz.
+
+
+    ### Ürün
+
+
+    ##### Yeni bir ürün ile
+
+
+    Eğer ihtiyaç duyduğunuz ürün bilgisi henüz yoksa, öncelikle ürün
+    oluşturmanız gereklidir. Bunun için [Ürün
+    oluşturma](/#operation/createProduct) endpoint'ini kullanmalısınız. Başarılı
+    bir şekilde ürün oluşturulursa size dönecek olan yanıt ihtiyaç duyacağınız
+    ürün `id`'sini içerir.
+
+
+    ##### Mevcut bir ürün ile
+
+
+    Eğer daha önceden oluşturduğunuz bir ürünü kullanarak bir satış faturası
+    oluşturacaksanız öncelikle o ürünün `id`'sini öğrenmeniz gerekir. Bunun için
+    [Ürün listesi](/#operation/listProducts) endpoint'ini kullanabilirsiniz.
+    Ürün listesi endpoint'i isim, kod gibi çeşitli filtreleri destekler. Bunları
+    kullanarak aradığınız ürünü bulabilirsiniz.
+
+
+    ---
+
+
+    İhtiyaç duyduğunuz müşteri ve ürün `id`'lerini aldıktan sonra [Satış
+    Faturası Oluşturma](/#operation/createSalesInvoice) endpoint'i ile satış
+    faturası oluşturabilirsiniz. Endpoint'in tanımında sağ tarafta beklediğimiz
+    veri şekli bulunmaktadır, aşağıdaki bilgileri verinin şekli ile kıyaslamak
+    daha açıklayıcı olabilir.
+
+
+    Dikkat edilecek noktalar:
+
+    * `relationships` altındaki `contact`'te bulunan `id` alanına müşteri
+    `id`'sini girmeniz gereklidir.
+
+    * `relationships` altındaki `details` kısmı bir listedir (`array`) ve fatura
+    kalemlerini temsil eder. Bu listenin her elemanının ilişkili olduğu bir ürün
+    vardır. Yani `details` altındaki her elemanın kendine ait bir
+    `relationships` kısmı mevcuttur. Buradaki `product` `id` alanı üstteki ürün
+    adımlarında elde ettiğiniz `id`'yi koymanız gereken yerdir.
+
 
     ## Satış Faturasına Tahsilat Ekleme
 
@@ -243,62 +297,64 @@ info:
     ## Satış Faturasının Tahsilatını Silme
 
 
-    Bir satış faturasının tahsilatını silmek aslında o tahsilatı yaratan para
-    akışı - işlemi silmek demektir.
+    Bir satış faturasının tahsilatını silmek aslında o tahsilatı oluşturan para
+    akış işlemini silmek demektir. Bir işlemi silmeden önce o işlemin `id`'sine
+    ihtiyacınız vardır.
 
 
-
-    [Bir işlemi silmek](/#operation/deleteTransaction) için o işlemin ID'sini
-    bilmek gerekir.
-
-    Bir satış faturasına ait tahsilatları almak için
-    [show](/#operation/showSalesInvoice) endpoint'ine istek atarken
-    `?include=payments` parametresini de eklemelisiniz. Tahsilatların yanında
-    işlemleri de almak isterseniz `?include=payments.tx` göndermelisiniz.
+    Bir satış faturasına ait tahsilatları almak için [Satış faturası bilgilerini
+    alma (show)](/#operation/showSalesInvoice) endpoint'ine istek atarken
+    `?include=payments` parametresini de eklemelisiniz. Bu size satış faturası
+    bilgilerine ilave olarak tahsilatları da verir.
 
 
+    Tahsilatlar ile birlikte o tahsilatları oluşturan işlemleri de almak için
+    yine aynı endpoint'e `?include=payments.tx` parametresini ekleyerek istek
+    yapmanız gerekir. Bu size hem satış faturası bilgilerini, hem tahsilat
+    bilgilerini hem de tahsilatı oluşturan işlemlerin bilgilerini verir.
 
-    Daha sonra ilgili işlem-transaction ID'sini [işlem
-    silme](/#operation/deleteTransaction) endpoint'inde kullanabilirsiniz.
+
+    `?include=payments.tx` parametresini kullanarak yaptığınız istek ile işlem
+    (`transaction`) `id`'sini aldıktan sonra [işlem
+    silme](/#operation/deleteTransaction) endpoint'inde bu `id`'yi kullanarak
+    silme işlemini yapabilirsiniz.
 
 
     ## Satış Faturası Resmileştirme
 
 
-    Satış faturasını
-    [oluşturduktan](/#section/Basic-Actions/Satis-Faturasi-Olusturma) sonra
-    e-Arşiv ve e-Fatura şeklinde resmileştirmek için adım adım şunları
-    yapmalısınız:
+    Oluşturduğunuz bir satış faturası varsa onu e-Arşiv veya e-Fatura olarak
+    resmileştirmek için aşağıdakileri yapmanız gereklidir.
 
 
-    1. Müşterinizin e-Fatura kullanıcısı olup olmadığını öğrenmelisiniz.
-      - Müşterinizin [e-Fatura gelen kutusu](/#operation/listEInvoiceInboxes) var ise e-Fatura kullanıcısıdır.
-    2. Eğer müşteriniz e-Fatura kullanıcısı ise:
-      - [e-Fatura oluşturmalısınız](/#operation/createEInvoice)
-    3. Eğer müşteriniz e-Fatura kullanıcısı değil ise:
-      - [e-Arşiv oluşturmalısınız](/#operation/createEArchive)
-    4. Her iki istek sonucunda da size takip edebileceğiniz bir işlem id'si
-    dönecektir.
-      Bu işlemi [sorgulama](/#tag/TrackableJobs) adresi ile belirli aralıklarla sorgulayıp, durum kontrolü yapmalısınız.
+    1. Öncelikle müşterinizin e-Fatura kullanıcısı olup olmadığını
+    öğrenmelisiniz. Bunun için müşterinizin e-Fatura gelen kutusu olup
+    olmadığına bakmak gereklidir. [e-Fatura gelen
+    kutusu](/#operation/listEInvoiceInboxes) endpoint'ine müşterinin vkn'sini
+    kullanarak bir istek yaptığınızda eğer bir gelen kutusu olduğuna dair yanıt
+    alıyorsanız müşteri e-Fatura kullanıcısıdır. Müşteri e-Fatura kullanıcısı
+    ise resmileştirme için e-Fatura oluşturmak, e-Fatura kullanıcısı değilse
+    e-Arşiv oluşturmak gereklidir.
 
-      - "data->attributes->status": "running" -> işlemin hala sürdüğü anlamına gelir.
-      - "data->attributes->status": "error" -> bir hata olduğu anlamına gelir.
-        - "data->attributes->errors": ile hataları görebilirsiniz.
-      - "data->attributes->status": "done" -> başarılı bir işlem anlamına gelir.
+    2. e-Fatura veya e-Arşiv oluşturma:
+       * Önceki adımda müşterinin e-Fatura kullanıcısı olduğu öğrenildiyse,  [e-Fatura oluşturma endpoint'i](/#operation/createEInvoice) kullanılarak e-Fatura oluşturmak gereklidir.
+       * Önceki adımda müşterinin e-Arşiv kullanıcısı olduğu öğrenildiyse,  [e-Arşiv oluşturma endpoint'i](/#operation/createEArchive) kullanılarak e-Arşiv oluşturmak gereklidir.
 
-    5. Resmileştirme detayları
+       e-Fatura ve e-Arşiv oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura veya e-Arşiv oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
+       * `status: "running"` işlemin henüz sonuçlanmadığını gösterir.
+       * `status: "error"` işlemde bir hata olduğu anlamına gelir. Dönen yanıtta hata mesajını inceleyebilirsiniz.
+       * `status: "done"` işlemin başarılı bir şekilde sonuçlandığını gösterir.
+    4. e-Fatura / e-Arşiv işleminin başarılı bir şekilde sonuçlandığını
+    gördükten sonra e-Fatura / e-Arşiv bilgilerini almak için [Satış faturası
+    bilgilerini alma (show)](/#operation/showSalesInvoice) endpoint'ine
+    `?include=active_e_document` parametresi ile istek yapmanız gerekmektedir.
+    Buradan sıradaki adımda ihtiyaç duyacağınız e-Fatura / e-Arşiv `id`'lerini
+    ve başka bilgileri de alabilirsiniz.
 
-      Faturanız ile birlikte, faturanızın e-Arşiv/e-Fatura detaylarını görmek için [fatura bilgilerine](/#operation/showSalesInvoice) ulaşırken `?include=active_e_document` parametresini eklemeniz yeterlidir.
-
-    6. Başarılı resmileştirilen e-Arşiv
-
-      E-arşiv faturalarınızı başarılı bir şekilde resmileştirdikten sonra müşterinize PDF ile ulaştırabilirsiniz.
-      [e-Arşiv PDF](/#operation/showEArchivePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz. Unutmayın, bu URL 1 saat geçerli bir adrestir. Bu yüzden bu linki direk olarak müşterinizle <u>paylaşmamalısınız</u>. İndirip müşterinize ayrıca göndermelisiniz.
-
-    7. Başarılı resmileştirilen e-Fatura
-
-      Eğer e-fatura olarak başarılı bir şekilde resmileştirdiyseniz, yapmanız gereken başka bir işlem yoktur. Karşı taraf da e-fatura kullancısı olduğu için faturanız karşı tarafa otomatik olarak iletilecektir.
-      Eğer isterseniz yine de [e-Fatura PDF](/#operation/showEInvoicePdf) adresinden size dönen PDF'i indirip müşterinize gönderebilirsiniz.
+    5. e-Fatura / e-Arşiv başarılı bir resmileştirildikten sonra müşterilerinize
+    PDF olarak göndermek isteyebilirsiniz. Bunun için:
+       * e-Arşiv için, 4. adımda elde edeceğiniz e-Arşiv `id`'sini kullanarak [e-Arşiv PDF](/#operation/showEArchivePdf) endpoint'ine istek atabilirsiniz. Bu endpoint PDF henüz yoksa boş bir yanıt ile birlikte 204 döner. Yani 204 almayana kadar belirli aralıklarla bu endpoint'e istek yapmanız gerekmektedir. Geçerli yanıt aldığınızda size dönecek olan PDF URL 1 saat için geçerlidir. Bu yüzden bu linki direk olarak müşterinizle **paylaşmamalısınız**. İndirip müşterinize kendiniz göndermelisiniz.
+       * e-Fatura için ekstra yapmanız gereken birşey yoktur. Müşteriniz e-Fatura kullanıcısı olduğu için faturanız karşı tarafa otomatik olarak iletilecektir. Ama isterseniz kendiniz de PDF indirip gönderebilirsiniz. e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'dir: [e-Fatura PDF](/#operation/showEInvoicePdf)
 host: api.parasut.com
 schemes:
   - https
