@@ -2771,7 +2771,7 @@ paths:
       description: ''
       parameters:
         - name: 'filter[vkn]'
-          type: string
+          type: integer
           in: query
         - name: 'page[number]'
           type: integer
@@ -4862,7 +4862,7 @@ paths:
           type: string
           in: query
         - name: 'filter[spender_id]'
-          type: string
+          type: integer
           in: query
         - name: sort
           type: string
@@ -7311,6 +7311,15 @@ paths:
       summary: Index
       description: ''
       parameters:
+        - name: 'filter[issue_date]'
+          type: string
+          in: query
+        - name: 'filter[due_date]'
+          type: string
+          in: query
+        - name: 'filter[contact_id]'
+          type: integer
+          in: query
         - name: sort
           type: string
           in: query
