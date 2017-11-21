@@ -10125,6 +10125,7 @@ securityDefinitions:
     tokenUrl: 'https://api.parasut.com/oauth/token'
     authorizationUrl: 'https://api.parasut.com/oauth/authorize'
     flow: accessCode
+    scopes: {}
 definitions:
   Error:
     type: object
