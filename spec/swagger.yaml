@@ -309,13 +309,13 @@ info:
 
 
     Tahsilatlar ile birlikte o tahsilatları oluşturan işlemleri de almak için
-    yine aynı endpoint'e `?include=payments.tx` parametresini ekleyerek istek
-    yapmanız gerekir. Bu size hem satış faturası bilgilerini, hem tahsilat
+    yine aynı endpoint'e `?include=payments.transaction` parametresini ekleyerek
+    istek yapmanız gerekir. Bu size hem satış faturası bilgilerini, hem tahsilat
     bilgilerini hem de tahsilatı oluşturan işlemlerin bilgilerini verir.
 
 
-    `?include=payments.tx` parametresini kullanarak yaptığınız istek ile işlem
-    (`transaction`) `id`'sini aldıktan sonra [işlem
+    `?include=payments.transaction` parametresini kullanarak yaptığınız istek
+    ile işlem (`transaction`) `id`'sini aldıktan sonra [işlem
     silme](/#operation/deleteTransaction) endpoint'inde bu `id`'yi kullanarak
     silme işlemini yapabilirsiniz.
 
@@ -1571,7 +1571,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: payable, tx*
+            *Available: payable, transaction*
         - name: payment_form
           schema:
             type: object
@@ -4888,8 +4888,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Faturalar
@@ -4991,8 +4992,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5177,8 +5179,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5405,8 +5408,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Fatura
@@ -5565,8 +5569,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5756,8 +5761,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5984,7 +5990,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: payable, tx*
+            *Available: payable, transaction*
         - name: payment_form
           schema:
             type: object
@@ -6108,8 +6114,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Fatura
@@ -6212,8 +6219,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Fatura
@@ -6316,8 +6324,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Fatura
@@ -6420,8 +6429,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, supplier, details, payments,
-            payments.tx, tags, recurrence_plan, active_e_document, pay_to*
+            *Available: category, spender, details, details.product, payments,
+            payments.transaction, tags, recurrence_plan, active_e_document,
+            pay_to*
       responses:
         '200':
           description: Fatura
@@ -7197,7 +7207,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: payable, tx*
+            *Available: payable, transaction*
         - name: payment_form
           schema:
             type: object
@@ -7344,8 +7354,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Satış faturaları
@@ -7441,8 +7452,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -7655,8 +7667,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -7748,8 +7761,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8018,7 +8032,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: payable, tx*
+            *Available: payable, transaction*
         - name: payment_form
           schema:
             type: object
@@ -8142,8 +8156,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8247,8 +8262,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8352,8 +8368,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8457,8 +8474,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8562,8 +8580,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, payments, payments.tx, tags,
-            sharings, recurrence_plan, active_e_document*
+            *Available: category, contact, details, details.product, payments,
+            payments.transaction, tags, sharings, recurrence_plan,
+            active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -9793,7 +9812,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: payable, tx*
+            *Available: payable, transaction*
         - name: payment_form
           schema:
             type: object
@@ -11387,7 +11406,7 @@ definitions:
                       - bank_fees
                       - salaries
                       - checks
-          tx:
+          transaction:
             type: object
             properties:
               data:
@@ -11797,20 +11816,6 @@ definitions:
                       description: Type of the resource
                       enum:
                         - payments
-          payments.tx:
-            type: object
-            properties:
-              data:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    maxLength: 255
-                  type:
-                    type: string
-                    maxLength: 255
-                    description: Type of the resource
-                    enum: []
           tags:
             type: object
             properties:
@@ -12475,20 +12480,6 @@ definitions:
                       description: Type of the resource
                       enum:
                         - payments
-          payments.tx:
-            type: object
-            properties:
-              data:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    maxLength: 255
-                  type:
-                    type: string
-                    maxLength: 255
-                    description: Type of the resource
-                    enum: []
           tags:
             type: object
             properties:
