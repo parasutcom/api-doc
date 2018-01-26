@@ -341,7 +341,8 @@ info:
        * Önceki adımda müşterinin e-Arşiv kullanıcısı olduğu öğrenildiyse,  [e-Arşiv oluşturma endpoint'i](/#operation/createEArchive) kullanılarak e-Arşiv oluşturmak gereklidir.
 
        e-Fatura ve e-Arşiv oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura veya e-Arşiv oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
-       * `status: "running"` işlemin henüz sonuçlanmadığını gösterir.
+       * `status: "pending"` işlemin sırada olduğunu, henüz başlamadığını gösterir.
+       * `status: "running"` işlemin yapılmakta olduğunu ancak henüz sonuçlanmadığını gösterir.
        * `status: "error"` işlemde bir hata olduğu anlamına gelir. Dönen yanıtta hata mesajını inceleyebilirsiniz.
        * `status: "done"` işlemin başarılı bir şekilde sonuçlandığını gösterir.
     4. e-Fatura / e-Arşiv işleminin başarılı bir şekilde sonuçlandığını
@@ -390,6 +391,8 @@ tags:
     x-displayName: MAAŞ
   - name: SalesInvoices
     x-displayName: SATIŞ FATURASI
+  - name: ShipmentDocuments
+    x-displayName: STOK HAREKETİ
   - name: Tags
     x-displayName: ETİKET
   - name: Taxes
@@ -423,6 +426,7 @@ x-tagGroups:
   - name: Stok
     tags:
       - Products
+      - ShipmentDocuments
   - name: Ayarlar
     tags:
       - ItemCategories
@@ -836,6 +840,13 @@ paths:
       operationId: showMe
       summary: Show
       description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: user_roles, companies, profile*
       responses:
         '200':
           description: Me
@@ -8771,6 +8782,661 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: listShipmentDocuments
+      summary: Index
+      description: ''
+      parameters:
+        - name: 'filter[inflow]'
+          type: string
+          in: query
+        - name: 'filter[issue_date]'
+          type: string
+          in: query
+        - name: 'filter[invoice_status]'
+          type: string
+          in: query
+        - name: 'filter[archived]'
+          type: boolean
+          in: query
+        - name: 'filter[tag_ids[]]'
+          type: integer
+          in: query
+        - name: sort
+          type: string
+          in: query
+          description: >-
+            Sortable parameters - *Available: id, issue_date, description,
+            inflow*
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, details, details.product, tags, invoice*
+      responses:
+        '200':
+          description: Stok Hareketleri
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/ShipmentDocument'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - tags
+                        - shipment_document_details
+                        - sales_invoices
+                        - purchase_bills
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - ShipmentDocuments
+      operationId: createShipmentDocument
+      summary: Create
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, details, details.product, tags, invoice*
+        - name: shipment_document_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - shipment_document_details
+                                attributes:
+                                  $ref: >-
+                                    #/definitions/ShipmentDocumentDetailAttributes
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contact
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Stok Hareketi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - tags
+                        - shipment_document_details
+                        - sales_invoices
+                        - purchase_bills
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Stok Hareketi ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: showShipmentDocument
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, details, details.product, tags, invoice*
+      responses:
+        '200':
+          description: Stok Hareketi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - tags
+                        - shipment_document_details
+                        - sales_invoices
+                        - purchase_bills
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - ShipmentDocuments
+      operationId: updateShipmentDocument
+      summary: Edit
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, details, details.product, tags, invoice*
+        - name: shipment_document_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - shipment_document_details
+                                attributes:
+                                  $ref: >-
+                                    #/definitions/ShipmentDocumentDetailAttributes
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contact
+                      tags:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - tags
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Stok Hareketi
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - tags
+                        - shipment_document_details
+                        - sales_invoices
+                        - purchase_bills
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - ShipmentDocuments
+      operationId: deleteShipmentDocument
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/tags':
     parameters:
       - name: company_id
@@ -10253,6 +10919,55 @@ definitions:
       relationships: {}
     required:
       - attributes
+  AddressAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        readOnly: true
+      address:
+        type: string
+        readOnly: true
+      phone:
+        type: string
+        readOnly: true
+      fax:
+        type: string
+        readOnly: true
+  Address:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - addresses
+      attributes:
+        $ref: '#/definitions/AddressAttributes'
+      relationships:
+        type: object
+        properties:
+          addressable:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - companies
+    required:
+      - attributes
   BankFeeAttributes:
     type: object
     properties:
@@ -10356,6 +11071,180 @@ definitions:
                       description: Type of the resource
                       enum:
                         - tags
+    required:
+      - attributes
+  CompanyAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        readOnly: true
+      valid_until:
+        type: string
+        format: date
+        readOnly: true
+      subscription_status:
+        type: string
+        readOnly: true
+      trial_expiration_at:
+        type: string
+        format: date-time
+        readOnly: true
+      allowed_inspection_at:
+        type: string
+        format: date-time
+        readOnly: true
+      app_url:
+        type: string
+        readOnly: true
+      legal_name:
+        type: string
+        readOnly: true
+      occupation_field:
+        type: string
+        readOnly: true
+      district:
+        type: string
+        readOnly: true
+      city:
+        type: string
+        readOnly: true
+      tax_office:
+        type: string
+        readOnly: true
+      tax_number:
+        type: string
+        readOnly: true
+      mersis_no:
+        type: string
+        readOnly: true
+      total_unused_bonus_months:
+        type: number
+        readOnly: true
+      subscription_started_at:
+        type: string
+        format: date
+        readOnly: true
+      subscription_renewed_at:
+        type: string
+        format: date
+        readOnly: true
+      subscription_value:
+        type: number
+        readOnly: true
+      primary_job:
+        type: string
+        readOnly: true
+      is_active:
+        type: boolean
+        readOnly: true
+      accessible:
+        type: boolean
+        readOnly: true
+      inspectable:
+        type: boolean
+        readOnly: true
+      is_in_grace_period:
+        type: boolean
+        readOnly: true
+      subscription_status_for_analytics:
+        type: string
+        readOnly: true
+      end_of_grace_period_at:
+        type: string
+        format: date
+        readOnly: true
+      inventory_enabled:
+        type: boolean
+        readOnly: true
+      is_in_trial_period:
+        type: boolean
+        readOnly: true
+      has_iyzico_integration:
+        type: boolean
+        readOnly: true
+      has_active_subscription:
+        type: boolean
+        readOnly: true
+      logo:
+        - type: object
+          properties:
+            url:
+              type: string
+            is_processing:
+              type: boolean
+      subscription_info_text:
+        type: string
+        readOnly: true
+      subscription_info_title:
+        type: string
+        readOnly: true
+      subscription_url:
+        type: string
+        readOnly: true
+      referral_url:
+        type: string
+        readOnly: true
+      subscription_plan_duration:
+        type: number
+        readOnly: true
+      subscription_plan_name:
+        type: string
+        readOnly: true
+      e_invoicing_activated_at:
+        type: string
+        format: date-time
+        readOnly: true
+      has_selected_plan:
+        type: boolean
+        readOnly: true
+  Company:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - companies
+      attributes:
+        $ref: '#/definitions/CompanyAttributes'
+      relationships:
+        type: object
+        properties:
+          owner:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - users
+          address:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - addresses
     required:
       - attributes
   ContactAttributes:
@@ -10704,7 +11593,9 @@ definitions:
         properties:
           internet_sale:
             type: object
-            description: İnternet satışı bilgileri
+            description: >-
+              İnternet satışı bilgileri. İnternet üzerinden bir satış
+              yapıyorsanız doldurmak zorunlu.
             properties:
               url:
                 type: string
@@ -10723,10 +11614,16 @@ definitions:
               payment_date:
                 type: string
                 format: date
+                pattern: YYYY-MM-DD
                 description: Ödeme tarihi
           shipment:
             type: object
-            description: Gönderi bilgileri
+            description: >-
+              Gönderi bilgileri. Gönderim yapılıyorsa doldurmak zorunlu. Örneğin
+              bir hizmet satışı için kargolanan veya gönderilen birşey yoktur,
+              bu durumda doldurulması zorunlu değil ancak bir e-ticaret sitesi
+              olarak yapılan satışta müşteriye kargo / kurye ile bir ürün
+              gönderimi vardır, bu durumda doldurmak zorunlu.
             properties:
               title:
                 type: string
@@ -11596,6 +12493,56 @@ definitions:
                     description: Type of the resource
                     enum:
                       - item_categories
+    required:
+      - attributes
+  ProfileAttributes:
+    type: object
+    properties:
+      phone:
+        type: string
+        readOnly: true
+      job_title:
+        type: string
+        readOnly: true
+      avatar:
+        - type: object
+          properties:
+            url:
+              type: string
+            is_processing:
+              type: boolean
+  Profile:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - profiles
+      attributes:
+        $ref: '#/definitions/ProfileAttributes'
+      relationships:
+        type: object
+        properties:
+          user:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - users
     required:
       - attributes
   PurchaseBillAttributes:
@@ -12642,6 +13589,198 @@ definitions:
                       - products
     required:
       - attributes
+  ShipmentDocumentAttributes:
+    type: object
+    properties:
+      archived:
+        type: boolean
+        readOnly: true
+      invoice_no:
+        type: string
+        readOnly: true
+      print_note:
+        type: string
+        readOnly: true
+      printed_at:
+        type: string
+        format: date-time
+        readOnly: true
+      print_url:
+        type: string
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      inflow:
+        type: boolean
+        readOnly: false
+      description:
+        type: string
+        readOnly: false
+      city:
+        type: string
+        readOnly: false
+      district:
+        type: string
+        readOnly: false
+      address:
+        type: string
+        readOnly: false
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+      shipment_date:
+        type: string
+        format: date
+        readOnly: false
+      procurement_number:
+        type: string
+        readOnly: false
+    required:
+      - issue_date
+  ShipmentDocument:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_documents
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentAttributes'
+      relationships:
+        type: object
+        properties:
+          contact:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+          tags:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - tags
+          details:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - shipment_document_details
+          invoice:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+                      - purchase_bills
+    required:
+      - attributes
+  ShipmentDocumentDetailAttributes:
+    type: object
+    properties:
+      detail_no:
+        type: number
+        readOnly: true
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      quantity:
+        type: number
+        readOnly: false
+    required:
+      - quantity
+  ShipmentDocumentDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_document_details
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentDetailAttributes'
+      relationships:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+    required:
+      - attributes
   TagAttributes:
     type: object
     properties:
@@ -12911,5 +14050,114 @@ definitions:
                       description: Type of the resource
                       enum:
                         - payments
+    required:
+      - attributes
+  UserRoleAttributes:
+    type: object
+    properties:
+      sales_invoices:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+      expenditures:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+      own_expenditures:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+      employees:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+      accounts:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+      settings:
+        type: string
+        enum:
+          - rw
+          - ro
+          - na
+        readOnly: true
+  UserRole:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - user_roles
+      attributes:
+        $ref: '#/definitions/UserRoleAttributes'
+      relationships:
+        type: object
+        properties:
+          company:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - companies
+          user:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - users
+          managed_employee:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - employees
     required:
       - attributes
