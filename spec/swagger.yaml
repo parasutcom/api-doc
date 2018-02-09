@@ -7341,6 +7341,12 @@ paths:
         - name: 'filter[contact_id]'
           type: integer
           in: query
+        - name: 'filter[invoice_id]'
+          type: integer
+          in: query
+        - name: 'filter[invoice_series]'
+          type: string
+          in: query
         - name: sort
           type: string
           in: query
