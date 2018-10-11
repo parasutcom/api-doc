@@ -138,13 +138,25 @@ info:
     ### 2. grant_type=password
 
 
-    access_token almanız için aşağıdaki url'de size özel alanları doldurarak
-    POST ile ulaşmanız gerekmektedir.
+    E-posta ve şifre ile access_token almanız için aşağıdaki istekte size özel
+    alanları doldurarak POST isteği atmanız gerekmektedir.
 
 
     ```bash
 
-    BASE_URL/oauth/token?client_id=CLIENT_ID&username=YOUREMAIL&password=YOURPASSWORD&grant_type=password&redirect_uri=urn:ietf:wg:oauth:2.0:oob
+    curl -F grant_type=password \
+
+    -F client_id=CLIENT_ID \
+
+    -F client_secret=CLIENT_SECRET \
+
+    -F username=YOUREMAIL \
+
+    -F password=YOURPASSWORD \
+
+    -F redirect_uri=urn:ietf:wg:oauth:2.0:oob \
+
+    -X POST BASE_URL/oauth/token
 
     ```
 
