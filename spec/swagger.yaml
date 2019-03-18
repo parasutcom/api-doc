@@ -59,6 +59,8 @@ info:
     `Authorization` header'ı olarak `Bearer access_token` şeklinde
     göndermelisiniz.
 
+    - Dakikada 60 adet istek gönderebilirsiniz.
+
 
     # Authentication
 
@@ -367,7 +369,7 @@ info:
     5. e-Fatura / e-Arşiv başarılı bir resmileştirildikten sonra müşterilerinize
     PDF olarak göndermek isteyebilirsiniz. Bunun için:
        * e-Arşiv için, 4. adımda elde edeceğiniz e-Arşiv `id`'sini kullanarak [e-Arşiv PDF](/#operation/showEArchivePdf) endpoint'ine istek atabilirsiniz. Bu endpoint PDF henüz yoksa boş bir yanıt ile birlikte 204 döner. Yani 204 almayana kadar belirli aralıklarla bu endpoint'e istek yapmanız gerekmektedir. Geçerli yanıt aldığınızda size dönecek olan PDF URL 1 saat için geçerlidir. Bu yüzden bu linki direk olarak müşterinizle **paylaşmamalısınız**. İndirip müşterinize kendiniz göndermelisiniz.
-       * e-Fatura için ekstra yapmanız gereken birşey yoktur. Müşteriniz e-Fatura kullanıcısı olduğu için faturanız karşı tarafa otomatik olarak iletilecektir. Ama isterseniz kendiniz de PDF indirip gönderebilirsiniz. e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'dir: [e-Fatura PDF](/#operation/showEInvoicePdf)
+       * e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'dir: [e-Fatura PDF](/#operation/showEInvoicePdf)
 
     ## İrsaliye Oluşturma
 
@@ -13558,6 +13560,10 @@ definitions:
       shipment_addres:
         type: string
         readOnly: false
+      shipment_included:
+        type: boolean
+        readOnly: false
+        description: İrsaliyeli fatura
     required:
       - item_type
       - issue_date
