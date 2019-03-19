@@ -10040,6 +10040,126 @@ paths:
         description: Firma ID
         in: path
         required: true
+    get:
+      tags:
+        - Taxes
+      operationId: listTaxes
+      summary: Index
+      description: ''
+      parameters:
+        - name: 'filter[due_date]'
+          type: string
+          in: query
+        - name: 'filter[issue_date]'
+          type: string
+          in: query
+        - name: 'filter[currency]'
+          type: string
+          in: query
+        - name: 'filter[remaining]'
+          type: number
+          in: query
+        - name: sort
+          type: string
+          in: query
+          description: >-
+            Sortable parameters - *Available: id, issue_date, due_date,
+            remaining, description, net_total*
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: category, tags, payments*
+      responses:
+        '200':
+          description: Vergiler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Tax'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - item_categories
+                        - tags
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
     post:
       tags:
         - Taxes
