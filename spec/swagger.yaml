@@ -927,6 +927,127 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/accounts/{id}/transactions':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Hesap ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Accounts
+      operationId: listAccountTransactions
+      summary: Transactions
+      description: ''
+      parameters:
+        - name: 'filter[date]'
+          type: string
+          in: query
+        - name: sort
+          type: string
+          in: query
+          description: 'Sortable parameters - *Available: id*'
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account*
+      responses:
+        '200':
+          description: İşlemler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   /me:
     get:
       tags:
@@ -14467,22 +14588,27 @@ definitions:
         type: string
         format: date
         readOnly: true
+      description:
+        type: string
+        readOnly: false
+        description: Açıklama
       transaction_type:
         type: string
         readOnly: false
-      humanized_type_name:
-        type: string
-        readOnly: false
+        description: İşlem türü
       date:
         type: string
         format: date
         readOnly: false
+        description: Tarih
       amount_in_trl:
         type: number
         readOnly: false
+        description: TRL karşılığı meblağ
       debit_amount:
         type: number
         readOnly: false
+        description: Borç meblağ
       debit_currency:
         type: string
         enum:
@@ -14491,9 +14617,11 @@ definitions:
           - EUR
           - GBP
         readOnly: false
+        description: Borç döviz cinsi
       credit_amount:
         type: number
         readOnly: false
+        description: Alacak meblağ
       credit_currency:
         type: string
         enum:
@@ -14502,6 +14630,7 @@ definitions:
           - EUR
           - GBP
         readOnly: false
+        description: Alacak döviz cinsi
   Transaction:
     type: object
     properties:
