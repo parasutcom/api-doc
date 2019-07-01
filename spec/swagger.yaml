@@ -1048,6 +1048,244 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/accounts/{id}/transactions/debit_transactions':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Kasa/Banka Hesabı ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Accounts
+      operationId: createDebitTransaction
+      summary: Debit Transaction
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account, payments*
+        - name: transaction_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - transactions
+                  attributes:
+                    $ref: '#/definitions/AccountDebitCreditTransactionFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: İşlem
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/accounts/{id}/transactions/credit_transactions':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Kasa/Banka Hesabı ID
+        in: path
+        required: true
+    post:
+      tags:
+        - Accounts
+      operationId: createCreditTransaction
+      summary: Credit Transaction
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: debit_account, credit_account, payments*
+        - name: transaction_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - transactions
+                  attributes:
+                    $ref: '#/definitions/AccountDebitCreditTransactionFormAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: İşlem
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Transaction'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - accounts
+                        - payments
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   /me:
     get:
       tags:
@@ -11495,6 +11733,42 @@ definitions:
           - accounts
       attributes:
         $ref: '#/definitions/AccountAttributes'
+      relationships: {}
+    required:
+      - attributes
+  AccountDebitCreditTransactionFormAttributes:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: İşlem Tarihi
+        readOnly: false
+      amount:
+        type: number
+        description: İşlem Tutarı
+        readOnly: false
+      description:
+        type: string
+        description: İşlem Açıklaması
+        readOnly: false
+    required:
+      - date
+      - amount
+  AccountDebitCreditTransactionForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - transactions
+      attributes:
+        $ref: '#/definitions/AccountDebitCreditTransactionFormAttributes'
       relationships: {}
     required:
       - attributes
