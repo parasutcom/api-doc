@@ -1048,7 +1048,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
-  '/{company_id}/accounts/{id}/transactions/debit_transactions':
+  '/{company_id}/accounts/{id}/debit_transactions':
     parameters:
       - name: company_id
         type: integer
@@ -1167,7 +1167,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
-  '/{company_id}/accounts/{id}/transactions/credit_transactions':
+  '/{company_id}/accounts/{id}/credit_transactions':
     parameters:
       - name: company_id
         type: integer
