@@ -7971,6 +7971,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8148,6 +8149,21 @@ paths:
                                   description: Type of the resource
                                   enum:
                                     - tags
+                      sales_offer:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_offers
           in: body
           required: true
       responses:
@@ -8176,6 +8192,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8282,6 +8299,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8457,6 +8475,21 @@ paths:
                                   description: Type of the resource
                                   enum:
                                     - tags
+                      sales_offer:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_offers
           in: body
           required: true
       responses:
@@ -8485,6 +8518,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8771,6 +8805,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8877,6 +8912,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -8983,6 +9019,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -9089,6 +9126,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -9276,6 +9314,21 @@ paths:
                                   description: Type of the resource
                                   enum:
                                     - tags
+                      sales_offer:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_offers
           in: body
           required: true
       responses:
@@ -9304,6 +9357,7 @@ paths:
                         - sales_invoice_details
                         - payments
                         - tags
+                        - sales_offers
                         - sharings
                         - recurrence_plans
                         - e_archives
@@ -14296,6 +14350,21 @@ definitions:
                       description: Type of the resource
                       enum:
                         - tags
+          sales_offer:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_offers
           sharings:
             type: object
             properties:
@@ -14439,6 +14508,41 @@ definitions:
                     description: Type of the resource
                     enum:
                       - products
+    required:
+      - attributes
+  SalesOfferAttributes: {}
+  SalesOffer:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_offers
+      attributes:
+        $ref: '#/definitions/SalesOfferAttributes'
+      relationships:
+        type: object
+        properties:
+          sales_invoice:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
     required:
       - attributes
   ShipmentDocumentAttributes:
