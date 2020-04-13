@@ -344,6 +344,12 @@ info:
     alıyorsanız müşteri e-Fatura kullanıcısıdır. Müşteri e-Fatura kullanıcısı
     ise resmileştirme için e-Fatura oluşturmak, e-Fatura kullanıcısı değilse
     e-Arşiv oluşturmak gereklidir.
+    
+    Oluşturduğunuz e-Fatura, e-Arşiv ve e-Smm’nin
+    düzenleme tarihi e-Fatura’ya geçiş sağladığınız aktivasyon tarihinden sonra
+    olmalıdır. Aynı zamanda oluşturduğunuz e-Fatura’nın düzenleme tarihi alıcının
+    etiketi kullanmaya başladığı tarihten de önce olamaz. Alıcının etiketi
+    kullanmaya başladığı tarihi e-Fatura gelen kutusunu çekerek görüntüleyebilirsiniz.
 
     2. e-Fatura veya e-Arşiv oluşturma:
        * Önceki adımda müşterinin e-Fatura kullanıcısı olduğu öğrenildiyse,  [e-Fatura oluşturma endpoint'i](/#operation/createEInvoice) kullanılarak e-Fatura oluşturmak gereklidir.
