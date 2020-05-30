@@ -6,18 +6,23 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
+    Bir önceki API (V1) dökümantasyonuna [bu
+    bağlantı](https://api.parasut.com/docs) ile ulaşabilirsiniz
+
+
     # GİRİŞ
 
 
     ## API Hakkında
 
 
-    Paraşüt API'yi kullanmak veya görüşlerinizi
+    Paraşüt API henüz beta aşamasındadır ve sadece belli sayıda kullanıcıya
+    açıktır. Eğer beta test sürecine katılmak veya API hakkındaki görüşlerinizi
     bizimle paylaşmak isterseniz lütfen bizimle destek@parasut.com adresi
-    üzerinden iletişime geçiniz.
+    üzerinden bağlantıya geçiniz.
 
 
-    API'yi kullanarak Paraşüt verilerine ulaşabilir ve kendi yazdığınız
+    API'yi kullanarak Paraşüt veritabanına ulaşabilir ve kendi yazdığınız
     uygulamalar ile entegre edebilirsiniz. API vasıtasıyla Paraşüt Web arayüzü
     ile yapılan hemen her işlemi gerçekleştirebilirsiniz.
 
@@ -483,6 +488,8 @@ tags:
     x-displayName: MAAŞ
   - name: SalesInvoices
     x-displayName: SATIŞ FATURASI
+  - name: SalesOffers
+    x-displayName: SalesOffers
   - name: ShipmentDocuments
     x-displayName: İRSALİYE
   - name: StockMovements
@@ -9372,6 +9379,77 @@ paths:
                       type: object
                     relationships:
                       type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Sales Offer ID
+        in: path
+        required: true
+    get:
+      tags:
+        - SalesOffers
+      operationId: showSalesOffer
+      summary: Show
+      description: ''
+      responses:
+        '200':
+          description: Teklif
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffer'
         '400':
           description: Bad Request
           schema:
