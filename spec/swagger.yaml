@@ -4911,7 +4911,9 @@ paths:
         - Products
       operationId: createProduct
       summary: Create
-      description: ''
+      description: >-
+        `unit_selection` değeri için kullanılabilir birimler - 
+        *Available: Adet, Ay, Çift, Çuval, Dakika, Diğer, File, Gram, Gün, Hafta, Kamyon, Kilogram, Koli, Litre, Metre, Metreküp, Miligram, Paket, Palet, Poşet, Saat, Sandık, Saniye, Ton, Yıl*
       parameters:
         - name: include
           type: string
@@ -13333,10 +13335,14 @@ definitions:
         type: string
         readOnly: false
         description: Alış ÖTV tipi
-      unit:
+      unit_selection:
         type: string
         readOnly: false
         description: Birim
+      unit:
+        type: string
+        readOnly: false
+        description: Birim açıklaması
       communications_tax_rate:
         type: number
         readOnly: false
