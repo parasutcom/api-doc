@@ -13342,7 +13342,7 @@ definitions:
       unit:
         type: string
         readOnly: false
-        description: Birim açıklaması (Birim "diğer" ise)
+        description: Birim açıklaması (Birim "Diğer" ise)
       communications_tax_rate:
         type: number
         readOnly: false
