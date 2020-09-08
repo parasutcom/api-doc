@@ -344,33 +344,37 @@ info:
     alıyorsanız müşteri e-Fatura kullanıcısıdır. Müşteri e-Fatura kullanıcısı
     ise resmileştirme için e-Fatura oluşturmak, e-Fatura kullanıcısı değilse
     e-Arşiv oluşturmak gereklidir.
-    
-    Oluşturduğunuz e-Fatura, e-Arşiv ve e-Smm’nin
-    düzenleme tarihi e-Fatura’ya geçiş sağladığınız aktivasyon tarihinden sonra
-    olmalıdır. Aynı zamanda oluşturduğunuz e-Fatura’nın düzenleme tarihi alıcının
-    etiketi kullanmaya başladığı tarihten de önce olamaz. Alıcının etiketi
-    kullanmaya başladığı tarihi e-Fatura gelen kutusunu çekerek görüntüleyebilirsiniz.
 
-    2. e-Fatura veya e-Arşiv oluşturma:
+
+    Oluşturduğunuz e-Fatura, e-Arşiv ve e-Smm’nin düzenleme tarihi e-Fatura’ya
+    geçiş sağladığınız aktivasyon tarihinden sonra olmalıdır. Aynı zamanda
+    oluşturduğunuz e-Fatura’nın düzenleme tarihi alıcının etiketi kullanmaya
+    başladığı tarihten de önce olamaz. Alıcının etiketi kullanmaya başladığı
+    tarihi e-Fatura gelen kutusunu çekerek görüntüleyebilirsiniz.
+
+
+    2. e-Fatura / e-Arşiv / e-Smm oluşturma:
        * Önceki adımda müşterinin e-Fatura kullanıcısı olduğu öğrenildiyse,  [e-Fatura oluşturma endpoint'i](/#operation/createEInvoice) kullanılarak e-Fatura oluşturmak gereklidir.
        * Önceki adımda müşterinin e-Arşiv kullanıcısı olduğu öğrenildiyse,  [e-Arşiv oluşturma endpoint'i](/#operation/createEArchive) kullanılarak e-Arşiv oluşturmak gereklidir.
+       * Önceki adımda müşterinin e-Smm kullanıcısı olduğu öğrenildiyse,  [e-Smm oluşturma endpoint'i](/#operation/createESmm) kullanılarak e-Smm oluşturmak gereklidir.
 
-       e-Fatura ve e-Arşiv oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura veya e-Arşiv oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
+       e-Fatura / e-Arşiv / e-Smm oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura / e-Arşiv / e-Smm oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
        * `status: "pending"` işlemin sırada olduğunu, henüz başlamadığını gösterir.
        * `status: "running"` işlemin yapılmakta olduğunu ancak henüz sonuçlanmadığını gösterir.
        * `status: "error"` işlemde bir hata olduğu anlamına gelir. Dönen yanıtta hata mesajını inceleyebilirsiniz.
        * `status: "done"` işlemin başarılı bir şekilde sonuçlandığını gösterir.
-    4. e-Fatura / e-Arşiv işleminin başarılı bir şekilde sonuçlandığını
-    gördükten sonra e-Fatura / e-Arşiv bilgilerini almak için [Satış faturası
-    bilgilerini alma (show)](/#operation/showSalesInvoice) endpoint'ine
+    3. e-Fatura / e-Arşiv / e-Smm işleminin başarılı bir şekilde sonuçlandığını
+    gördükten sonra e-Fatura / e-Arşiv / e-Smm bilgilerini almak için [Satış
+    faturası bilgilerini alma (show)](/#operation/showSalesInvoice) endpoint'ine
     `?include=active_e_document` parametresi ile istek yapmanız gerekmektedir.
-    Buradan sıradaki adımda ihtiyaç duyacağınız e-Fatura / e-Arşiv `id`'lerini
-    ve başka bilgileri de alabilirsiniz.
+    Buradan sıradaki adımda ihtiyaç duyacağınız e-Fatura / e-Arşiv / e-Smm
+    `id`'lerini ve başka bilgileri de alabilirsiniz.
 
-    5. e-Fatura / e-Arşiv başarılı bir resmileştirildikten sonra müşterilerinize
-    PDF olarak göndermek isteyebilirsiniz. Bunun için:
+    4. e-Fatura / e-Arşiv / e-Smm başarılı bir resmileştirildikten sonra
+    müşterilerinize PDF olarak göndermek isteyebilirsiniz. Bunun için:
        * e-Arşiv için, 4. adımda elde edeceğiniz e-Arşiv `id`'sini kullanarak [e-Arşiv PDF](/#operation/showEArchivePdf) endpoint'ine istek atabilirsiniz. Bu endpoint PDF henüz yoksa boş bir yanıt ile birlikte 204 döner. Yani 204 almayana kadar belirli aralıklarla bu endpoint'e istek yapmanız gerekmektedir. Geçerli yanıt aldığınızda size dönecek olan PDF URL 1 saat için geçerlidir. Bu yüzden bu linki direk olarak müşterinizle **paylaşmamalısınız**. İndirip müşterinize kendiniz göndermelisiniz.
        * e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'dir: [e-Fatura PDF](/#operation/showEInvoicePdf)
+       * e-Arşiv için anlatılan senaryonun aynısı e-Smm için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'dir: [e-Smm PDF](/#operation/showESmmPdf)
 
     ## İrsaliye Oluşturma
 
@@ -471,6 +475,8 @@ tags:
     x-displayName: E-FATURA GELEN KUTUSU
   - name: EInvoices
     x-displayName: E-FATURA
+  - name: ESmms
+    x-displayName: E-SMM
   - name: Employees
     x-displayName: ÇALIŞAN
   - name: ItemCategories
@@ -513,6 +519,7 @@ x-tagGroups:
       - EInvoiceInboxes
       - EArchives
       - EInvoices
+      - ESmms
   - name: Nakit
     tags:
       - Accounts
@@ -3532,6 +3539,281 @@ paths:
       responses:
         '200':
           description: e-Fatura PDF
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDocumentPdf'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_smms':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - ESmms
+      operationId: createESmm
+      summary: Create
+      description: ''
+      parameters:
+        - name: e_smm_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - e_smms
+                  attributes:
+                    $ref: '#/definitions/ESmmCommonFormAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      sales_invoices:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_invoices
+          in: body
+          required: true
+      responses:
+        '201':
+          description: e-Makbuz
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ESmm'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_invoices
+                        - purchase_bills
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_smms/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: ESmm ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ESmms
+      operationId: showESmm
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: sales_invoice*
+      responses:
+        '200':
+          description: e-Makbuz
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ESmm'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/e_smms/{id}.pdf':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: ESmm ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ESmms
+      operationId: showESmmPdf
+      summary: Show PDF
+      description: ''
+      responses:
+        '200':
+          description: e-Makbuz PDF
           schema:
             type: object
             properties:
@@ -12863,6 +13145,101 @@ definitions:
           - e_invoice_inboxes
       attributes:
         $ref: '#/definitions/EInvoiceInboxAttributes'
+      relationships: {}
+    required:
+      - attributes
+  ESmmAttributes:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      printed_at:
+        type: string
+        format: date
+        readOnly: true
+      uuid:
+        type: string
+        readOnly: true
+      vkn:
+        type: string
+        readOnly: true
+      invoice_number:
+        type: number
+        readOnly: true
+      is_printed:
+        type: boolean
+        readOnly: true
+      pdf_url:
+        type: string
+        readOnly: true
+  ESmm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_smms
+      attributes:
+        $ref: '#/definitions/ESmmAttributes'
+      relationships:
+        type: object
+        properties:
+          sales_invoice:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_invoices
+    required:
+      - attributes
+  ESmmCommonFormAttributes:
+    type: object
+    properties:
+      vat_withholding_code:
+        type: string
+        description: >-
+          Tevkifat oranına ait vergi kodu. - *Bu dosyada ilgili kodları
+          bulabilirsiniz:
+          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+        readOnly: false
+      note:
+        type: string
+        description: Fatura notu
+        readOnly: false
+  ESmmCommonForm:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_smm_commons
+      attributes:
+        $ref: '#/definitions/ESmmCommonFormAttributes'
       relationships: {}
     required:
       - attributes
