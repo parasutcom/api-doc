@@ -14817,10 +14817,10 @@ definitions:
             type: number
             description: cash_sale true ise bu alan doldurmak zorunludur.
           payment_date:
-            type: number
+            type: string
             description: cash_sale true ise bu alan doldurmak zorunludur.
           payment_description:
-            type: number
+            type: string
   SalesInvoiceCreateUpdate:
     type: object
     properties:
