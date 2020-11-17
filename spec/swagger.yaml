@@ -14815,10 +14815,10 @@ definitions:
         properties:
           payment_account_id:
             type: number
-            description: cash_sale true ise bu alan doldurmak zorunludur.
+            description: Peşin faturalar için bu alan doldurmak zorunludur.
           payment_date:
             type: string
-            description: cash_sale true ise bu alan doldurmak zorunludur.
+            description: Peşin faturalar için bu alan doldurmak zorunludur.
           payment_description:
             type: string
   SalesInvoiceCreateUpdate:
