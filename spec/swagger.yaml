@@ -14815,10 +14815,10 @@ definitions:
         properties:
           payment_account_id:
             type: number
-            description: Peşin faturalar için bu alan doldurmak zorunludur.
+            description: Peşin faturalar için ödeme oluşturma / güncellemede kullanılır.
           payment_date:
             type: string
-            description: Peşin faturalar için bu alan doldurmak zorunludur.
+            description: Peşin faturalar için ödeme oluşturma / güncellemede kullanılır.
           payment_description:
             type: string
   SalesInvoiceCreateUpdate:
