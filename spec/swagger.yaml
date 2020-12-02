@@ -12,9 +12,8 @@ info:
     ## API Hakkında
 
 
-    Paraşüt API'yi kullanmak veya görüşlerinizi
-    bizimle paylaşmak isterseniz lütfen bizimle destek@parasut.com adresi
-    üzerinden iletişime geçiniz.
+    Paraşüt API'yi kullanmak veya görüşlerinizi bizimle paylaşmak isterseniz
+    lütfen bizimle destek@parasut.com adresi üzerinden iletişime geçiniz.
 
 
     API'yi kullanarak Paraşüt verilerine ulaşabilir ve kendi yazdığınız
@@ -12517,6 +12516,7 @@ definitions:
       is_abroad:
         type: boolean
         readOnly: false
+        description: Müşteri/tedarikçi yurt dışı bilgisi
       archived:
         type: boolean
         readOnly: false
@@ -14616,8 +14616,9 @@ definitions:
         type: string
         readOnly: false
       is_abroad:
-        type: string
+        type: boolean
         readOnly: false
+        description: Alıcı yurt dışı bilgisi
       order_no:
         type: string
         readOnly: false
