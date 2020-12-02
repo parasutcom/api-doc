@@ -6,23 +6,17 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
-    Bir önceki API (V1) dökümantasyonuna [bu
-    bağlantı](https://api.parasut.com/docs) ile ulaşabilirsiniz
-
-
     # GİRİŞ
 
 
     ## API Hakkında
 
 
-    Paraşüt API henüz beta aşamasındadır ve sadece belli sayıda kullanıcıya
-    açıktır. Eğer beta test sürecine katılmak veya API hakkındaki görüşlerinizi
-    bizimle paylaşmak isterseniz lütfen bizimle destek@parasut.com adresi
-    üzerinden bağlantıya geçiniz.
+    Paraşüt API'yi kullanmak veya görüşlerinizi bizimle paylaşmak isterseniz
+    lütfen bizimle destek@parasut.com adresi üzerinden iletişime geçiniz.
 
 
-    API'yi kullanarak Paraşüt veritabanına ulaşabilir ve kendi yazdığınız
+    API'yi kullanarak Paraşüt verilerine ulaşabilir ve kendi yazdığınız
     uygulamalar ile entegre edebilirsiniz. API vasıtasıyla Paraşüt Web arayüzü
     ile yapılan hemen her işlemi gerçekleştirebilirsiniz.
 
