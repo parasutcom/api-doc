@@ -12516,7 +12516,7 @@ definitions:
       is_abroad:
         type: boolean
         readOnly: false
-        description: Müşteri/tedarikçi yurtdışı bilgisi
+        description: Müşteri/tedarikçi yurt dışı bilgisi
       archived:
         type: boolean
         readOnly: false
@@ -14618,7 +14618,7 @@ definitions:
       is_abroad:
         type: boolean
         readOnly: false
-        description: Alıcı yurtdışı bilgisi
+        description: Alıcı yurt dışı bilgisi
       order_no:
         type: string
         readOnly: false
