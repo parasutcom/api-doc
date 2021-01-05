@@ -8348,7 +8348,7 @@ paths:
                     enum:
                       - sales_invoices
                   attributes:
-                    $ref: '#/definitions/SalesInvoiceAttributes'
+                    $ref: '#/definitions/SalesInvoiceCreateUpdateAttributes'
                   relationships:
                     type: object
                     properties:
@@ -8674,7 +8674,7 @@ paths:
                     enum:
                       - sales_invoices
                   attributes:
-                    $ref: '#/definitions/SalesInvoiceAttributes'
+                    $ref: '#/definitions/SalesInvoiceCreateUpdateAttributes'
                   relationships:
                     type: object
                     properties:
@@ -12529,6 +12529,10 @@ definitions:
           - customer
           - supplier
         readOnly: false
+      untrackable:
+        type: boolean
+        readOnly: false
+        description: Listelenmemiş müşteri sonradan listelenebilir hale getirilemez
     required:
       - name
       - account_type
@@ -14633,6 +14637,10 @@ definitions:
         type: boolean
         readOnly: false
         description: İrsaliyeli fatura
+      cash_sale:
+        type: boolean
+        readOnly: false
+        description: Peşin satış
     required:
       - item_type
       - issue_date
@@ -14797,6 +14805,36 @@ definitions:
                     enum:
                       - e_archives
                       - e_invoices
+    required:
+      - attributes
+  SalesInvoiceCreateUpdateAttributes:
+    allOf:
+      - $ref: '#/definitions/SalesInvoiceAttributes'
+      - type: object
+        properties:
+          payment_account_id:
+            type: number
+            description: Peşin faturalar için ödeme oluşturma / güncellemede kullanılır.
+          payment_date:
+            type: string
+            description: Peşin faturalar için ödeme oluşturma / güncellemede kullanılır.
+          payment_description:
+            type: string
+  SalesInvoiceCreateUpdate:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_invoices
+      attributes:
+        $ref: '#/definitions/SalesInvoiceCreateUpdateAttributes'
+      relationships: {}
     required:
       - attributes
   SalesInvoiceDetailAttributes:
