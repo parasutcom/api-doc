@@ -12504,6 +12504,9 @@ definitions:
         type: string
         readOnly: false
         description: İl
+      country:
+        type: string
+        readOnly: false
       address:
         type: string
         readOnly: false
@@ -13000,6 +13003,29 @@ definitions:
           - waiting
           - failed
           - successful
+        readOnly: true
+      gtb_ref_no:
+        type: string
+        description: GTB Referans Numarası
+        readOnly: true
+      gtb_registration_no:
+        type: string
+        description: >-
+          Gümrük Çıkış Beyannamesi Tescil Numarası - *İhracat faturaları için
+          Satış Faturası Show sayfasında `active_e_document` altında gözükür.*
+        readOnly: true
+      gtb_export_date:
+        type: string
+        format: date
+        description: >-
+          Fiili İhracat Tarihi - *İhracat faturaları için Satış Faturası Show
+          sayfasında `active_e_document` altında gözükür.*
+        readOnly: true
+      response_note:
+        type: string
+        description: >-
+          e-İhracat Red Sebebi - *İhracat faturaları için Satış Faturası Show
+          sayfasında `active_e_document` altında gözükür.*
         readOnly: true
       issue_date:
         type: string
@@ -13748,6 +13774,13 @@ definitions:
         type: number
         readOnly: false
         description: Başlangıç Stok Miktarı
+      gtip:
+        type: string
+        format: number
+        description: >-
+          Ürünün GTIP kodu - *https://uygulama.gtb.gov.tr/Tara adresinden
+          öğrenebilirsiniz*
+        readOnly: false
     required:
       - name
   Product:
@@ -14534,10 +14567,12 @@ definitions:
         type: string
         enum:
           - invoice
+          - export
           - estimate
           - cancelled
           - recurring_invoice
           - recurring_estimate
+          - recurring_export
           - refund
         readOnly: false
         description: Fatura türü
@@ -14613,6 +14648,9 @@ definitions:
         type: string
         readOnly: false
         description: Müşteri vergi numarası
+      country:
+        type: string
+        readOnly: false
       city:
         type: string
         readOnly: false
@@ -14894,6 +14932,40 @@ definitions:
         type: string
         readOnly: false
         description: Açıklama
+      delivery_method:
+        type: string
+        description: Teslim Şartı
+        enum:
+          - CFR
+          - CIF
+          - CIP
+          - CPT
+          - DAF
+          - DDP
+          - DDU
+          - DEQ
+          - DES
+          - EXW
+          - FAS
+          - FCA
+          - FOB
+          - DAP
+          - DAT
+        readOnly: false
+      shipping_method:
+        type: string
+        description: Gönderim Şekli
+        enum:
+          - Belirtilmedi
+          - Denizyolu
+          - Demiryolu
+          - Karayolu
+          - Havayolu
+          - Posta
+          - Çok araçlı
+          - Sabit taşıma tesisleri
+          - İç su taşımacılığı
+        readOnly: false
     required:
       - quantity
       - unit_price
