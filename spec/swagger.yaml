@@ -346,11 +346,11 @@ info:
     resmileştirilmelidir.
 
 
-    Oluşturduğunuz e-Fatura veya e-Arşiv'in düzenleme tarihi e-Fatura’ya geçiş
-    sağladığınız aktivasyon tarihinden sonra olmalıdır. Aynı zamanda
-    oluşturduğunuz e-Fatura’nın düzenleme tarihi alıcının etiketi kullanmaya
-    başladığı tarihten de önce olamaz. Alıcının etiketi kullanmaya başladığı
-    tarihi e-Fatura gelen kutusunu çekerek görüntüleyebilirsiniz.
+    Oluşturduğunuz e-Fatura, e-Arşiv ve e-Smm’nin düzenleme tarihi
+    e-Fatura/e-Smm’ye geçiş sağladığınız aktivasyon tarihinden sonra olmalıdır.
+    Aynı zamanda oluşturduğunuz e-Fatura’nın düzenleme tarihi alıcının etiketi
+    kullanmaya başladığı tarihten de önce olamaz. Alıcının etiketi kullanmaya
+    başladığı tarihi e-Fatura gelen kutusunu çekerek görüntüleyebilirsiniz.
 
 
     2. e-Fatura / e-Arşiv / e-Smm oluşturma:
