@@ -555,21 +555,27 @@ paths:
         - name: 'filter[name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[currency]'
           type: string
           in: query
+          description: ''
         - name: 'filter[bank_name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[bank_branch]'
           type: string
           in: query
+          description: ''
         - name: 'filter[account_type]'
           type: string
           in: query
+          description: ''
         - name: 'filter[iban]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -957,6 +963,7 @@ paths:
         - name: 'filter[date]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -2160,18 +2167,23 @@ paths:
         - name: 'filter[name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[email]'
           type: string
           in: query
+          description: ''
         - name: 'filter[tax_number]'
           type: string
           in: query
+          description: ''
         - name: 'filter[tax_office]'
           type: string
           in: query
+          description: ''
         - name: 'filter[city]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -3245,6 +3257,7 @@ paths:
         - name: 'filter[vkn]'
           type: integer
           in: query
+          description: ''
         - name: 'page[number]'
           type: integer
           in: query
@@ -3881,9 +3894,11 @@ paths:
         - name: 'filter[name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[email]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -4603,9 +4618,11 @@ paths:
         - name: 'filter[name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[category_type]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -5087,9 +5104,11 @@ paths:
         - name: 'filter[name]'
           type: string
           in: query
+          description: ''
         - name: 'filter[code]'
           type: string
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -5605,12 +5624,15 @@ paths:
         - name: 'filter[issue_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[due_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[spender_id]'
           type: integer
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -7274,15 +7296,19 @@ paths:
         - name: 'filter[due_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[issue_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[currency]'
           type: string
           in: query
+          description: ''
         - name: 'filter[remaining]'
           type: number
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -8192,18 +8218,29 @@ paths:
         - name: 'filter[issue_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[due_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[contact_id]'
           type: integer
           in: query
+          description: ''
         - name: 'filter[invoice_id]'
           type: integer
           in: query
+          description: ''
         - name: 'filter[invoice_series]'
           type: string
           in: query
+          description: ''
+        - name: 'filter[item_type]'
+          type: string
+          in: query
+          description: >
+            Default value is *'invoice, refund, estimate'*. Available: *invoice,
+            refund, estimate, export*
         - name: sort
           type: string
           in: query
@@ -9716,12 +9753,15 @@ paths:
         - name: 'filter[flow_type]'
           type: string
           in: query
+          description: ''
         - name: 'filter[invoice_status]'
           type: string
           in: query
+          description: ''
         - name: 'filter[archived]'
           type: boolean
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -10867,15 +10907,19 @@ paths:
         - name: 'filter[due_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[issue_date]'
           type: string
           in: query
+          description: ''
         - name: 'filter[currency]'
           type: string
           in: query
+          description: ''
         - name: 'filter[remaining]'
           type: number
           in: query
+          description: ''
         - name: sort
           type: string
           in: query
@@ -13013,20 +13057,20 @@ definitions:
         type: string
         description: >-
           Gümrük Çıkış Beyannamesi Tescil Numarası - *İhracat faturaları için
-          Satış Faturası Show sayfasında `active_e_document` altında gözükür.*
+          Satış Faturası Show cevabında `active_e_document` altında gözükür.*
         readOnly: true
       gtb_export_date:
         type: string
         format: date
         description: >-
           Fiili İhracat Tarihi - *İhracat faturaları için Satış Faturası Show
-          sayfasında `active_e_document` altında gözükür.*
+          cevabında `active_e_document` altında gözükür.*
         readOnly: true
       response_note:
         type: string
         description: >-
           e-İhracat Red Sebebi - *İhracat faturaları için Satış Faturası Show
-          sayfasında `active_e_document` altında gözükür.*
+          cevabında `active_e_document` altında gözükür.*
         readOnly: true
       issue_date:
         type: string
