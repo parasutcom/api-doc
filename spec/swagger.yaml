@@ -479,6 +479,8 @@ tags:
     x-displayName: E-SMM
   - name: Employees
     x-displayName: ÇALIŞAN
+  - name: InventoryLevels
+    x-displayName: STOK MİKTARI
   - name: ItemCategories
     x-displayName: KATEGORİ
   - name: Products
@@ -501,6 +503,8 @@ tags:
     x-displayName: TRACKABLE JOB
   - name: Transactions
     x-displayName: İŞLEM
+  - name: Warehouses
+    x-displayName: DEPO
 x-tagGroups:
   - name: Satışlar
     tags:
@@ -527,8 +531,10 @@ x-tagGroups:
   - name: Stok
     tags:
       - Products
+      - Warehouses
       - ShipmentDocuments
       - StockMovements
+      - InventoryLevels
   - name: Ayarlar
     tags:
       - ItemCategories
@@ -4601,6 +4607,140 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/product/{product_id}/inventory_levels':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: product_id
+        type: integer
+        description: Ürün ID
+        in: path
+        required: true
+    get:
+      tags:
+        - InventoryLevels
+      operationId: listInventoryLevels
+      summary: Index
+      description: Ürünün varolan depolardaki tüm stok miktarlarını listeler.
+      parameters:
+        - name: 'filter[warehouses.name]'
+          type: string
+          in: query
+          description: Sonuçların filtrelenmesini istediğiniz depo ismi.
+        - name: 'filter[archived]'
+          type: boolean
+          in: query
+          description: ''
+        - name: 'filter[has_stock]'
+          type: boolean
+          in: query
+          description: ''
+        - name: 'filter[stock_count]'
+          type: number
+          in: query
+          description: ''
+        - name: sort
+          type: string
+          in: query
+          description: 'Sortable parameters - *Available: id, stock_count*'
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: product, warehouse*
+      responses:
+        '200':
+          description: Stok miktarları
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/InventoryLevel'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - products
+                        - warehouses
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/item_categories':
     parameters:
       - name: company_id
@@ -5131,7 +5271,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category*
+            *Available: inventory_levels, category*
       responses:
         '200':
           description: Ürünler
@@ -5155,6 +5295,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
+                        - inventory_levels
                         - item_categories
                     attributes:
                       type: object
@@ -5219,7 +5360,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category*
+            *Available: inventory_levels, category*
         - name: product_form
           schema:
             type: object
@@ -5243,6 +5384,21 @@ paths:
                   relationships:
                     type: object
                     properties:
+                      inventory_levels:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - inventory_levels
                       category:
                         type: object
                         properties:
@@ -5281,6 +5437,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
+                        - inventory_levels
                         - item_categories
                     attributes:
                       type: object
@@ -5355,7 +5512,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category*
+            *Available: inventory_levels, category*
       responses:
         '200':
           description: Ürün
@@ -5377,6 +5534,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
+                        - inventory_levels
                         - item_categories
                     attributes:
                       type: object
@@ -5439,7 +5597,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category*
+            *Available: inventory_levels, category*
         - name: product_form
           schema:
             type: object
@@ -5463,6 +5621,21 @@ paths:
                   relationships:
                     type: object
                     properties:
+                      inventory_levels:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - inventory_levels
                       category:
                         type: object
                         properties:
@@ -5501,6 +5674,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
+                        - inventory_levels
                         - item_categories
                     attributes:
                       type: object
@@ -5657,9 +5831,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Faturalar
@@ -5761,9 +5935,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -5948,9 +6122,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -6011,6 +6185,21 @@ paths:
                                               description: Type of the resource
                                               enum:
                                                 - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
                       supplier:
                         type: object
                         properties:
@@ -6177,9 +6366,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -6338,9 +6527,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -6530,9 +6719,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
         - name: purchase_bill_form
           schema:
             type: object
@@ -6593,6 +6782,21 @@ paths:
                                               description: Type of the resource
                                               enum:
                                                 - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
                       supplier:
                         type: object
                         properties:
@@ -6883,9 +7087,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -6988,9 +7192,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -7093,9 +7297,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -7198,9 +7402,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, spender, details, details.product, payments,
-            payments.transaction, tags, recurrence_plan, active_e_document,
-            pay_to*
+            *Available: category, spender, details, details.product,
+            details.warehouse, payments, payments.transaction, tags,
+            recurrence_plan, active_e_document, pay_to*
       responses:
         '200':
           description: Fatura
@@ -8265,9 +8469,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Satış faturaları
@@ -8364,9 +8568,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8427,6 +8631,21 @@ paths:
                                               description: Type of the resource
                                               enum:
                                                 - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
                       contact:
                         type: object
                         properties:
@@ -8595,9 +8814,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -8690,9 +8909,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -8753,6 +8972,21 @@ paths:
                                               description: Type of the resource
                                               enum:
                                                 - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
                       contact:
                         type: object
                         properties:
@@ -9101,9 +9335,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -9208,9 +9442,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -9315,9 +9549,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -9422,9 +9656,9 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
       responses:
         '200':
           description: Fatura
@@ -9522,16 +9756,18 @@ paths:
         - SalesInvoices
       operationId: convertEstimateToInvoice
       summary: Convert estimate to invoice
-      description: ''
+      description: >-
+        Ürünlerinizin stok hareketleri varsayılan deponuz üzerinden
+        oluşturulacaktır.
       parameters:
         - name: include
           type: string
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: category, contact, details, details.product, payments,
-            payments.transaction, tags, sharings, recurrence_plan,
-            active_e_document*
+            *Available: category, contact, details, details.product,
+            details.warehouse, payments, payments.transaction, tags, sharings,
+            recurrence_plan, active_e_document*
         - name: sales_invoice_form
           schema:
             type: object
@@ -9592,6 +9828,21 @@ paths:
                                               description: Type of the resource
                                               enum:
                                                 - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
                       contact:
                         type: object
                         properties:
@@ -10431,7 +10682,7 @@ paths:
           in: query
           description: >-
             Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-            *Available: product, source, contact*
+            *Available: product, source, contact, warehouse*
       responses:
         '200':
           description: Stok hareketleri
@@ -10455,6 +10706,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
+                        - warehouses
                         - products
                         - shipment_documents
                         - sales_invoice_details
@@ -12000,6 +12252,526 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/warehouses':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Warehouses
+      operationId: listWarehouses
+      summary: Index
+      description: ''
+      parameters:
+        - name: 'filter[name]'
+          type: string
+          in: query
+          description: ''
+        - name: 'filter[archived]'
+          type: boolean
+          in: query
+          description: ''
+        - name: sort
+          type: string
+          in: query
+          description: 'Sortable parameters - *Available: id, name*'
+          default: '-id'
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: inventory_levels*
+      responses:
+        '200':
+          description: Depolar
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Warehouse'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - inventory_levels
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Warehouses
+      operationId: createWarehouse
+      summary: Create
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: inventory_levels*
+        - name: product_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
+                  attributes:
+                    $ref: '#/definitions/WarehouseAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      inventory_levels:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - inventory_levels
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Depo
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Warehouse'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - inventory_levels
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/warehouses/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Depo ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Warehouses
+      operationId: showWarehouse
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: inventory_levels*
+      responses:
+        '200':
+          description: Depo
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Warehouse'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - inventory_levels
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Warehouses
+      operationId: updateWarehouse
+      summary: Edit
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: inventory_levels*
+        - name: product_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
+                  attributes:
+                    $ref: '#/definitions/WarehouseAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      inventory_levels:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - inventory_levels
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Depo
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Warehouse'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - inventory_levels
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Warehouses
+      operationId: deleteWarehouse
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
 security:
   - parasut_auth: []
 securityDefinitions:
@@ -12449,6 +13221,21 @@ definitions:
       relationships:
         type: object
         properties:
+          default_warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
           owner:
             type: object
             properties:
@@ -13425,6 +14212,74 @@ definitions:
                       - user_roles
     required:
       - attributes
+  InventoryLevelAttributes:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      stock_count:
+        type: number
+        readOnly: true
+        description: Stok Miktarı
+      initial_stock_count:
+        type: number
+        readOnly: false
+        description: Başlangıç Stok Miktarı
+  InventoryLevel:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - inventory_levels
+      attributes:
+        $ref: '#/definitions/InventoryLevelAttributes'
+      relationships:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+          warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
+    required:
+      - attributes
   ItemCategoryAttributes:
     type: object
     properties:
@@ -13818,7 +14673,9 @@ definitions:
       initial_stock_count:
         type: number
         readOnly: false
-        description: Başlangıç Stok Miktarı
+        description: >-
+          Başlangıç Stok Miktarı. Eğer birden fazla deponuz varsa başlangıç stok
+          miktarını "Stok Miktarı" oluşturarak güncellemelisiniz.
       gtip:
         type: string
         format: number
@@ -13845,6 +14702,21 @@ definitions:
       relationships:
         type: object
         properties:
+          inventory_levels:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - inventory_levels
           category:
             type: object
             properties:
@@ -14327,6 +15199,21 @@ definitions:
       relationships:
         type: object
         properties:
+          warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
           product:
             type: object
             properties:
@@ -15032,6 +15919,21 @@ definitions:
       relationships:
         type: object
         properties:
+          warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
           product:
             type: object
             properties:
@@ -15281,6 +16183,21 @@ definitions:
       relationships:
         type: object
         properties:
+          warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
           product:
             type: object
             properties:
@@ -15716,5 +16633,76 @@ definitions:
                     description: Type of the resource
                     enum:
                       - employees
+    required:
+      - attributes
+  WarehouseAttributes:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      name:
+        type: string
+        readOnly: false
+        description: Depo İsmi
+      address:
+        type: string
+        readOnly: false
+        description: Adres
+      city:
+        type: string
+        readOnly: false
+        description: İl
+      district:
+        type: string
+        readOnly: false
+        description: İlçe
+      is_abroad:
+        type: boolean
+        readOnly: false
+        description: Yurt dışında
+      archived:
+        type: boolean
+        readOnly: false
+        description: Arşivlenme durumu
+    required:
+      - name
+  Warehouse:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - warehouses
+      attributes:
+        $ref: '#/definitions/WarehouseAttributes'
+      relationships:
+        type: object
+        properties:
+          inventory_levels:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - inventory_levels
     required:
       - attributes
