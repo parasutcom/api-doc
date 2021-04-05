@@ -480,7 +480,7 @@ tags:
   - name: Employees
     x-displayName: ÇALIŞAN
   - name: InventoryLevels
-    x-displayName: STOK MİKTARI
+    x-displayName: DEPO STOK SEVİYESİ
   - name: ItemCategories
     x-displayName: KATEGORİ
   - name: Products
@@ -4624,7 +4624,7 @@ paths:
         - InventoryLevels
       operationId: listInventoryLevels
       summary: Index
-      description: Ürünün varolan depolardaki tüm stok miktarlarını listeler.
+      description: Ürünün varolan depolardaki tüm stok seviyelerini listeler.
       parameters:
         - name: 'filter[warehouses.name]'
           type: string
@@ -4667,7 +4667,7 @@ paths:
             *Available: product, warehouse*
       responses:
         '200':
-          description: Stok miktarları
+          description: Depo stok seviyeleri
           schema:
             type: object
             properties:
@@ -5388,17 +5388,19 @@ paths:
                         type: object
                         properties:
                           data:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                maxLength: 255
-                              type:
-                                type: string
-                                maxLength: 255
-                                description: Type of the resource
-                                enum:
-                                  - inventory_levels
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - inventory_levels
                       category:
                         type: object
                         properties:
@@ -5625,17 +5627,19 @@ paths:
                         type: object
                         properties:
                           data:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                maxLength: 255
-                              type:
-                                type: string
-                                maxLength: 255
-                                description: Type of the resource
-                                enum:
-                                  - inventory_levels
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - inventory_levels
                       category:
                         type: object
                         properties:
@@ -12412,17 +12416,19 @@ paths:
                         type: object
                         properties:
                           data:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                maxLength: 255
-                              type:
-                                type: string
-                                maxLength: 255
-                                description: Type of the resource
-                                enum:
-                                  - inventory_levels
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - inventory_levels
           in: body
           required: true
       responses:
@@ -12632,17 +12638,19 @@ paths:
                         type: object
                         properties:
                           data:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                maxLength: 255
-                              type:
-                                type: string
-                                maxLength: 255
-                                description: Type of the resource
-                                enum:
-                                  - inventory_levels
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - inventory_levels
           in: body
           required: true
       responses:
@@ -14674,8 +14682,9 @@ definitions:
         type: number
         readOnly: false
         description: >-
-          Başlangıç Stok Miktarı. Eğer birden fazla deponuz varsa başlangıç stok
-          miktarını "Stok Miktarı" oluşturarak güncellemelisiniz.
+          Başlangıç Stok Miktarı. Birden fazla deponuz varsa başlangıç stok
+          miktarını, depo stok seviyesi (inventory_level) relationship'i
+          üzerinden depo bazında göndermelisiniz.
       gtip:
         type: string
         format: number
