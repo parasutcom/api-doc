@@ -5629,6 +5629,15 @@ paths:
           type: string
           in: query
           description: ''
+        - name: 'filter[supplier_id]'
+          type: integer
+          in: query
+          description: ''
+        - name: 'filter[item_type]'
+          type: string
+          in: query
+          description: |
+            Available: *purchase_bill, refund, cancelled*
         - name: 'filter[spender_id]'
           type: integer
           in: query
