@@ -8467,8 +8467,8 @@ paths:
           type: string
           in: query
           description: >
-            Available: *printed, invoices_not_sent, e_invoice_sent,
-            e_archive_sent*
+            Available: *printed, not_printed, invoices_not_sent, e_invoice_sent,
+            e_archive_sent, e_smm_sent*
         - name: 'filter[payment_status]'
           type: string
           in: query
@@ -14716,6 +14716,9 @@ definitions:
         description: >-
           Ürünün GTIP kodu - *https://uygulama.gtb.gov.tr/Tara adresinden
           öğrenebilirsiniz*
+        readOnly: false
+      barcode:
+        type: string
         readOnly: false
     required:
       - name
