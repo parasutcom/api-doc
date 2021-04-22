@@ -358,7 +358,7 @@ info:
        * Önceki adımda müşterinin e-Arşiv kullanıcısı olduğu öğrenildiyse,  [e-Arşiv oluşturma endpoint'i](/#operation/createEArchive) kullanılarak e-Arşiv oluşturmak gereklidir.
        * Eğer makbuz kullanıcısı iseniz, [e-Smm oluşturma endpoint'ini](/#operation/createESmm) kullanarak e-Smm oluşturmanız gereklidir.
 
-       e-Fatura / e-Arşiv / e-Smm oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura / e-Arşiv / e-Smm oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
+       e-Fatura / e-Arşiv / e-Smm oluşturma işlemi synchronous değildir. Yani istek arka planda yerine getirilir. Bu yüzden e-Fatura / e-Arşiv / e-Smm oluşturma endpoint'leri cevap olarak oluşturma işleminin durumunu takip edebileceğiniz bir işlem `id`'si döner. Bu işlem `id`'sini [sorgulama](/#tag/TrackableJobs) endpoint'inde belirli aralıklarla(`id`'nin kullanım süresi oluşturulduktan sonra 15 dakikadır) kullanıp oluşturma işleminin durumunu takip etmeniz gerekmektedir. İşlem durumu ile ilgili aşağıdaki yanıtları alabilirsiniz:
        * `status: "pending"` işlemin sırada olduğunu, henüz başlamadığını gösterir.
        * `status: "running"` işlemin yapılmakta olduğunu ancak henüz sonuçlanmadığını gösterir.
        * `status: "error"` işlemde bir hata olduğu anlamına gelir. Dönen yanıtta hata mesajını inceleyebilirsiniz.
@@ -2190,6 +2190,11 @@ paths:
           type: string
           in: query
           description: ''
+        - name: 'filter[account_type]'
+          type: string
+          in: query
+          description: |
+            Available: *customer, supplier*
         - name: sort
           type: string
           in: query
@@ -8458,6 +8463,17 @@ paths:
           description: >
             Default value is *'invoice, refund, estimate'*. Available: *invoice,
             refund, estimate, export*
+        - name: 'filter[print_status]'
+          type: string
+          in: query
+          description: >
+            Available: *printed, not_printed, invoices_not_sent, e_invoice_sent,
+            e_archive_sent, e_smm_sent*
+        - name: 'filter[payment_status]'
+          type: string
+          in: query
+          description: |
+            Available: *overdue, not_due, unscheduled, paid*
         - name: sort
           type: string
           in: query
@@ -13711,14 +13727,14 @@ definitions:
         description: >-
           Tevkifat oranına ait vergi kodu. - *Bu dosyada ilgili kodları
           bulabilirsiniz:
-          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+          https://ebelge.gib.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2.1_Kilavuzlar.zip*
         readOnly: false
       vat_exemption_reason_code:
         type: string
         description: >-
           KDV'si %0 olan hizmet ve ürünlerin KDV muafiyet sebebi kodu. - *Bu
           dosyada ilgili kodları bulabilirsiniz:
-          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+          https://ebelge.gib.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2.1_Kilavuzlar.zip*
         readOnly: false
       vat_exemption_reason:
         type: string
@@ -14099,7 +14115,7 @@ definitions:
         description: >-
           Tevkifat oranına ait vergi kodu. - *Bu dosyada ilgili kodları
           bulabilirsiniz:
-          https://www.efatura.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2_Kilavuzlar.zip*
+          https://ebelge.gib.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2.1_Kilavuzlar.zip*
         readOnly: false
       note:
         type: string
@@ -14700,6 +14716,9 @@ definitions:
         description: >-
           Ürünün GTIP kodu - *https://uygulama.gtb.gov.tr/Tara adresinden
           öğrenebilirsiniz*
+        readOnly: false
+      barcode:
+        type: string
         readOnly: false
     required:
       - name
