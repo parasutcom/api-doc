@@ -14264,6 +14264,9 @@ definitions:
         type: number
         readOnly: false
         description: Başlangıç Stok Miktarı
+      critical_stock_count:
+        type: number
+        readOnly: false
   InventoryLevel:
     type: object
     properties:
