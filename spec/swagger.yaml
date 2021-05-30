@@ -380,9 +380,14 @@ info:
 
 
     Eğer özel gereksinim duyan bir firmaya e-fatura kesiyorsanız, bu kısmı
-    detaylı bir şekilde gözden geçiriniz. Özel gereksinimler için
-    [E-Fatura/Create](#operation/createEInvoice) kısmındaki
-    *custom_requirement_params*'e örnek json'u aşağıda görebilirsiniz.
+    detaylı bir şekilde gözden geçiriniz. Aşağıda desteklediğimiz özel
+    firmaların kendi ihtiyaçlarına göre oluşturduğumuz alanları görebilirsiniz.
+
+
+    ### SGK için gerekli özel alanlar
+
+
+    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz. 
 
 
     ``` json
@@ -419,15 +424,7 @@ info:
     - `term_end_date`: dönem bitiş
 
 
-    Aşağıda desteklediğimiz özel firmaların kendi ihtiyaçlarına göre
-    oluşturduğumuz alanları görebilirsiniz.
-
-
-    ### SGK'ya için gerekli özel alanlar
-
-
-    SGK'ya fatura kesmek için `additional_invoice_type`'ın aşağıdaki değerlerden
-    biri olmalıdır.
+    Ek olarak `additional_invoice_type`'ın aşağıdaki değerlerden biri olmalıdır.
 
 
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
@@ -14047,21 +14044,6 @@ definitions:
                 properties:
                   data:
                     type: object
-                    properties:
-                      additional_invoice_type:
-                        type: string
-                      taxpayer_code:
-                        type: string
-                      taxpayer_name:
-                        type: string
-                      file_number:
-                        type: string
-                      term_start_date:
-                        type: string
-                        format: date
-                      term_end_date:
-                        type: string
-                        format: date
   EInvoiceForm:
     type: object
     properties:
