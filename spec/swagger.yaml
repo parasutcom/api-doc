@@ -376,6 +376,61 @@ info:
        * e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'tir: [e-Fatura PDF](/#operation/showEInvoicePdf)
        * e-Arşiv için anlatılan senaryonun aynısı e-Smm için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'tir: [e-Smm PDF](/#operation/showESmmPdf)
 
+    ## Belirli Firmalar İçin Özel Gereksinimler
+
+
+    Eğer özel gereksinim duyan bir firmaya e-fatura kesiyorsanız, bu kısmı
+    detaylı bir şekilde gözden geçiriniz. Aşağıda desteklediğimiz özel
+    firmaların kendi ihtiyaçlarına göre oluşturduğumuz alanları görebilirsiniz.
+
+
+    ### SGK için gerekli özel alanlar
+
+
+    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz. 
+
+
+    ``` json
+
+    custom_requirement_params: {
+      integration: {     
+        data: {       
+          additional_invoice_type: 'SAGLIK_ECZ',
+          taxpayer_code: 'xx',
+          taxpayer_name: 'xx',
+          file_number: 'xx',
+          term_start_date: '2021-01-02',
+          term_end_date: '2021-01-04'
+        }
+      }
+    }
+
+    ```
+
+
+    Buradaki data'nın içindeki alanların anlamları:
+
+
+    - `additional_invoice_type`: ilave fatura tipi
+
+    - `taxpayer_code`: mükellef kodu
+
+    - `taxpayer_name`: mükellef adı
+
+    - `file_number`: dosya numarası
+
+    - `term_start_date`: dönem başlangıç
+
+    - `term_end_date`: dönem bitiş
+
+
+    Ek olarak `additional_invoice_type` aşağıdaki değerlerden biri olmalıdır.
+
+
+    Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
+    MAL_HIZMET, DIGER*
+
+
     ## İrsaliye Oluşturma
 
 
@@ -13978,6 +14033,17 @@ definitions:
             description: >-
               Alıcının e-Fatura gelen kutusu - *[e-Fatura Gelen Kutusu
               Öğrenme](/#operation/listEInvoiceInboxes)*
+          custom_requirement_params:
+            type: object
+            description: >-
+              Özel gereksinimler - *[Detaylı
+              bilgi](#section/SIK-KULLANILAN-ISLEMLER/Belirli-Firmalar-Icin-Ozel-Gereksinimler)*
+            properties:
+              integration:
+                type: object
+                properties:
+                  data:
+                    type: object
   EInvoiceForm:
     type: object
     properties:
