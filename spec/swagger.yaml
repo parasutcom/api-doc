@@ -424,7 +424,7 @@ info:
     - `term_end_date`: dönem bitiş
 
 
-    Ek olarak `additional_invoice_type`'ın aşağıdaki değerlerden biri olmalıdır.
+    Ek olarak `additional_invoice_type` aşağıdaki değerlerden biri olmalıdır.
 
 
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
