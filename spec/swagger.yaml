@@ -396,8 +396,8 @@ info:
       integration: {     
         data: {       
           additional_invoice_type: 'SAGLIK_ECZ',
-          taxpayer_code: 'xx',
-          taxpayer_name: 'xx',
+          tax_payer_code: 'xx',
+          tax_payer_name: 'xx',
           file_number: 'xx',
           term_start_date: '2021-01-02',
           term_end_date: '2021-01-04'
@@ -413,9 +413,9 @@ info:
 
     - `additional_invoice_type`: ilave fatura tipi
 
-    - `taxpayer_code`: mükellef kodu
+    - `tax_payer_code`: mükellef kodu
 
-    - `taxpayer_name`: mükellef adı
+    - `tax_payer_name`: mükellef adı
 
     - `file_number`: dosya numarası
 
