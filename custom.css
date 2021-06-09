@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.security-definition h2.sharable-header {
+  display: none;
+}
+
+.security-definition h3 {
+  display: none;
+}
+
+.security-definition .security-scopes-details {
+  display: none;
+}
+
+.download-openapi {
+  display: none;
+}
+
+.operation-content params-list json-schema {
+  overflow-x: scroll;
+}
+
+/*
+.params-wrap .param .param-info .param-type {
+  color: rgba(38, 50, 56, 0.7);
+}
+
+.params-wrap .param .param-info .param-description {
+  color: rgba(38, 50, 56, 0.4);
+}
+*/

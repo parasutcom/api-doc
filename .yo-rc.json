@@ -1,0 +1,11 @@
+{
+  "generator-openapi-repo": {
+    "importExistingSpec": true,
+    "importedSpec": "/Users/furkan/parasut/swagger/out/v4/v4.yaml",
+    "name": "Parasut API",
+    "repo": "parasutcom/api-doc",
+    "splitSpec": false,
+    "samples": true,
+    "installSwaggerUI": false
+  }
+}
