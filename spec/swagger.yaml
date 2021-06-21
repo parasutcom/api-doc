@@ -15979,6 +15979,8 @@ definitions:
           - CIP
           - CPT
           - DAF
+          - DAP
+          - DPU
           - DDP
           - DDU
           - DEQ
@@ -15987,14 +15989,11 @@ definitions:
           - FAS
           - FCA
           - FOB
-          - DAP
-          - DAT
         readOnly: false
       shipping_method:
         type: string
         description: Gönderim Şekli
         enum:
-          - Belirtilmedi
           - Denizyolu
           - Demiryolu
           - Karayolu
