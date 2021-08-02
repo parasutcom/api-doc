@@ -550,6 +550,8 @@ tags:
     x-displayName: İRSALİYE
   - name: StockMovements
     x-displayName: STOK HAREKETİ
+  - name: StockUpdates
+    x-displayName: STOK GÜNCELLEME
   - name: Tags
     x-displayName: ETİKET
   - name: Taxes
@@ -590,6 +592,7 @@ x-tagGroups:
       - ShipmentDocuments
       - StockMovements
       - InventoryLevels
+      - StockUpdates
   - name: Ayarlar
     tags:
       - ItemCategories
@@ -10847,6 +10850,174 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/stock_updates':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - StockUpdates
+      operationId: createStockUpdate
+      summary: Create
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: details, details.product, details.warehouse*
+        - name: stock_update_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - stock_updates
+                  attributes:
+                    $ref: '#/definitions/StockUpdateAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - stock_update_details
+                                attributes:
+                                  $ref: '#/definitions/StockUpdateDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                                    warehouse:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - warehouses
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Stok güncelleme
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/StockUpdate'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - stock_update_details
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/tags':
     parameters:
       - name: company_id
@@ -16350,6 +16521,128 @@ definitions:
                     description: Type of the resource
                     enum:
                       - contacts
+    required:
+      - attributes
+  StockUpdateAttributes:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Stok güncelleme tarihi
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Son güncelleme tarihi
+  StockUpdate:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - stock_updates
+      attributes:
+        $ref: '#/definitions/StockUpdateAttributes'
+      relationships:
+        type: object
+        properties:
+          details:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - stock_update_details
+    required:
+      - attributes
+  StockUpdateDetailAttributes:
+    type: object
+    properties:
+      old_total_inventory:
+        type: number
+        required: true
+        readOnly: true
+        description: Eski stok miktarı
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Kayıt tarihi
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+        description: Son güncelleme tarihi
+      new_total_inventory:
+        type: number
+        readOnly: false
+        description: Yeni stok miktarı
+    required:
+      - new_total_inventory
+  StockUpdateDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - stock_update_details
+      attributes:
+        $ref: '#/definitions/StockUpdateDetailAttributes'
+      relationships:
+        type: object
+        properties:
+          warehouse:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - warehouses
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
     required:
       - attributes
   TagAttributes:
