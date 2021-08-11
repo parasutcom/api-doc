@@ -13627,6 +13627,15 @@ definitions:
         type: boolean
         readOnly: false
         description: Listelenmemiş müşteri sonradan listelenebilir hale getirilemez
+      invoicing_preferences:
+        type: object
+        properties:
+          e_document_accounts:
+            description: Bu alana hesap ID'leri eklenebilir.
+            type: array
+            items:
+              type: integer
+        readOnly: false
     required:
       - name
       - account_type
@@ -15888,6 +15897,12 @@ definitions:
         type: boolean
         readOnly: false
         description: Peşin satış
+      payer_tax_numbers:
+        description: Kamu faturaları için zorunludur.
+        type: array
+        items:
+          type: string
+        readOnly: false
     required:
       - item_type
       - issue_date
