@@ -3708,7 +3708,7 @@ paths:
                   relationships:
                     type: object
                     properties:
-                      sales_invoices:
+                      sales_invoice:
                         type: object
                         properties:
                           data:
