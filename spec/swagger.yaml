@@ -6,6 +6,22 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
+  
+    # CHANGE LOG
+    
+    ### **2021-10-11**
+    
+    #### Added
+    
+    - Belirli Firmalar İçin Özel Gereksinimler alanına Amazon için gerekli özel alanlar eklendi.
+    
+    
+    #### Changed
+    
+    - Fatura oluşturmada `order_no` ve `order_date` alanlarının tanımlamaları değiştirildi.
+    
+    
+    
     # GİRİŞ
 
 
@@ -429,6 +445,60 @@ info:
 
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
     MAL_HIZMET, DIGER*
+    
+    ### Amazon için gerekli özel alanlar
+    
+    Öncellikle Amazon'a fatura kesebilmek için müşteri adres bilgilerini doğru girmelisiniz.
+    Faturanızdaki 
+    
+    - `billing_address`
+    
+    - `billing_postal_code`
+    
+    - `tax_office`
+    
+    - `district`
+    
+    - `city`
+    
+    - `order_no` 
+    
+    - `order_date` alanlarının doğru bir şekilde doldurulduğundan emin olunuz.
+    
+    
+    Amazon'a fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz.
+    
+    ```json
+    
+    custom_requirement_params: {
+      integration: {
+        data: {
+          supplier_code: '210'
+        }
+      },
+      products: [
+        {
+          product_id: 1,
+          data: {
+            buyer_code: 'B01M7UN8RS'
+          }
+        },
+        {
+          product_id: 2,
+          data: {
+            buyer_code: 'B0186FESVC'
+          }
+        }
+      ]
+    }
+    
+    ```
+    
+    Buradaki data'nın içindeki alanların anlamları:
+    
+    - `supplier_code`: tedarikçi kodu
+
+    - `buyer_code`: ürün AEN / ASIN kodu
 
 
     ## İrsaliye Oluşturma
@@ -13591,6 +13661,10 @@ definitions:
         type: string
         readOnly: false
         description: İlçe
+      postal_code:
+        type: string
+        readOnly: false
+        description: Posta kodu
       city:
         type: string
         readOnly: false
@@ -15850,6 +15924,10 @@ definitions:
         type: string
         readOnly: false
         description: Gönderim adresi
+      billing_postal_code:
+        type: string
+        readOnly: false
+        description: Gönderim posta kodu
       billing_phone:
         type: string
         readOnly: false
@@ -15882,10 +15960,12 @@ definitions:
       order_no:
         type: string
         readOnly: false
+        description: Sipariş no (resmileştirmek için order_date dolu ise bu alan zorunludur)
       order_date:
         type: string
         format: date
         readOnly: false
+        description: Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan zorunludur)
       shipment_addres:
         type: string
         readOnly: false
