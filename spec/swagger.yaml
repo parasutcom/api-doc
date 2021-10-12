@@ -448,25 +448,23 @@ info:
     
     ### Amazon için gerekli özel alanlar
     
-    Öncellikle Amazon'a fatura kesebilmek için müşteri adres bilgilerini doğru girmelisiniz.
-    Faturanızdaki 
+    Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada kullanılan adres bilgileri:
+
     
-    - `billing_address`
+    - `billing_address`: Esentepe Mahallesi, Bahar Sk. No: 13/52
     
-    - `billing_postal_code`
+    - `billing_postal_code`: 34394
     
-    - `tax_office`
+    - `tax_office`: Zincirlikuyu
     
-    - `district`
+    - `district`: Şişli
     
-    - `city`
+    - `city`: İstanbul
     
-    - `order_no` 
-    
-    - `order_date` alanlarının doğru bir şekilde doldurulduğundan emin olunuz.
+    - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve `order_date`) doldurulmalıdır.
     
     
-    Amazon'a fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz.
+    Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u inceleyebilirsiniz.
     
     ```json
     
@@ -497,6 +495,8 @@ info:
     Buradaki data'nın içindeki alanların anlamları:
     
     - `supplier_code`: tedarikçi kodu
+    
+    - `product_id`: paraşüt ürün id
 
     - `buyer_code`: ürün AEN / ASIN kodu
 
