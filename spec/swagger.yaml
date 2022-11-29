@@ -6,22 +6,22 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
-  
+
     # CHANGE LOG
-    
+
     ### **2021-10-11**
-    
+
     #### Added
-    
+
     - Belirli Firmalar İçin Özel Gereksinimler alanına Amazon için gerekli özel alanlar eklendi.
-    
-    
+
+
     #### Changed
-    
+
     - Fatura oluşturmada `order_no` ve `order_date` alanlarının tanımlamaları değiştirildi.
-    
-    
-    
+
+
+
     # GİRİŞ
 
 
@@ -403,14 +403,14 @@ info:
     ### SGK için gerekli özel alanlar
 
 
-    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz. 
+    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz.
 
 
     ``` json
 
     custom_requirement_params: {
-      integration: {     
-        data: {       
+      integration: {
+        data: {
           additional_invoice_type: 'SAGLIK_ECZ',
           tax_payer_code: 'xx',
           tax_payer_name: 'xx',
@@ -445,29 +445,29 @@ info:
 
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
     MAL_HIZMET, DIGER*
-    
+
     ### Amazon için gerekli özel alanlar
-    
+
     Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada kullanılan adres bilgileri:
 
-    
+
     - `billing_address`: Esentepe Mahallesi, Bahar Sk. No: 13/52
-    
+
     - `billing_postal_code`: 34394
-    
+
     - `tax_office`: Zincirlikuyu
-    
+
     - `district`: Şişli
-    
+
     - `city`: İstanbul
-    
+
     - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve `order_date`) doldurulmalıdır.
-    
-    
+
+
     Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u inceleyebilirsiniz.
-    
+
     ```json
-    
+
     custom_requirement_params: {
       integration: {
         data: {
@@ -489,13 +489,13 @@ info:
         }
       ]
     }
-    
+
     ```
-    
+
     Buradaki data'nın içindeki alanların anlamları:
-    
+
     - `supplier_code`: tedarikçi kodu
-    
+
     - `product_id`: paraşüt ürün id
 
     - `buyer_code`: ürün AEN / ASIN kodu
@@ -15514,6 +15514,9 @@ definitions:
       vat_rate:
         type: number
         readOnly: false
+      vat_withholding_rate:
+        type: number
+        readOnly: false
       discount_type:
         type: string
         enum:
@@ -15626,9 +15629,6 @@ definitions:
         type: number
         readOnly: false
       withholding_rate:
-        type: number
-        readOnly: false
-      vat_withholding_rate:
         type: number
         readOnly: false
       invoice_discount:
