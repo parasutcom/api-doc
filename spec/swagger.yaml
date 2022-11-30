@@ -15247,9 +15247,6 @@ definitions:
       withholding_rate:
         type: number
         readOnly: false
-      vat_withholding_rate:
-        type: number
-        readOnly: false
       invoice_discount_type:
         type: string
         enum:
