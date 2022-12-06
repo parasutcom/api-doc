@@ -15165,6 +15165,9 @@ definitions:
       total_vat:
         type: number
         readOnly: false
+      total_vat_withholding:
+        type: number
+        readOnly: true
       total_discount:
         type: number
         readOnly: true
@@ -15494,6 +15497,9 @@ definitions:
       net_total:
         type: number
         readOnly: true
+      vat_withholding:
+        type: number
+        readOnly: true
       created_at:
         type: string
         format: date
@@ -15811,7 +15817,7 @@ definitions:
         type: number
         readOnly: true
         description: Toplam KDV
-      vat_withholding:
+      total_vat_withholding:
         type: number
         readOnly: true
         description: Tevkifat
@@ -15904,10 +15910,6 @@ definitions:
         type: number
         readOnly: false
         description: Stopaj oranı
-      vat_withholding_rate:
-        type: number
-        readOnly: false
-        description: Tevkifat oranı
       invoice_discount_type:
         type: string
         enum:
@@ -16183,6 +16185,10 @@ definitions:
         type: number
         readOnly: true
         description: Ürün/hizmet net tutarı
+      vat_withholding:
+        type: number
+        readOnly: true
+        description: Tevkifat
       created_at:
         type: string
         format: date
@@ -16205,6 +16211,10 @@ definitions:
         type: number
         readOnly: false
         description: KDV oranı
+      vat_withholding_rate:
+        type: number
+        description: Tevkifat oranı
+        readOnly: false
       discount_type:
         type: string
         enum:
