@@ -6,22 +6,22 @@ info:
     url: 'https://apidocs.parasut.com/logo.png'
     backgroundColor: null
   description: >
-  
+
     # CHANGE LOG
-    
+
     ### **2021-10-11**
-    
+
     #### Added
-    
+
     - Belirli Firmalar İçin Özel Gereksinimler alanına Amazon için gerekli özel alanlar eklendi.
-    
-    
+
+
     #### Changed
-    
+
     - Fatura oluşturmada `order_no` ve `order_date` alanlarının tanımlamaları değiştirildi.
-    
-    
-    
+
+
+
     # GİRİŞ
 
 
@@ -403,14 +403,14 @@ info:
     ### SGK için gerekli özel alanlar
 
 
-    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz. 
+    SGK'ya fatura kesebilmek için aşağıdaki json'u inceleyebilirsiniz.
 
 
     ``` json
 
     custom_requirement_params: {
-      integration: {     
-        data: {       
+      integration: {
+        data: {
           additional_invoice_type: 'SAGLIK_ECZ',
           tax_payer_code: 'xx',
           tax_payer_name: 'xx',
@@ -445,29 +445,29 @@ info:
 
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
     MAL_HIZMET, DIGER*
-    
+
     ### Amazon için gerekli özel alanlar
-    
+
     Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada kullanılan adres bilgileri:
 
-    
+
     - `billing_address`: Esentepe Mahallesi, Bahar Sk. No: 13/52
-    
+
     - `billing_postal_code`: 34394
-    
+
     - `tax_office`: Zincirlikuyu
-    
+
     - `district`: Şişli
-    
+
     - `city`: İstanbul
-    
+
     - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve `order_date`) doldurulmalıdır.
-    
-    
+
+
     Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u inceleyebilirsiniz.
-    
+
     ```json
-    
+
     custom_requirement_params: {
       integration: {
         data: {
@@ -489,13 +489,13 @@ info:
         }
       ]
     }
-    
+
     ```
-    
+
     Buradaki data'nın içindeki alanların anlamları:
-    
+
     - `supplier_code`: tedarikçi kodu
-    
+
     - `product_id`: paraşüt ürün id
 
     - `buyer_code`: ürün AEN / ASIN kodu
@@ -14031,12 +14031,22 @@ definitions:
   EDocumentCommonFormAttributes:
     type: object
     properties:
-      vat_withholding_code:
-        type: string
+      vat_withholding_params:
+        type: array
         description: >-
-          Tevkifat oranına ait vergi kodu. - *Bu dosyada ilgili kodları
-          bulabilirsiniz:
+          Tevkifat kodları - *Tevkifat faturadaki her kalem için ayrıdır.
+          Tevkifat uygulanan her ürün için Tevkifat kodu göndermeniz
+          gerekmektedir.* - *Bu dosyada ilgili kodları bulabilirsiniz:
           https://ebelge.gib.gov.tr/dosyalar/kilavuzlar/UBLTR_1.2.1_Kilavuzlar.zip*
+        items:
+          type: object
+          properties:
+            detail_id:
+              type: integer
+              description: Fatura kalem ID
+            vat_withholding_code:
+              type: string
+              description: Tevkifat kodu
         readOnly: false
       vat_exemption_reason_code:
         type: string
@@ -15165,6 +15175,9 @@ definitions:
       total_vat:
         type: number
         readOnly: false
+      total_vat_withholding:
+        type: number
+        readOnly: true
       total_discount:
         type: number
         readOnly: true
@@ -15245,9 +15258,6 @@ definitions:
         type: number
         readOnly: false
       withholding_rate:
-        type: number
-        readOnly: false
-      vat_withholding_rate:
         type: number
         readOnly: false
       invoice_discount_type:
@@ -15497,6 +15507,9 @@ definitions:
       net_total:
         type: number
         readOnly: true
+      vat_withholding:
+        type: number
+        readOnly: true
       created_at:
         type: string
         format: date
@@ -15512,6 +15525,9 @@ definitions:
         type: number
         readOnly: false
       vat_rate:
+        type: number
+        readOnly: false
+      vat_withholding_rate:
         type: number
         readOnly: false
       discount_type:
@@ -15626,9 +15642,6 @@ definitions:
         type: number
         readOnly: false
       withholding_rate:
-        type: number
-        readOnly: false
-      vat_withholding_rate:
         type: number
         readOnly: false
       invoice_discount:
@@ -15814,7 +15827,7 @@ definitions:
         type: number
         readOnly: true
         description: Toplam KDV
-      vat_withholding:
+      total_vat_withholding:
         type: number
         readOnly: true
         description: Tevkifat
@@ -15907,10 +15920,6 @@ definitions:
         type: number
         readOnly: false
         description: Stopaj oranı
-      vat_withholding_rate:
-        type: number
-        readOnly: false
-        description: Tevkifat oranı
       invoice_discount_type:
         type: string
         enum:
@@ -16186,6 +16195,10 @@ definitions:
         type: number
         readOnly: true
         description: Ürün/hizmet net tutarı
+      vat_withholding:
+        type: number
+        readOnly: true
+        description: Tevkifat
       created_at:
         type: string
         format: date
@@ -16208,6 +16221,10 @@ definitions:
         type: number
         readOnly: false
         description: KDV oranı
+      vat_withholding_rate:
+        type: number
+        description: Tevkifat oranı
+        readOnly: false
       discount_type:
         type: string
         enum:
