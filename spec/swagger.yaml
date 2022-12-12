@@ -14043,7 +14043,7 @@ definitions:
           properties:
             detail_id:
               type: integer
-              description: Fatura detay ID
+              description: Fatura kalem ID
             vat_withholding_code:
               type: string
               description: Tevkifat kodu
