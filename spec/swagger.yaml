@@ -71,6 +71,29 @@ info:
 
     - Dakikada 60 adet istek gönderebilirsiniz.
 
+    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `evet data` ve size tanımlanan 
+    `encryption key` değerlerini SHA256 ile hash'leyerek ile oluşturulur.
+      - Örnek bir Webhook URL'ine gönderilen request body şöyle görünür;
+
+        ```json
+        {
+          "company_id": "1",
+          "resource": "sales_invoice",
+          "action": "update",
+          "event_date": "2023-01-02T01:01:00.000Z",
+          "data": {
+            "id": 1,
+            "company_id": "1",
+            "created_at": "2023-01-01T01:01:00.000Z",
+            "updated_at": "2023-01-01T01:02:00.000Z",
+            "operated_by_type": null,
+            "operated_by_id": null,
+            "included": [ ... ], # array of related objects
+            "data": { ... } # object modal, bu örnekte sales invoice
+          }
+        }
+        ```
+
 
     # Authentication
 
@@ -13198,11 +13221,36 @@ paths:
                     enum:
                       - webhook
                   attributes:
-                    $ref: '#/definitions/WebhookAttributes'
+                    type: object
+                    required:
+                      - model
+                      - action
+                      - uri
+                    properties:
+                      model:
+                        type: string
+                        enum:
+                          - shipment_document
+                          - employee
+                          - product
+                          - contact
+                          - stock_movement
+                          - sales_invoice
+                        description: Model name to create its webhook
+                      action:
+                        type: string
+                        enum:
+                          - create
+                          - update
+                          - delete
+                        description: Action name to create related webhook
+                      uri:
+                        type: string
+                        description: URI to use webhook
           in: body
           required: true
       responses:
-        '201':
+        '200':
           description: Webhook
           schema:
             type: object
@@ -13355,7 +13403,7 @@ paths:
       summary: Delete
       description: Deletes Webhook record
       responses:
-        '204':
+        '200':
           description: No content
           schema:
             type: object
@@ -17573,6 +17621,5 @@ definitions:
           - webhook
       attributes:
         $ref: '#/definitions/WebhookAttributes'
-      relationships: {}
     required:
       - attributes
