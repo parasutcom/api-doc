@@ -69,14 +69,16 @@ info:
     `Authorization` header'ı olarak `Bearer access_token` şeklinde
     göndermelisiniz.
 
-    - Dakikada 60 adet istek gönderebilirsiniz.
+    - 10 saniyede 10 adet istek gönderebilirsiniz.
 
-    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `evet data` ve size tanımlanan 
+    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `event data` ve size tanımlanan 
     `encryption key` değerlerini SHA256 ile hash'leyerek ile oluşturulur.
-      - Örnek bir Webhook URL'ine gönderilen request body şöyle görünür;
+      - Örnek bir Webhook URL'ine gönderilen request şöyle görünür;
+    
+       `Content-Type: www-url-encoded`
 
         ```json
-        {
+        body: {
           "company_id": "1",
           "resource": "sales_invoice",
           "action": "update",
@@ -89,7 +91,8 @@ info:
             "operated_by_type": null,
             "operated_by_id": null,
             "included": [ ... ], # array of related objects
-            "data": { ... } # object modal, bu örnekte sales invoice
+            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object modal. İlgili modeli dönen API ile aynı formatta
+            # data bu örnekte sales invoice, ilgili API: /#operation/showSalesInvoice
           }
         }
         ```
