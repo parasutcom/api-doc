@@ -9,17 +9,15 @@ info:
 
     # CHANGE LOG
 
-    ### **2021-10-11**
+    ### **2023-01-19**
 
     #### Added
 
-    - Belirli Firmalar İçin Özel Gereksinimler alanına Amazon için gerekli özel alanlar eklendi.
+    - Satış Faturası'na Konaklama Vergisi için `total_accommodation_tax` ve
+    `accommodation_tax_exemption_reason_code` alanları eklendi.
 
-
-    #### Changed
-
-    - Fatura oluşturmada `order_no` ve `order_date` alanlarının tanımlamaları değiştirildi.
-
+    - Satış Faturası Detayı'na Konaklama Vergisi için `accommodation_tax_rate`,
+    `accommodation_tax` ve `accommodation_tax_exempt` alanları eklendi.
 
 
     # GİRİŞ
@@ -452,7 +450,6 @@ info:
 
     Buradaki data'nın içindeki alanların anlamları:
 
-
     - `additional_invoice_type`: ilave fatura tipi
 
     - `tax_payer_code`: mükellef kodu
@@ -472,10 +469,11 @@ info:
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
     MAL_HIZMET, DIGER*
 
+
     ### Amazon için gerekli özel alanlar
 
-    Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada kullanılan adres bilgileri:
-
+    Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada
+    kullanılan adres bilgileri:
 
     - `billing_address`: Esentepe Mahallesi, Bahar Sk. No: 13/52
 
@@ -487,10 +485,15 @@ info:
 
     - `city`: İstanbul
 
-    - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve `order_date`) doldurulmalıdır.
+    - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve
+    `order_date`) doldurulmalıdır.
 
 
-    Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u inceleyebilirsiniz.
+    Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan
+    `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt
+    üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u
+    inceleyebilirsiniz.
+
 
     ```json
 
@@ -517,6 +520,7 @@ info:
     }
 
     ```
+
 
     Buradaki data'nın içindeki alanların anlamları:
 
@@ -14016,9 +14020,9 @@ definitions:
         readOnly: false
         description: İlçe
       postal_code:
+        description: Posta kodu
         type: string
         readOnly: false
-        description: Posta kodu
       city:
         type: string
         readOnly: false
@@ -16196,6 +16200,10 @@ definitions:
         type: number
         readOnly: true
         description: Vergiler Hariç Toplam
+      total_accommodation_tax:
+        type: number
+        readOnly: true
+        description: Toplam Konaklama Vergisi
       remaining:
         type: number
         readOnly: true
@@ -16323,12 +16331,24 @@ definitions:
       order_no:
         type: string
         readOnly: false
-        description: Sipariş no (resmileştirmek için order_date dolu ise bu alan zorunludur)
+        description: >-
+          Sipariş no (resmileştirmek için order_date dolu ise bu alan
+          zorunludur)
       order_date:
         type: string
         format: date
         readOnly: false
-        description: Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan zorunludur)
+        description: >-
+          Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan
+          zorunludur)
+      accommodation_tax_exemption_reason_code:
+        type: string
+        enum:
+          - '001'
+        readOnly: false
+        description: >-
+          Konaklama Vergisi İstisna Kodu boş ya da belirtilen değerlerden biri
+          olmalı.
       shipment_addres:
         type: string
         readOnly: false
@@ -16341,11 +16361,11 @@ definitions:
         readOnly: false
         description: Peşin satış
       payer_tax_numbers:
-        description: Kamu faturaları için zorunludur.
         type: array
         items:
           type: string
         readOnly: false
+        description: Kamu faturaları için zorunludur.
     required:
       - item_type
       - issue_date
@@ -16577,8 +16597,8 @@ definitions:
         description: KDV oranı
       vat_withholding_rate:
         type: number
-        description: Tevkifat oranı
         readOnly: false
+        description: Tevkifat oranı
       discount_type:
         type: string
         enum:
@@ -16640,10 +16660,28 @@ definitions:
           - Sabit taşıma tesisleri
           - İç su taşımacılığı
         readOnly: false
+      accommodation_tax_rate:
+        description: Konaklama Vergisi Oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+      accommodation_tax:
+        description: Konaklama Vergisi Miktarı
+        type: number
+        readOnly: false
+      accommodation_tax_exempt:
+        description: Konaklama Vergisi İstisna mı
+        type: boolean
+        readOnly: false
     required:
       - quantity
       - unit_price
       - vat_rate
+      - accommodation_tax_rate
+      - accommodation_tax
+      - accommodation_tax_exempt
   SalesInvoiceDetail:
     type: object
     properties:
