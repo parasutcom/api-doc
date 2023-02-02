@@ -69,7 +69,33 @@ info:
     `Authorization` header'ı olarak `Bearer access_token` şeklinde
     göndermelisiniz.
 
-    - Dakikada 60 adet istek gönderebilirsiniz.
+    - 10 saniyede 10 adet istek gönderebilirsiniz.
+
+    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `event data` ve size tanımlanan 
+    `encryption key` değerlerini SHA256 ile hash'leyerek ile oluşturulur.
+      - Örnek bir Webhook URL'ine gönderilen request şöyle görünür;
+    
+       `Content-Type: www-url-encoded`
+
+        ```json
+        body: {
+          "company_id": "1",
+          "resource": "sales_invoice",
+          "action": "update",
+          "event_date": "2023-01-02T01:01:00.000Z",
+          "data": {
+            "id": 1,
+            "company_id": "1",
+            "created_at": "2023-01-01T01:01:00.000Z",
+            "updated_at": "2023-01-01T01:02:00.000Z",
+            "operated_by_type": null,
+            "operated_by_id": null,
+            "included": [ ... ], # array of related objects
+            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object modal. İlgili modeli dönen API ile aynı formatta
+            # data bu örnekte sales invoice, ilgili API: /#operation/showSalesInvoice
+          }
+        }
+        ```
 
 
     # Authentication
@@ -632,6 +658,8 @@ tags:
     x-displayName: İŞLEM
   - name: Warehouses
     x-displayName: DEPO
+  - name: Webhooks
+    x-displayName: Webhooks
 x-tagGroups:
   - name: Satışlar
     tags:
@@ -671,6 +699,7 @@ x-tagGroups:
     tags:
       - ApiHome
       - TrackableJobs
+      - Webhooks
 paths:
   '/{company_id}/accounts':
     parameters:
@@ -13101,6 +13130,331 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/webhooks':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - Webhooks
+      operationId: getWebhook
+      summary: Get
+      description: Get Webhooks for the company
+      responses:
+        '200':
+          description: Webhooks
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Webhook'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Webhooks
+      operationId: createWebhook
+      summary: Create
+      description: Creates a new Webhook record for the company
+      parameters:
+        - name: webhook_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - webhook
+                  attributes:
+                    type: object
+                    required:
+                      - model
+                      - action
+                      - uri
+                    properties:
+                      model:
+                        type: string
+                        enum:
+                          - shipment_document
+                          - employee
+                          - product
+                          - contact
+                          - stock_movement
+                          - sales_invoice
+                        description: Model name to create its webhook
+                      action:
+                        type: string
+                        enum:
+                          - create
+                          - update
+                          - delete
+                        description: Action name to create related webhook
+                      uri:
+                        type: string
+                        description: URI to use webhook
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Webhook
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Webhook'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/webhooks/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Hesap ID
+        in: path
+        required: true
+    put:
+      tags:
+        - Webhooks
+      operationId: updateWebhook
+      summary: Edit
+      description: Updates Webhook record of the company
+      parameters:
+        - name: webhook_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - webhook
+                  attributes:
+                    $ref: '#/definitions/WebhookAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Webhook
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Webhook'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Webhooks
+      operationId: deleteWebhook
+      summary: Delete
+      description: Deletes Webhook record
+      responses:
+        '200':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
 security:
   - parasut_auth: []
 securityDefinitions:
@@ -17214,5 +17568,61 @@ definitions:
                     description: Type of the resource
                     enum:
                       - inventory_levels
+    required:
+      - attributes
+  WebhookAttributes:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date
+        description: Date the record created
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        description: Date the record updated
+        readOnly: true
+      company_id:
+        type: integer
+        description: Firma ID
+        readOnly: true
+      model:
+        type: string
+        enum:
+          - shipment_document
+          - employee
+          - product
+          - contact
+          - stock_movement
+          - sales_invoice
+        description: Model name to create its webhook
+        readOnly: false
+      action:
+        type: string
+        enum:
+          - create
+          - update
+          - delete
+        description: Action name to create related webhook
+        readOnly: false
+      uri:
+        type: string
+        description: URI to use webhook
+        readOnly: false
+  Webhook:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - webhook
+      attributes:
+        $ref: '#/definitions/WebhookAttributes'
     required:
       - attributes
