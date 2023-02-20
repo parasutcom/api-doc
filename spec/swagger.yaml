@@ -9,15 +9,30 @@ info:
 
     # CHANGE LOG
 
-    ### **2023-01-19**
+    ### **2023-02-20**
 
-    #### Added
+    #### Konaklama Vergisi
 
-    - Satış Faturası'na Konaklama Vergisi için `total_accommodation_tax` ve
-    `accommodation_tax_exemption_reason_code` alanları eklendi.
+    - Satış Faturası üzerine `accommodation_tax_exemption_reason_code` alanı
+    eklendi.
 
-    - Satış Faturası Detayı'na Konaklama Vergisi için `accommodation_tax_rate`,
-    `accommodation_tax` ve `accommodation_tax_exempt` alanları eklendi.
+    - Satış Faturası Detayı üzerine `accommodation_tax_rate` ve
+    `accommodation_tax_exempt` alanları eklendi.
+
+    - E-Arşiv ve E-Fatura üzerine `accommodation_tax_exemption_reason_code`
+    alanı eklendi.
+
+    - Ürün üzerine `accommodation_tax_rate` eklendi.
+
+    - Gider Faturası Detayı üzerine `accommodation_tax_rate` ve
+    `accommodation_tax_exempt` alanları eklendi.
+
+
+    ### **2023-02-02**
+
+    #### Webhook
+
+    - Webhook GET, POST, PUT ve DELETE endpoint'leri eklendi.
 
 
     # GİRİŞ
