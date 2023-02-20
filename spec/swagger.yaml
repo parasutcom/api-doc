@@ -14421,6 +14421,12 @@ definitions:
                 - 63
                 - 9077
         readOnly: false
+      accommodation_tax_exemption_reason_code:
+        description: Konaklama Vergisi istisna kodu
+        type: string
+        enum:
+          - '001'
+        readOnly: false
   EDocumentCommonForm:
     type: object
     properties:
@@ -15347,6 +15353,13 @@ definitions:
         type: number
         readOnly: false
         description: ÖİV oranı
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
       archived:
         type: boolean
         readOnly: false
@@ -15884,6 +15897,17 @@ definitions:
       communications_tax_rate:
         type: number
         readOnly: false
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+      accommodation_tax_exempt:
+        description: Konaklama Vergisi muafiyeti
+        type: boolean
+        readOnly: false
       description:
         type: string
         readOnly: false
@@ -15985,6 +16009,17 @@ definitions:
         enum:
           - percentage
           - amount
+        readOnly: false
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+      accommodation_tax_exempt:
+        description: Konaklama Vergisi muafiyeti
+        type: boolean
         readOnly: false
     required:
       - item_type
@@ -16178,7 +16213,6 @@ definitions:
       total_accommodation_tax:
         type: number
         readOnly: true
-        description: Toplam Konaklama Vergisi
       remaining:
         type: number
         readOnly: true
@@ -16321,9 +16355,7 @@ definitions:
         enum:
           - '001'
         readOnly: false
-        description: >-
-          Konaklama Vergisi İstisna Kodu boş ya da belirtilen değerlerden biri
-          olmalı.
+        description: Konaklama Vergisi istisna kodu
       shipment_addres:
         type: string
         readOnly: false
@@ -16636,27 +16668,20 @@ definitions:
           - İç su taşımacılığı
         readOnly: false
       accommodation_tax_rate:
-        description: Konaklama Vergisi Oranı
         type: number
         enum:
           - 0
           - 2
         readOnly: false
-      accommodation_tax:
-        description: Konaklama Vergisi Miktarı
-        type: number
-        readOnly: false
+        description: Konaklama Vergisi oranı
       accommodation_tax_exempt:
-        description: Konaklama Vergisi İstisna mı
         type: boolean
         readOnly: false
+        description: Konaklama Vergisi İstisna mı
     required:
       - quantity
       - unit_price
       - vat_rate
-      - accommodation_tax_rate
-      - accommodation_tax
-      - accommodation_tax_exempt
   SalesInvoiceDetail:
     type: object
     properties:
