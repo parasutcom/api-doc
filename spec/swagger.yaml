@@ -16831,6 +16831,26 @@ definitions:
         type: string
         readOnly: false
         description: Adres
+      postal_code:
+        type: string
+        readOnly: false
+        description: Posta kodu
+      company_city:
+        type: string
+        readOnly: false
+        description: Şirket ili
+      company_district:
+        type: string
+        readOnly: false
+        description: Şirket ilçesi
+      company_address:
+        type: string
+        readOnly: false
+        description: Şirket adresi
+      company_postal_code:
+        type: string
+        readOnly: false
+        description: Şirket posta kodu
       issue_date:
         type: string
         format: date
@@ -16841,6 +16861,35 @@ definitions:
         format: date-time
         readOnly: false
         description: Fiili sevk tarihi
+      order_no:
+        type: string
+        readOnly: false
+        description: Sipariş numarası
+      order_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Sipariş tarihi
+      carrier_legal_name:
+        type: string
+        readOnly: false
+        description: Kargo firması ismi
+      carrier_tax_number:
+        type: string
+        readOnly: false
+        description: Kargo firması vergi numarası
+      carrier_license_plate:
+        type: string
+        readOnly: false
+        description: Kargo firması araç plakası
+      trailer_license_plates:
+        type: string
+        readOnly: false
+        description: Kargo römork araç plakaları
+      drivers_info:
+        type: string
+        readOnly: false
+        description: Şöför bilgileri
       procurement_number:
         type: string
         readOnly: false
