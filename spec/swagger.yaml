@@ -69,10 +69,11 @@ info:
 
     - 10 saniyede 10 adet istek gönderebilirsiniz.
 
-    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `event data` ve size tanımlanan 
-    `encryption key` değerlerini SHA256 ile hash'leyerek ile oluşturulur.
+    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature`
+    headerı `event data` ve size tanımlanan `encryption key` değerlerini SHA256
+    ile hash'leyerek ile oluşturulur.
       - Örnek bir Webhook URL'ine gönderilen request şöyle görünür;
-    
+
        `Content-Type: www-url-encoded`
 
         ```json
@@ -89,12 +90,11 @@ info:
             "operated_by_type": null,
             "operated_by_id": null,
             "included": [ ... ], # array of related objects
-            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object modal. İlgili modeli dönen API ile aynı formatta
+            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object model. İlgili modeli dönen API ile aynı formatta
             # data bu örnekte sales invoice, ilgili API: /#operation/showSalesInvoice
           }
         }
         ```
-
 
     # Authentication
 
@@ -13228,36 +13228,11 @@ paths:
                     enum:
                       - webhook
                   attributes:
-                    type: object
-                    required:
-                      - model
-                      - action
-                      - uri
-                    properties:
-                      model:
-                        type: string
-                        enum:
-                          - shipment_document
-                          - employee
-                          - product
-                          - contact
-                          - stock_movement
-                          - sales_invoice
-                        description: Model name to create its webhook
-                      action:
-                        type: string
-                        enum:
-                          - create
-                          - update
-                          - delete
-                        description: Action name to create related webhook
-                      uri:
-                        type: string
-                        description: URI to use webhook
+                    $ref: '#/definitions/WebhookAttributes'
           in: body
           required: true
       responses:
-        '200':
+        '201':
           description: Webhook
           schema:
             type: object
@@ -13410,7 +13385,7 @@ paths:
       summary: Delete
       description: Deletes Webhook record
       responses:
-        '200':
+        '204':
           description: No content
           schema:
             type: object
@@ -17648,6 +17623,10 @@ definitions:
         type: string
         description: URI to use webhook
         readOnly: false
+    required:
+      - model
+      - action
+      - uri
   Webhook:
     type: object
     properties:
@@ -17662,5 +17641,6 @@ definitions:
           - webhook
       attributes:
         $ref: '#/definitions/WebhookAttributes'
+      relationships: {}
     required:
       - attributes
