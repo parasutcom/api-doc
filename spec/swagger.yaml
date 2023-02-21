@@ -9,6 +9,21 @@ info:
 
     # CHANGE LOG
 
+    ### **2023-02-25**
+
+    #### İrsaliye
+
+    - İrsaliye üzerine `postal_code`, `company_city`, `company_district`,
+    `company_address`, `company_postal_code`, `order_no`, `order_date`,
+    `carrier_legal_name`, `carrier_tax_number`, `carrier_license_plate`,
+    `trailer_license_plates` ve `drivers_info` alanları eklendi.
+
+    - İrsaliye için `download_e_documents`, `archive`, `unarchive`, `print`,
+    `update_print_info`, `mark_as_printed`, `link_invoices`, `unlink_invoices`,
+    `legalize`, `resend`, `pdf`, `ubl`, `e_despatch`, `preview`, `response_html`
+    ve `validate_e_despatch` endpointleri eklendi.
+
+
     ### **2023-02-20**
 
     #### Konaklama Vergisi
@@ -10254,28 +10269,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/ShipmentDocument'
-              included:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      maxLength: 255
-                    type:
-                      type: string
-                      maxLength: 255
-                      description: Type of the resource
-                      enum:
-                        - contacts
-                        - tags
-                        - stock_movements
-                        - sales_invoices
-                        - purchase_bills
-                    attributes:
-                      type: object
-                    relationships:
-                      type: object
               meta:
                 $ref: '#/definitions/ListMeta'
         '400':
@@ -10439,28 +10432,6 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/ShipmentDocument'
-              included:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      maxLength: 255
-                    type:
-                      type: string
-                      maxLength: 255
-                      description: Type of the resource
-                      enum:
-                        - contacts
-                        - tags
-                        - stock_movements
-                        - sales_invoices
-                        - purchase_bills
-                    attributes:
-                      type: object
-                    relationships:
-                      type: object
         '400':
           description: Bad Request
           schema:
@@ -10540,28 +10511,6 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/ShipmentDocument'
-              included:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      maxLength: 255
-                    type:
-                      type: string
-                      maxLength: 255
-                      description: Type of the resource
-                      enum:
-                        - contacts
-                        - tags
-                        - stock_movements
-                        - sales_invoices
-                        - purchase_bills
-                    attributes:
-                      type: object
-                    relationships:
-                      type: object
         '400':
           description: Bad Request
           schema:
@@ -10723,28 +10672,6 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/ShipmentDocument'
-              included:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      maxLength: 255
-                    type:
-                      type: string
-                      maxLength: 255
-                      description: Type of the resource
-                      enum:
-                        - contacts
-                        - tags
-                        - stock_movements
-                        - sales_invoices
-                        - purchase_bills
-                    attributes:
-                      type: object
-                    relationships:
-                      type: object
         '400':
           description: Bad Request
           schema:
@@ -10801,6 +10728,1300 @@ paths:
           description: No content
           schema:
             type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/archive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - ShipmentDocuments
+      operationId: archiveShipmentDocument
+      summary: Archive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, stock_movements, stock_movements.product, tags,
+            invoices*
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/unarchive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - ShipmentDocuments
+      operationId: unarchiveShipmentDocument
+      summary: Unarchive
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, stock_movements, stock_movements.product, tags,
+            invoices*
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/print':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: printShipmentDocument
+      summary: Print
+      description: ''
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/update_print_info':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - ShipmentDocuments
+      operationId: updatePrintInfoShipmentDocument
+      summary: Update print info
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, stock_movements, stock_movements.product, tags,
+            invoices*
+        - name: shipment_documents_update_print_info
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentUpdatePrintInfoAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/mark_as_printed':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - ShipmentDocuments
+      operationId: markAsPrintedShipmentDocument
+      summary: Mark as printed
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, stock_movements, stock_movements.product, tags,
+            invoices*
+        - name: shipment_documents_mark_as_printed
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentMarkAsPrintedAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/link_invoices':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    post:
+      tags:
+        - ShipmentDocuments
+      operationId: linkInvoicesWithShipmentDocument
+      summary: Link invoices with Shipment Documents
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: invoices*
+        - name: shipment_documents_link
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentLinkAttributes'
+          in: body
+          required: true
+      responses:
+        '201':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/unlink_invoices':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    delete:
+      tags:
+        - ShipmentDocuments
+      operationId: unlinkInvoicesWithShipmentDocument
+      summary: Unlink invoices with Shipment Documents
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: invoices*
+        - name: shipment_documents_link
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - shipment_documents
+                  attributes:
+                    $ref: '#/definitions/ShipmentDocumentLinkAttributes'
+          in: body
+          required: true
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/e_despatch':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: showEDespatches
+      summary: Show E-Despatches
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/pdf':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: pdfEDespatch
+      summary: PDF E-Despatch
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/ubl':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: ublEDespatches
+      summary: UBL E-Despatches
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/legalize':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    post:
+      tags:
+        - ShipmentDocuments
+      operationId: legalizeEDespatches
+      summary: Legalize E-Despatches
+      description: ''
+      responses:
+        '201':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/resend':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - ShipmentDocuments
+      operationId: resendEDespatches
+      summary: Resend E-Despatches
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/preview':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: previewEDespatches
+      summary: Preview E-Despatches
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/response_html':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: responseHtmlEDespatch
+      summary: Response HTML E-Despatch
+      description: ''
+      responses:
+        '200':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/{id}/validate_e_despatch':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: İrsaliye ID
+        in: path
+        required: true
+    post:
+      tags:
+        - ShipmentDocuments
+      operationId: validateEDespatch
+      summary: Validate E-Despatch HTML E-Despatch
+      description: ''
+      responses:
+        '201':
+          description: E-İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/EDespatch'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/shipment_documents/download_e_documents':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - ShipmentDocuments
+      operationId: downloadShipmentDocuments
+      summary: Download e-documents
+      description: ''
+      parameters:
+        - name: 'filter[flow_type]'
+          type: string
+          in: query
+          description: ''
+        - name: 'filter[invoice_status]'
+          type: string
+          in: query
+          description: ''
+        - name: 'filter[archived]'
+          type: boolean
+          in: query
+          description: ''
+        - name: sort
+          type: string
+          in: query
+          description: >-
+            Sortable parameters - *Available: id, issue_date, description,
+            inflow*
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: 'page[size]'
+          type: integer
+          in: query
+          description: Page Size
+          default: 15
+          minimum: 1
+          maximum: 25
+      responses:
+        '200':
+          description: İrsaliye
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
         '400':
           description: Bad Request
           schema:
@@ -14376,6 +15597,44 @@ definitions:
       relationships: {}
     required:
       - attributes
+  EDespatchAttributes:
+    type: object
+    properties:
+      id:
+        type: string
+        readOnly: true
+      type:
+        type: string
+        readOnly: true
+      attributes:
+        type: object
+        properties:
+          uuid:
+            type: string
+          env_uuid:
+            type: string
+          gib_status_code:
+            type: string
+          despatch_no:
+            type: string
+        readOnly: true
+  EDespatch:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - e_despatches
+      attributes:
+        $ref: '#/definitions/EDespatchAttributes'
+      relationships: {}
+    required:
+      - attributes
   EDocumentCommonFormAttributes:
     type: object
     properties:
@@ -16887,7 +18146,19 @@ definitions:
         readOnly: false
         description: Kargo römork araç plakaları
       drivers_info:
-        type: string
+        type: array
+        items:
+          type: object
+          properties:
+            full_name:
+              type: string
+              description: Şöför adı
+            tckn:
+              type: string
+              description: TC kimlik numarası
+            passport_no:
+              type: string
+              description: Pasaport numarası
         readOnly: false
         description: Şöför bilgileri
       procurement_number:
@@ -16980,6 +18251,91 @@ definitions:
                       enum:
                         - sales_invoices
                         - purchase_bills
+    required:
+      - attributes
+  ShipmentDocumentLinkAttributes:
+    allOf:
+      - type: object
+        properties:
+          invoice_type:
+            description: Fatura tipi
+            type: string
+            enum:
+              - purchase_bills
+              - sales_invoices
+          invoice_ids:
+            description: Eşleştirmek istediğiniz fatura ID'leri
+            type: array
+  ShipmentDocumentLink:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_documents
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentLinkAttributes'
+      relationships: {}
+    required:
+      - attributes
+  ShipmentDocumentMarkAsPrintedAttributes:
+    allOf:
+      - type: object
+        properties:
+          procurement_number:
+            description: İrsaliye Numarası
+            type: string
+  ShipmentDocumentMarkAsPrinted:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_documents
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentMarkAsPrintedAttributes'
+      relationships: {}
+    required:
+      - attributes
+  ShipmentDocumentUpdatePrintInfoAttributes:
+    allOf:
+      - type: object
+        properties:
+          print_note:
+            description: Yazdırma notu
+            type: string
+          shipment_date:
+            description: İrsaliye tarihi
+            type: string
+            format: date-time
+          invoice_no:
+            description: Fatura ID
+            type: string
+  ShipmentDocumentUpdatePrintInfo:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_documents
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentUpdatePrintInfoAttributes'
+      relationships: {}
     required:
       - attributes
   StockMovementAttributes:
