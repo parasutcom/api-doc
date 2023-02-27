@@ -11147,6 +11147,9 @@ paths:
                     description: Type of the resource
                     enum:
                       - shipment_documents
+                  template_id:
+                    type: integer
+                    description: Yazdırma Şablonu ID
                   attributes:
                     $ref: '#/definitions/ShipmentDocumentMarkAsPrintedAttributes'
           in: body
@@ -11219,8 +11222,8 @@ paths:
     post:
       tags:
         - ShipmentDocuments
-      operationId: linkInvoicesWithShipmentDocument
-      summary: Link invoices with Shipment Documents
+      operationId: linkShipmentDocumentWithInvoices
+      summary: Link with invoices
       description: ''
       parameters:
         - name: include
@@ -11247,8 +11250,17 @@ paths:
                     description: Type of the resource
                     enum:
                       - shipment_documents
-                  attributes:
-                    $ref: '#/definitions/ShipmentDocumentLinkAttributes'
+                  invoice_ids:
+                    description: Eşleştirmek istediğiniz fatura ID'leri
+                    type: array
+                    items:
+                      type: integer
+                  invoice_type:
+                    description: Fatura tipi
+                    type: string
+                    enum:
+                      - purchase_bills
+                      - sales_invoices
           in: body
           required: true
       responses:
@@ -11319,8 +11331,8 @@ paths:
     delete:
       tags:
         - ShipmentDocuments
-      operationId: unlinkInvoicesWithShipmentDocument
-      summary: Unlink invoices with Shipment Documents
+      operationId: unlinkShipmentDocumentWithInvoices
+      summary: Unlink with invoices
       description: ''
       parameters:
         - name: include
@@ -11347,15 +11359,27 @@ paths:
                     description: Type of the resource
                     enum:
                       - shipment_documents
-                  attributes:
-                    $ref: '#/definitions/ShipmentDocumentLinkAttributes'
+                  invoice_ids:
+                    description: Eşleştirmek istediğiniz fatura ID'leri
+                    type: array
+                    items:
+                      type: integer
+                  invoice_type:
+                    description: Fatura tipi
+                    type: string
+                    enum:
+                      - purchase_bills
+                      - sales_invoices
           in: body
           required: true
       responses:
         '204':
-          description: No content
+          description: İrsaliye
           schema:
             type: object
+            properties:
+              data:
+                $ref: '#/definitions/ShipmentDocument'
         '400':
           description: Bad Request
           schema:
@@ -11490,6 +11514,14 @@ paths:
       operationId: pdfEDespatch
       summary: PDF E-Despatch
       description: ''
+      parameters:
+        - name: in_place
+          type: boolean
+          in: query
+          description: >-
+            PDF'e yönlendirmek için true ya da PDF içeriğini JSON formatında
+            almak için false
+          default: false
       responses:
         '200':
           description: E-İrsaliye
@@ -11845,6 +11877,12 @@ paths:
       operationId: responseHtmlEDespatch
       summary: Response HTML E-Despatch
       description: ''
+      parameters:
+        - name: in_place
+          type: boolean
+          in: query
+          description: iFrame olarak almak için true ya da HTML formatında almak için false
+          default: false
       responses:
         '200':
           description: E-İrsaliye
@@ -18251,36 +18289,6 @@ definitions:
                       enum:
                         - sales_invoices
                         - purchase_bills
-    required:
-      - attributes
-  ShipmentDocumentLinkAttributes:
-    allOf:
-      - type: object
-        properties:
-          invoice_type:
-            description: Fatura tipi
-            type: string
-            enum:
-              - purchase_bills
-              - sales_invoices
-          invoice_ids:
-            description: Eşleştirmek istediğiniz fatura ID'leri
-            type: array
-  ShipmentDocumentLink:
-    type: object
-    properties:
-      id:
-        type: string
-        maxLength: 255
-      type:
-        type: string
-        maxLength: 255
-        description: Type of the resource
-        enum:
-          - shipment_documents
-      attributes:
-        $ref: '#/definitions/ShipmentDocumentLinkAttributes'
-      relationships: {}
     required:
       - attributes
   ShipmentDocumentMarkAsPrintedAttributes:
