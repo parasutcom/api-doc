@@ -10951,12 +10951,9 @@ paths:
       description: ''
       responses:
         '200':
-          description: İrsaliye
+          description: İrsaliye PDF ya da stream
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ShipmentDocument'
+            type: string
         '400':
           description: Bad Request
           schema:
@@ -11373,7 +11370,7 @@ paths:
           in: body
           required: true
       responses:
-        '204':
+        '200':
           description: İrsaliye
           schema:
             type: object
@@ -11440,8 +11437,8 @@ paths:
     get:
       tags:
         - ShipmentDocuments
-      operationId: showEDespatches
-      summary: Show E-Despatches
+      operationId: showEDespatch
+      summary: Show E-Despatch
       description: ''
       responses:
         '200':
@@ -11595,12 +11592,9 @@ paths:
       description: ''
       responses:
         '200':
-          description: E-İrsaliye
+          description: Zipped E-İrsaliye UBL
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/EDespatch'
+            type: string
         '400':
           description: Bad Request
           schema:
@@ -11736,7 +11730,7 @@ paths:
       summary: Resend E-Despatches
       description: ''
       responses:
-        '200':
+        '201':
           description: E-İrsaliye
           schema:
             type: object
@@ -11808,12 +11802,9 @@ paths:
       description: ''
       responses:
         '200':
-          description: E-İrsaliye
+          description: E-İrsaliye as PDF
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/EDespatch'
+            type: string
         '400':
           description: Bad Request
           schema:
@@ -11881,16 +11872,15 @@ paths:
         - name: in_place
           type: boolean
           in: query
-          description: iFrame olarak almak için true ya da HTML formatında almak için false
+          description: >-
+            iFrame olarak almak için true ya da JSON içinde HTML formatında
+            almak için false
           default: false
       responses:
         '200':
-          description: E-İrsaliye
+          description: E-İrsaliye as HTML
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/EDespatch'
+            type: string
         '400':
           description: Bad Request
           schema:
@@ -11955,13 +11945,9 @@ paths:
       summary: Validate E-Despatch HTML E-Despatch
       description: ''
       responses:
-        '201':
-          description: E-İrsaliye
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/EDespatch'
+        '200':
+          description: No content
+          schema: {}
         '400':
           description: Bad Request
           schema:
@@ -12054,12 +12040,12 @@ paths:
           maximum: 25
       responses:
         '200':
-          description: İrsaliye
+          description: E-Documents Download URL
           schema:
             type: object
             properties:
               data:
-                $ref: '#/definitions/ShipmentDocument'
+                $ref: '#/definitions/ShipmentDocumentDownloadEDocument'
         '400':
           description: Bad Request
           schema:
@@ -15667,7 +15653,7 @@ definitions:
         maxLength: 255
         description: Type of the resource
         enum:
-          - e_despatches
+          - EDespatch
       attributes:
         $ref: '#/definitions/EDespatchAttributes'
       relationships: {}
@@ -18289,6 +18275,32 @@ definitions:
                       enum:
                         - sales_invoices
                         - purchase_bills
+    required:
+      - attributes
+  ShipmentDocumentDownloadEDocumentAttributes:
+    type: object
+    properties:
+      result_url:
+        type: string
+        readOnly: true
+      jid:
+        type: string
+        readOnly: true
+  ShipmentDocumentDownloadEDocument:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - shipment_documents_download_e_document
+      attributes:
+        $ref: '#/definitions/ShipmentDocumentDownloadEDocumentAttributes'
+      relationships: {}
     required:
       - attributes
   ShipmentDocumentMarkAsPrintedAttributes:
