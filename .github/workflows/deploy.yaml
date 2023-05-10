@@ -16,11 +16,12 @@ jobs:
           node-version: '18.x'
       - run: npm ci
       - run: npm run build
+      - run: tar -cvf artifact.tar web_deploy
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: 'github-pages'
-          path: 'web_deploy'
+          path: artifact.tar
           retention-days: 1
           if-no-files-found: error
   deploy:
