@@ -16,7 +16,16 @@ jobs:
           node-version: '18.x'
       - run: npm ci
       - run: npm run build
-      - run: tar -cvf artifact.tar web_deploy
+      - name: Compress artifact
+        run: |
+          chmod -c -R +rX "web_deploy" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+          tar \
+            --dereference \
+            --directory "web_deploy" \
+            -cvf "artifact.tar" \
+            .
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
