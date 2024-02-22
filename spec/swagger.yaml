@@ -640,6 +640,8 @@ tags:
     x-displayName: FİŞ / FATURA
   - name: Salaries
     x-displayName: MAAŞ
+  - name: SalesOffers
+    x-displayName: TEKLİF
   - name: SalesInvoices
     x-displayName: SATIŞ FATURASI
   - name: ShipmentDocuments
@@ -663,6 +665,7 @@ tags:
 x-tagGroups:
   - name: Satışlar
     tags:
+      - SalesOffers
       - SalesInvoices
       - Contacts
   - name: Giderler
@@ -10173,6 +10176,1225 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    get:
+      tags:
+        - SalesOffers
+      operationId: listSalesOffers
+      summary: Index
+      description: ''
+      parameters:
+        - name: 'filter[archived]'
+          type: boolean
+          in: query
+          description: ''
+        - name: 'filter[query]'
+          type: string
+          in: query
+          description: ''
+        - name: 'filter[invoice_status]'
+          type: string
+          in: query
+          description: ''
+        - name: 'filter[status]'
+          type: string
+          in: query
+          description: ''
+        - name: sort
+          type: string
+          in: query
+          description: >-
+            Sortable parameters - *Available: id, issue_date, description, net_total_in_trl, sales_invoice_id*
+          default: id
+        - name: 'page[number]'
+          type: integer
+          in: query
+          description: Page Number
+          default: 1
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: contact, sales_invoice*
+      responses:
+        '200':
+          description: Teklifler
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - sales_invoice
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+              meta:
+                $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    post:
+      tags:
+        - SalesOffers
+      operationId: createSalesOffers
+      summary: Create
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: sales_invoice,contact.category,contact.contact_people.contact,sharings.collaborator,activities.item,activities.done_by *
+        - name: sales_offers_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_offers
+                  attributes:
+                    $ref: '#/definitions/SalesOffersCreateUpdateAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - sales_offer_details
+                                attributes:
+                                  $ref: '#/definitions/SalesOffersDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                                            attributes:
+                                              $ref: '#/definitions/ProductAttributes'
+                                    offer:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - sales_offers
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                              attributes:
+                                $ref: '#/definitions/ContactAttributes'
+                              relationships:
+                                type: object
+                                properties:
+                                  category:
+                                    type: object
+                                    properties:
+                                      data:
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: string
+                                            maxLength: 255
+                                          type:
+                                            type: string
+                                            maxLength: 255
+                                            description: Type of the resource
+                                            enum:
+                                              - item_categories
+          in: body
+          required: true
+      responses:
+        '201':
+          description: Teklif
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - sales_invoices
+                        - details
+                        - activities
+                        - sharings
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true
+    get:
+      tags:
+        - SalesOffers
+      operationId: showSalesOffers
+      summary: Show
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: details.product contact.contact_people.contact contact.category sales_invoice activities.item activities.done_by sharings.collaborator*
+      responses:
+        '200':
+          description: Teklif
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - sales_invoices
+                        - details
+                        - activities
+                        - sharings
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    put:
+      tags: 
+        - SalesOffers
+      operationId: updateSalesOffers
+      summary: Edit
+      description: ''
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >- 
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: sales_invoice,contact.category,contact.contact_people.contact,sharings.collaborator,activities.item,activities.done_by*
+        - name: sales_offers_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_offers
+                  attributes:
+                    $ref: '#/definitions/SalesOffersCreateUpdateAttributes'
+                  relationships:
+                    type: object
+                    properties:
+                      details:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - sales_offer_details
+                                attributes:
+                                  $ref: '#/definitions/SalesOffersDetailAttributes'
+                                relationships:
+                                  type: object
+                                  properties:
+                                    product:
+                                      type: object
+                                      properties:
+                                        data:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: string
+                                              maxLength: 255
+                                            type:
+                                              type: string
+                                              maxLength: 255
+                                              description: Type of the resource
+                                              enum:
+                                                - products
+                      contact:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - contacts
+                      sharings:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sharings
+                      activities:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - activities
+                      sales_invoice:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_invoices
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Teklif
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - sales_invoices
+                        - details
+                        - activities
+                        - sharings
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - SalesOffers
+      operationId: deleteSalesOffers
+      summary: Delete
+      description: ''
+      responses:
+        '204':
+          description: No content
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}/pdf': 
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true
+    post:
+      tags:
+        - SalesOffers
+      operationId: showSalesOffersPdf
+      summary: PDF
+      description: >-
+        Oluşan PDF'in URL'ine trackable_jobs response'unun içerisinde data > attributes > url alanından erişebilirsiniz.
+      responses:
+        '202':
+          description: Teklif PDF
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - trackable_jobs
+                  attributes:
+                    $ref: '#/definitions/SalesOffersPdf'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                  meta:
+                    $ref: '#/definitions/ListMeta'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}/archive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesOffers
+      operationId: archiveSalesOffers
+      summary: Archive
+      description: ''
+      responses:
+        '200':
+          description: Teklif
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                        - contacts
+                        - sales_invoices
+                        - details
+                        - activities
+                        - sharings
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}/unarchive':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true
+    patch:
+      tags:
+        - SalesOffers
+      operationId: unarchiveSalesOffers
+      summary: Unarchive
+      description: ''
+      responses:
+        '200':
+          description: Fatura
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - contacts
+                        - sales_invoices
+                        - details
+                        - activities
+                        - sharings
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}/details':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true 
+    get:
+      tags:
+        - SalesOffers
+      operationId: showSalesOffersDetails
+      summary: Details
+      description: ''
+      parameters:
+        - name: 'page[size]'
+          type: number
+          in: query
+          description: ''
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: product*
+      responses:
+        '200':
+          description: Teklif Detayı
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/SalesOffersDetails'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - products
+                    attributes:
+                      $ref: '#/definitions/ProductAttributes'
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+  '/{company_id}/sales_offers/{id}/update_status':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+      - name: id
+        type: integer
+        description: Teklif ID
+        in: path
+        required: true 
+    patch:
+      tags:
+        - SalesOffers
+      operationId: updateSalesOffersStatus
+      summary: Update Status
+      description: ''
+      parameters:
+        - name: include
+          in: body
+          schema:
+            type: string
+            description: >-
+              Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+              *Available: activities*
+        - name: sales_offer_status_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_offers
+                  attributes:
+                    $ref: '#/definitions/SalesOffersUpdateStatusAttributes'
+          in: body
+          required: true
+      responses:
+        '200':
+          description: Teklif Statüsü
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sales_offers
+                  attributes:
+                    $ref: '#/definitions/SalesOffers'
+                  relationships:
+                    type: object
+                    properties:
+                      activities:
+                        type: object
+                        properties:
+                          data:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - activities
+                $ref: '#/definitions/SalesOffers'
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - products
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
   '/{company_id}/shipment_documents':
     parameters:
       - name: company_id
@@ -16693,8 +17915,153 @@ definitions:
                       - products
     required:
       - attributes
-  SalesOfferAttributes: {}
-  SalesOffer:
+  SalesOfferAttributes:
+    type: object
+    properties:
+      content:
+        type: string
+        readOnly: false
+        description: Teklif içeriği
+      contact_type:
+        type: string
+        readOnly: false
+        description: Alıcı tipi
+      sharings_count:
+        type: number
+        readOnly: true
+      status:
+        type: string
+        readOnly: true
+      display_exchange_rate_in_pdf:
+        type: boolean
+        readOnly: false
+        description: Gösterim döviz kuru
+      archived:
+        type: boolean
+        readOnly: true
+      net_total:
+        type: number
+        readOnly: true
+        description: Genel Toplam
+      gross_total:
+        type: number
+        readOnly: true
+        description: Ara toplam
+      withholding:
+        type: number
+        readOnly: true
+        description: Stopaj
+      total_excise_duty:
+        type: number
+        readOnly: true
+      total_communications_tax:
+        type: number
+        readOnly: true
+      total_accommodation_tax:
+        type: number
+        readOnly: true
+      total_vat:
+        type: number
+        readOnly: true
+        description: Toplam KDV
+      total_vat_withholding:
+        type: number
+        readOnly: true
+        description: Toplam Tevkifat
+      vat_withholding:
+        type: number
+        readOnly: true
+        description: Tevkifat
+      total_discount:
+        type: number
+        readOnly: true
+        description: Toplam indirim
+      total_invoice_discount:
+        type: number
+        readOnly: true
+      description:
+        type: string
+        readOnly: false
+        description: Fatura açıklaması
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Düzenleme tarihi
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Son tahsilat tarihi
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+        description: Döviz tipi
+      exchange_rate:
+        type: number
+        readOnly: false
+        description: Döviz kuru
+      withholding_rate:
+        type: number
+        readOnly: false
+        description: Stopaj oranı
+      invoice_discount_type:
+        type: string
+        enum:
+          - percentage
+          - amount
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+      billing_address:
+        type: string
+        readOnly: false
+        description: Gönderim adresi
+      billing_phone:
+        type: string
+        readOnly: false
+        description: Gönderim adresi telefonu
+      billing_fax:
+        type: string
+        readOnly: false
+        description: Gönderim adresi faksı
+      tax_office:
+        type: string
+        readOnly: false
+        description: Müşteri vergi dairesi
+      tax_number:
+        type: string
+        readOnly: false
+        description: Müşteri vergi numarası
+      city:
+        type: string
+        readOnly: false
+      district:
+        type: string
+        readOnly: false
+      is_abroad:
+        type: boolean
+        readOnly: false
+        description: Alıcı yurt dışı bilgisi
+      order_no:
+        type: string
+        readOnly: false
+        description: Sipariş no (resmileştirmek için order_date dolu ise bu alan zorunludur)
+      order_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan zorunludur)
+    required:
+      - item_type
+      - issue_date
+  SalesOffers:
     type: object
     properties:
       id:
@@ -16726,6 +18093,375 @@ definitions:
                     description: Type of the resource
                     enum:
                       - sales_invoices
+          contact:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - contacts
+          details:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sales_offer_details
+          activities:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - activities
+          sharings:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sharings
+    required:
+      - attributes
+  SalesOffersDetailAttributes:
+    type: object
+    properties:
+      description:
+        type: string
+        readOnly: false
+      net_total:
+        type: number
+        readOnly: false
+      unit_price:
+        type: number
+        readOnly: false
+      vat_rate:
+        type: number
+        readOnly: false
+      quantity:
+        type: number
+        readOnly: false
+      discount_type:
+        type: string
+        readOnly: false
+      discount_value:
+        type: number
+        readOnly: false
+      communications_tax_rate:
+        type: number
+        readOnly: false
+      excise_duty_type:
+        type: string
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+      excise_duty:
+        type: number
+        readOnly: false
+      excise_duty_rate:
+        type: number
+        readOnly: false
+      discount:
+        type: number
+        readOnly: false
+      communications_tax:
+        type: number
+        readOnly: false
+      detail_no:
+        type: number
+        readOnly: false
+      net_total_without_invoice_discount:
+        type: number
+        readOnly: false
+      vat_withholding:
+        type: number
+        readOnly: false
+      vat_withholding_rate:
+        type: number
+        readOnly: false
+      accommodation_tax_rate:
+        type: number
+        readOnly: false
+      accommodation_tax:
+        type: number
+        readOnly: false
+      accommodation_tax_exempt:
+        type: boolean
+        readOnly: false
+      created_at:
+        type: string
+        format: date
+        readOnly: true
+      updated_at:
+        type: string
+        format: date
+        readOnly: true
+      excise_duty_value:
+        type: number
+        readOnly: false
+  SalesOffersDetails:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_offers_details
+      attributes:
+        $ref: '#/definitions/SalesOffersDetailAttributes'
+      relationships:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    maxLength: 255
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - products
+                    
+    required:
+      - attributes
+  SalesOffersUpdateStatusAttributes:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Teklif durumu
+        enum:
+          - accepted
+          - rejected
+          - waiting
+        readOnly: false
+    required:
+      - status
+  SalesOffersCreateUpdateAttributes:
+    type: object
+    properties:
+      content:
+        type: string
+        readOnly: false
+        description: Teklif içeriği
+      contact_type:
+        type: string
+        readOnly: false
+        description: Alıcı tipi
+      sharings_count:
+        type: number
+        readOnly: true
+      status:
+        type: string
+        readOnly: true
+      display_exchange_rate_in_pdf:
+        type: boolean
+        readOnly: false
+        description: Gösterim döviz kuru
+      archived:
+        type: boolean
+        readOnly: true
+      net_total:
+        type: number
+        readOnly: true
+        description: Genel Toplam
+      gross_total:
+        type: number
+        readOnly: true
+        description: Ara toplam
+      withholding:
+        type: number
+        readOnly: true
+        description: Stopaj
+      total_excise_duty:
+        type: number
+        readOnly: true
+      total_communications_tax:
+        type: number
+        readOnly: true
+      total_accommodation_tax:
+        type: number
+        readOnly: true
+      total_vat:
+        type: number
+        readOnly: true
+        description: Toplam KDV
+      total_vat_withholding:
+        type: number
+        readOnly: true
+        description: Toplam Tevkifat
+      total_discount:
+        type: number
+        readOnly: true
+        description: Toplam indirim
+      total_invoice_discount:
+        type: number
+        readOnly: true
+      description:
+        type: string
+        readOnly: false
+        description: Fatura açıklaması
+      issue_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Düzenleme tarihi
+      due_date:
+        type: string
+        format: date
+        readOnly: false
+        description: Son tahsilat tarihi
+      currency:
+        type: string
+        enum:
+          - TRL
+          - USD
+          - EUR
+          - GBP
+        readOnly: false
+        description: Döviz tipi
+      exchange_rate:
+        type: number
+        readOnly: false
+        description: Döviz kuru
+      withholding_rate:
+        type: number
+        readOnly: false
+        description: Stopaj oranı
+      invoice_discount_type:
+        type: string
+        enum:
+          - percentage
+          - amount
+        readOnly: false
+      invoice_discount:
+        type: number
+        readOnly: false
+      billing_address:
+        type: string
+        readOnly: false
+        description: Gönderim adresi
+      billing_phone:
+        type: string
+        readOnly: false
+        description: Gönderim adresi telefonu
+      billing_fax:
+        type: string
+        readOnly: false
+        description: Gönderim adresi faksı
+      tax_office:
+        type: string
+        readOnly: false
+        description: Müşteri vergi dairesi
+      tax_number:
+        type: string
+        readOnly: false
+        description: Müşteri vergi numarası
+      city:
+        type: string
+        readOnly: false
+      district:
+        type: string
+        readOnly: false
+      is_abroad:
+        type: boolean
+        readOnly: false
+        description: Alıcı yurt dışı bilgisi
+      order_no:
+        type: string
+        readOnly: false
+        description: Sipariş no 
+    required:
+      - item_type
+      - issue_date
+  SalesOffersPdfAttributes:
+    type: object
+    properties:
+      url:
+        type: string
+        readOnly: true
+      created_at:
+        type: string
+        format: date-time
+        readOnly: true
+      status:
+        type: string
+        readOnly: true
+      errors:
+        type: array
+        items:
+          type: string
+        readOnly: true
+      result:
+        type: string
+        readOnly: true
+      statistics:
+        type: string
+        readOnly: true
+  SalesOffersPdf:
+    type: object
+    properties:
+      id:
+        type: string
+        maxLength: 255
+      type:
+        type: string
+        maxLength: 255
+        description: Type of the resource
+        enum:
+          - sales_offers_pdfs
+      attributes:
+        $ref: '#/definitions/SalesOffersPdfAttributes'
+      relationships: {}
     required:
       - attributes
   ShipmentDocumentAttributes:
