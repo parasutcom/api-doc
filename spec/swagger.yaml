@@ -640,6 +640,8 @@ tags:
     x-displayName: FİŞ / FATURA
   - name: Salaries
     x-displayName: MAAŞ
+  - name: SalesOffers
+    x-displayName: TEKLİF
   - name: SalesInvoices
     x-displayName: SATIŞ FATURASI
   - name: ShipmentDocuments
@@ -663,6 +665,7 @@ tags:
 x-tagGroups:
   - name: Satışlar
     tags:
+      - SalesOffers
       - SalesInvoices
       - Contacts
   - name: Giderler
@@ -11154,7 +11157,7 @@ paths:
         required: true 
     get:
       tags:
-        - SalesOffersDetails
+        - SalesOffers
       operationId: showSalesOffersDetails
       summary: Details
       description: ''
@@ -11254,7 +11257,7 @@ paths:
         required: true 
     patch:
       tags:
-        - SalesOffersUpdateStatus
+        - SalesOffers
       operationId: updateSalesOffersStatus
       summary: Update Status
       description: ''
