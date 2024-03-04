@@ -427,7 +427,7 @@ info:
     2. Sonrasında, gerekli alanlar doldurularak satış faturası endpointine bir POST isteği gönderilir ve fatura oluşturulur.
 
     
-    İpucu: 
+    Dikkat edilecek noktalar: 
       * Teklif ve satış faturası arasında çoğu alan benzerdir, bu yüzden teklif yanıtındaki alanlar satış faturası için uygun bir şekilde POST request verisi olarak aktarılabilir.
       * Teklif faturası response’unda, included array’inde 'contacts', 'sales_offer_details' ve 'products' türlerinde objeler bulunur. Bu objeler satış faturası POST request data’sı içindeki relationships alanına uygun bir şekilde aktarılabilir.
       * Satış faturası POST requestinde, data > relationships > sales_offer > data nesnesi bulunur. Bu nesnenin id alanına teklifin id'si; type alanına ise "sales_offers" değeri string formatında yazılması gerekmektedir.
