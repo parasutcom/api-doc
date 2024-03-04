@@ -417,6 +417,20 @@ info:
        * e-Arşiv için, 4. adımda elde edeceğiniz e-Arşiv `id`'sini kullanarak [e-Arşiv PDF](/#operation/showEArchivePdf) endpoint'ine istek atabilirsiniz. Bu endpoint PDF henüz yoksa boş bir yanıt ile birlikte 204 döner. Yani 204 almayana kadar belirli aralıklarla bu endpoint'e istek yapmanız gerekmektedir. Geçerli yanıt aldığınızda size dönecek olan PDF URL 1 saat için geçerlidir. Bu yüzden bu linki direk olarak müşterinizle **paylaşmamalısınız**. İndirip müşterinize kendiniz göndermelisiniz.
        * e-Arşiv için anlatılan senaryonun aynısı e-Fatura için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'tir: [e-Fatura PDF](/#operation/showEInvoicePdf)
        * e-Arşiv için anlatılan senaryonun aynısı e-Smm için de geçerlidir. Tek farklı kısım isteği yapacağınız endpoint'tir: [e-Smm PDF](/#operation/showESmmPdf)
+    
+    ## Tekliften Satış Faturası Oluşturma
+
+    Oluşturduğunuz Tekliften Fatura oluşturma süreci şu şekilde gerçekleşir:
+
+    1. Öncelikle, faturası oluşturulmak istenilen teklife bir GET isteği gönderilir ve yanıtı alınır.
+
+    2. Sonrasında, gerekli alanlar doldurularak satış faturası endpointine bir POST isteği gönderilir ve fatura oluşturulur.
+
+    
+    Dikkat edilecek noktalar: 
+      * Teklif ve satış faturası arasında çoğu alan benzerdir, bu yüzden teklif yanıtındaki alanlar satış faturası için uygun bir şekilde POST request verisi olarak aktarılabilir.
+      * Teklif faturası response’unda, included array’inde 'contacts', 'sales_offer_details' ve 'products' türlerinde objeler bulunur. Bu objeler satış faturası POST request data’sı içindeki relationships alanına uygun bir şekilde aktarılabilir.
+      * Satış faturası POST requestinde, data > relationships > sales_offer > data nesnesi bulunur. Bu nesnenin id alanına teklifin id'si; type alanına ise "sales_offers" değeri string formatında yazılması gerekmektedir.
 
     ## Belirli Firmalar İçin Özel Gereksinimler
 
@@ -11395,6 +11409,234 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Error'
+  '/{company_id}/sharings':
+    parameters:
+      - name: company_id
+        type: integer
+        description: Firma ID
+        in: path
+        required: true
+    post:
+      tags:
+        - SalesOffers
+      operationId: e-mailSalesOffers
+      summary: e-mail
+      description: >- 
+        E-mail status erişimi aşağıdaki şekilde sağlanır:
+
+        
+        Öncelikle, mevcut teklife bir GET isteği gönderilir. Ardından, yanıtta bulunan 'included' içinde 'sharings' türünde bir obje bulunur. Bu obje açılarak içindeki 'attributes' alanına bakılır. 'email_status' alanı, şu anda e-postanın durumunu sağlayacaktır.
+      parameters:
+        - name: include
+          type: string
+          in: query
+          description: >-
+            Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+            *Available: collaborator.contact_portal.accounts*
+        - name: sales_offers_email_form
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    maxLength: 255
+                    description: Type of the resource
+                    enum:
+                      - sharing_forms
+                  attributes:
+                    type: object
+                    properties:
+                      email:
+                        type: object
+                        properties:
+                          addresses:
+                            type: string
+                            maxLength: 255
+                            description: E-mail adresleri
+                          subject:
+                            type: string
+                            description: E-mail konusu
+                          body:
+                            type: string
+                            description: E-mail içeriği
+                      portal:
+                        type: object
+                        properties:
+                          has_online_collection:
+                            type: boolean
+                            description: Online tahsilat
+                            default: false
+                          has_online_payment_reminder:
+                            type: boolean
+                            description: Online ödeme hatırlatıcı
+                            default: false
+                          has_referral_link:
+                            type: boolean
+                            description: Referans linki
+                            default: false
+                      properties:
+                        type: object
+                  relationships:
+                    type: object
+                    properties:
+                      shareable:
+                        type: object
+                        properties:
+                          data:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                maxLength: 255
+                                description: ID of the sales offers
+                              type:
+                                type: string
+                                maxLength: 255
+                                description: Type of the resource
+                                enum:
+                                  - sales_offers
+          in: body
+          required: true
+      responses:
+        '200':
+          description: E-mail
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                      enum:
+                        - sharings
+                    attributes:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                        email:
+                          type: string
+                          maxLength: 255
+                          description: E-mail adresleri
+                        email_status:
+                          type: string
+                          maxLength: 255
+                          description: E-mail durumu
+                        message:
+                          type: string
+                          description: E-mail içeriği
+                        properties:
+                          type: object
+                        subject:
+                          type: string
+                          description: E-mail konusu
+                        updated_at:
+                          type: string
+                          format: date-time
+                    relationships:
+                      type: object
+                      properties:
+                        shareable:
+                          type: object
+                        collaborator:
+                          type: object
+                          properties:
+                            data:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  maxLength: 255
+                                type:
+                                  type: string
+                                  maxLength: 255
+                                  description: Type of the resource
+                                  enum:
+                                    - collaborators
+                    meta:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+              included:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      maxLength: 255
+                    type:
+                      type: string
+                      maxLength: 255
+                      description: Type of the resource
+                    attributes:
+                      type: object
+                    relationships:
+                      type: object
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/definitions/Error'  
   '/{company_id}/shipment_documents':
     parameters:
       - name: company_id
