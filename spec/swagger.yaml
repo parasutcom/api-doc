@@ -11324,7 +11324,7 @@ paths:
                     enum:
                       - sales_offers
                   attributes:
-                    $ref: '#/definitions/SalesOfferAttributes' 
+                    $ref: '#/definitions/SalesOfferAttributes'
                   relationships:
                     type: object
                     properties:
