@@ -11324,7 +11324,7 @@ paths:
                     enum:
                       - sales_offers
                   attributes:
-                    $ref: '#/definitions/SalesOffers'
+                    $ref: '#/definitions/SalesOfferAttributes'
                   relationships:
                     type: object
                     properties:
@@ -11345,7 +11345,6 @@ paths:
                                   description: Type of the resource
                                   enum:
                                     - activities
-                $ref: '#/definitions/SalesOffers'
               included:
                 type: array
                 items:
@@ -11359,7 +11358,7 @@ paths:
                       maxLength: 255
                       description: Type of the resource
                       enum:
-                        - products
+                        - activities
                     attributes:
                       type: object
                     relationships:
