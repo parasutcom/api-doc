@@ -11276,35 +11276,11 @@ paths:
       summary: Update Status
       description: ''
       parameters:
-        - name: include
-          in: body
-          schema:
-            type: string
-            description: >-
-              Response ile birlikte geri dönmesini istediğiniz ilişkiler -
-              *Available: activities*
-        - name: sales_offer_status_form
-          schema:
-            type: object
-            required:
-              - data
-            properties:
-              data:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    maxLength: 255
-                  type:
-                    type: string
-                    maxLength: 255
-                    description: Type of the resource
-                    enum:
-                      - sales_offers
-                  attributes:
-                    $ref: '#/definitions/SalesOffersUpdateStatusAttributes'
+        - name: sales_offer_update_status_body
           in: body
           required: true
+          schema: 
+            $ref: '#/definitions/SalesOffersUpdateStatusBody'
       responses:
         '200':
           description: Teklif Statüsü
@@ -18527,6 +18503,30 @@ definitions:
         readOnly: false
     required:
       - status
+  SalesOffersUpdateStatusBody:
+    description: ''
+    properties:
+      data:
+        type: object
+        properties:
+          id:
+            type: string
+            maxLength: 255
+          type:
+            type: string
+            maxLength: 255
+            description: Type of the resource
+            enum:
+              - sales_offers
+          attributes:
+            $ref: '#/definitions/SalesOffersUpdateStatusAttributes'
+      include:
+        type: string
+        description: >-
+          Response ile birlikte geri dönmesini istediğiniz ilişkiler -
+          *Available: activities*
+    required:
+      - data
   SalesOffersCreateUpdateAttributes:
     type: object
     properties:
