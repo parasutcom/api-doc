@@ -18503,7 +18503,7 @@ definitions:
         readOnly: false
     required:
       - status
-  SalesOffersUpdateStatusBody: 
+  SalesOffersUpdateStatusBody:
     type: object
     description: ''
     properties:
