@@ -9,17 +9,30 @@ info:
 
     # CHANGE LOG
 
-    ### **2021-10-11**
+    ### **2023-02-20**
 
-    #### Added
+    #### Konaklama Vergisi
 
-    - Belirli Firmalar İçin Özel Gereksinimler alanına Amazon için gerekli özel alanlar eklendi.
+    - Satış Faturası üzerine `accommodation_tax_exemption_reason_code` alanı
+    eklendi.
+
+    - Satış Faturası Detayı üzerine `accommodation_tax_rate` ve
+    `accommodation_tax_exempt` alanları eklendi.
+
+    - E-Arşiv ve E-Fatura üzerine `accommodation_tax_exemption_reason_code`
+    alanı eklendi.
+
+    - Ürün üzerine `accommodation_tax_rate` eklendi.
+
+    - Gider Faturası Detayı üzerine `accommodation_tax_rate` ve
+    `accommodation_tax_exempt` alanları eklendi.
 
 
-    #### Changed
+    ### **2023-02-02**
 
-    - Fatura oluşturmada `order_no` ve `order_date` alanlarının tanımlamaları değiştirildi.
+    #### Webhook
 
+    - Webhook GET, POST, PUT ve DELETE endpoint'leri eklendi.
 
 
     # GİRİŞ
@@ -71,10 +84,11 @@ info:
 
     - 10 saniyede 10 adet istek gönderebilirsiniz.
 
-    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature` headerı `event data` ve size tanımlanan 
-    `encryption key` değerlerini SHA256 ile hash'leyerek ile oluşturulur.
+    - Oluşturuduğunuz Webhook'un URL'ine gönderilen requestlerin `Signature`
+    headerı `event data` ve size tanımlanan `encryption key` değerlerini SHA256
+    ile hash'leyerek ile oluşturulur.
       - Örnek bir Webhook URL'ine gönderilen request şöyle görünür;
-    
+
        `Content-Type: www-url-encoded`
 
         ```json
@@ -91,12 +105,11 @@ info:
             "operated_by_type": null,
             "operated_by_id": null,
             "included": [ ... ], # array of related objects
-            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object modal. İlgili modeli dönen API ile aynı formatta
+            "data": { ... } # unparsed (ayrıştırılmamış), string halinde object model. İlgili modeli dönen API ile aynı formatta
             # data bu örnekte sales invoice, ilgili API: /#operation/showSalesInvoice
           }
         }
         ```
-
 
     # Authentication
 
@@ -466,7 +479,6 @@ info:
 
     Buradaki data'nın içindeki alanların anlamları:
 
-
     - `additional_invoice_type`: ilave fatura tipi
 
     - `tax_payer_code`: mükellef kodu
@@ -486,10 +498,11 @@ info:
     Available: *SAGLIK_ECZ, SAGLIK_HAS, SAGLIK_OPT, SAGLIK_MED, ABONELIK,
     MAL_HIZMET, DIGER*
 
+
     ### Amazon için gerekli özel alanlar
 
-    Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada kullanılan adres bilgileri:
-
+    Amazon'a kesilen faturalarda adres bilgisi doğru girilmelidir. Uygulamada
+    kullanılan adres bilgileri:
 
     - `billing_address`: Esentepe Mahallesi, Bahar Sk. No: 13/52
 
@@ -501,10 +514,15 @@ info:
 
     - `city`: İstanbul
 
-    - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve `order_date`) doldurulmalıdır.
+    - Amazon'a kesilen faturalarda sipariş bilgileri (`order_no` ve
+    `order_date`) doldurulmalıdır.
 
 
-    Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u inceleyebilirsiniz.
+    Tedarikçi kodu ve EAN / ASIN kodlarını girebileceğiniz alan
+    `custom_requirement_params` alanıdır. `product_id` yerine ürünlerin  paraşüt
+    üzerindeki id sini girebilirsiniz. Örnek olarak aşağıdaki json'u
+    inceleyebilirsiniz.
+
 
     ```json
 
@@ -531,6 +549,7 @@ info:
     }
 
     ```
+
 
     Buradaki data'nın içindeki alanların anlamları:
 
@@ -14663,36 +14682,11 @@ paths:
                     enum:
                       - webhook
                   attributes:
-                    type: object
-                    required:
-                      - model
-                      - action
-                      - uri
-                    properties:
-                      model:
-                        type: string
-                        enum:
-                          - shipment_document
-                          - employee
-                          - product
-                          - contact
-                          - stock_movement
-                          - sales_invoice
-                        description: Model name to create its webhook
-                      action:
-                        type: string
-                        enum:
-                          - create
-                          - update
-                          - delete
-                        description: Action name to create related webhook
-                      uri:
-                        type: string
-                        description: URI to use webhook
+                    $ref: '#/definitions/WebhookAttributes'
           in: body
           required: true
       responses:
-        '200':
+        '201':
           description: Webhook
           schema:
             type: object
@@ -14845,7 +14839,7 @@ paths:
       summary: Delete
       description: Deletes Webhook record
       responses:
-        '200':
+        '204':
           description: No content
           schema:
             type: object
@@ -15455,9 +15449,9 @@ definitions:
         readOnly: false
         description: İlçe
       postal_code:
+        description: Posta kodu
         type: string
         readOnly: false
-        description: Posta kodu
       city:
         type: string
         readOnly: false
@@ -15880,6 +15874,12 @@ definitions:
                 - 62
                 - 63
                 - 9077
+        readOnly: false
+      accommodation_tax_exemption_reason_code:
+        description: Konaklama Vergisi istisna kodu
+        type: string
+        enum:
+          - '001'
         readOnly: false
   EDocumentCommonForm:
     type: object
@@ -16807,6 +16807,13 @@ definitions:
         type: number
         readOnly: false
         description: ÖİV oranı
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
       archived:
         type: boolean
         readOnly: false
@@ -17344,6 +17351,17 @@ definitions:
       communications_tax_rate:
         type: number
         readOnly: false
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+      accommodation_tax_exempt:
+        description: Konaklama Vergisi muafiyeti
+        type: boolean
+        readOnly: false
       description:
         type: string
         readOnly: false
@@ -17445,6 +17463,17 @@ definitions:
         enum:
           - percentage
           - amount
+        readOnly: false
+      accommodation_tax_rate:
+        description: Konaklama Vergisi oranı
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+      accommodation_tax_exempt:
+        description: Konaklama Vergisi muafiyeti
+        type: boolean
         readOnly: false
     required:
       - item_type
@@ -17635,6 +17664,9 @@ definitions:
         type: number
         readOnly: true
         description: Vergiler Hariç Toplam
+      total_accommodation_tax:
+        type: number
+        readOnly: true
       remaining:
         type: number
         readOnly: true
@@ -17762,12 +17794,22 @@ definitions:
       order_no:
         type: string
         readOnly: false
-        description: Sipariş no (resmileştirmek için order_date dolu ise bu alan zorunludur)
+        description: >-
+          Sipariş no (resmileştirmek için order_date dolu ise bu alan
+          zorunludur)
       order_date:
         type: string
         format: date
         readOnly: false
-        description: Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan zorunludur)
+        description: >-
+          Sipariş tarihi (resmileştirmek için order_no dolu ise bu alan
+          zorunludur)
+      accommodation_tax_exemption_reason_code:
+        type: string
+        enum:
+          - '001'
+        readOnly: false
+        description: Konaklama Vergisi istisna kodu
       shipment_addres:
         type: string
         readOnly: false
@@ -17780,11 +17822,11 @@ definitions:
         readOnly: false
         description: Peşin satış
       payer_tax_numbers:
-        description: Kamu faturaları için zorunludur.
         type: array
         items:
           type: string
         readOnly: false
+        description: Kamu faturaları için zorunludur.
     required:
       - item_type
       - issue_date
@@ -18016,8 +18058,8 @@ definitions:
         description: KDV oranı
       vat_withholding_rate:
         type: number
-        description: Tevkifat oranı
         readOnly: false
+        description: Tevkifat oranı
       discount_type:
         type: string
         enum:
@@ -18079,6 +18121,17 @@ definitions:
           - Sabit taşıma tesisleri
           - İç su taşımacılığı
         readOnly: false
+      accommodation_tax_rate:
+        type: number
+        enum:
+          - 0
+          - 2
+        readOnly: false
+        description: Konaklama Vergisi oranı
+      accommodation_tax_exempt:
+        type: boolean
+        readOnly: false
+        description: Konaklama Vergisi İstisna mı
     required:
       - quantity
       - unit_price
@@ -19588,6 +19641,10 @@ definitions:
         type: string
         description: URI to use webhook
         readOnly: false
+    required:
+      - model
+      - action
+      - uri
   Webhook:
     type: object
     properties:
@@ -19602,5 +19659,6 @@ definitions:
           - webhook
       attributes:
         $ref: '#/definitions/WebhookAttributes'
+      relationships: {}
     required:
       - attributes
