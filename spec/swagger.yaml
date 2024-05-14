@@ -17785,6 +17785,20 @@ definitions:
         items:
           type: string
         readOnly: false
+      invoice_note:
+        type: string
+        readOnly: false
+        description: Fatura notu
+      append_contact_balance:
+        type: boolean
+        readOnly: false
+        description: Müşteri bakiyeniz faturaya eklenecektir.
+      e_document_accounts:
+        type: array
+        items:
+          type: Number
+        readOnly: false
+        description: Bu alana hesap ID'leri eklenebilir.
     required:
       - item_type
       - issue_date
