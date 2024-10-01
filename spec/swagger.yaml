@@ -15854,10 +15854,6 @@ definitions:
           Eğer KDV muafiyet sebebi kodu 250 veya 350 ise KDV muafiyet sebebi
           açıklaması.
         readOnly: false
-      note:
-        type: string
-        description: Fatura notu
-        readOnly: false
       excise_duty_codes:
         type: array
         description: >-
